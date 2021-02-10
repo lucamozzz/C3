@@ -9,11 +9,6 @@ public class ArticoloCarrello {
 		return this.descrizioneArticolo;
 	}
 
-	/**
-	 * 
-	 * @param idDescArticolo
-	 * @param quantita
-	 */
 	public ArticoloCarrello(Long idDescArticolo, int quantita) {
 		// TODO - implement ArticoloCarrello.ArticoloCarrello
 		throw new UnsupportedOperationException();
