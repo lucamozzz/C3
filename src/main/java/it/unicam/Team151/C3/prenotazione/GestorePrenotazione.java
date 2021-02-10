@@ -10,10 +10,7 @@ public class GestorePrenotazione {
 
 	private List<Prenotazione> prenotazioni;
 
-	/**
-	 * 
-	 * @param idPrenotazione
-	 */
+
 	public Prenotazione getPrenotazione(Long idPrenotazione) {
 		// TODO - implement GestorePrenotazione.getPrenotazione
 		throw new UnsupportedOperationException();
