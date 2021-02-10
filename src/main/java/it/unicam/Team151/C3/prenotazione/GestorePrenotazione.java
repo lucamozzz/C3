@@ -20,11 +20,7 @@ public class GestorePrenotazione {
 		return this.prenotazioni;
 	}
 
-	/**
-	 *  @param carrello
-	 * @param puntoConsegna
-	 * @return
-	 */
+
 	public Prenotazione createPrenotazione(Carrello carrello, PuntoConsegna puntoConsegna) {
 		return new Prenotazione(carrello, puntoConsegna);
 	}
