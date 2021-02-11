@@ -4,6 +4,7 @@ import it.unicam.Team151.C3.articoli.Categoria;
 import it.unicam.Team151.C3.controller.ConfermaPrenotazioneHandler;
 import it.unicam.Team151.C3.controller.ElaboraPrenotazioneHandler;
 import it.unicam.Team151.C3.controller.LogoutHandler;
+import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,8 @@ public class ICliente implements IUtenteAutenticato{
 	 * metodo per l'avvio della procedura di prenotazione.
 	 */
 	@GetMapping("puntiConsegna")
-	public void elaboraPrenotazione() {
-		elaboraPrenotazioneHandler.elaboraPrenotazione();
+	public List<PuntoConsegna> elaboraPrenotazione() {
+		return elaboraPrenotazioneHandler.elaboraPrenotazione();
 	}
 
 	@PostMapping("confermaPrenotazione")
@@ -34,30 +35,16 @@ public class ICliente implements IUtenteAutenticato{
 		confermaPrenotazioneHandler.confermaPrenotazione(idPuntoConsegna, idCliente);
 	}
 
-	/**
-	 * 
-	 * @param idArmadietto
-	 */
 	public void ritiraPrenotazione(Long idArmadietto) {
 		// TODO - implement ICliente.ritiraPrenotazione
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param idDescArticolo
-	 * @param quantita
-	 */
 	public void aggiungiArticoloCarrello(Long idDescArticolo, int quantita) {
 		// TODO - implement ICliente.aggiungiArticoloCarrello
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param idDescArticolo
-	 * @param quantita
-	 */
 	public void rimuoviArticoloCarrello(Long idDescArticolo, int quantita) {
 		// TODO - implement ICliente.rimuoviArticoloCarrello
 		throw new UnsupportedOperationException();
@@ -73,10 +60,6 @@ public class ICliente implements IUtenteAutenticato{
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param idCategoria
-	 */
 	public void scegliCategoria(Long idCategoria) {
 		// TODO - implement ICliente.scegliCategoria
 		throw new UnsupportedOperationException();
@@ -87,10 +70,6 @@ public class ICliente implements IUtenteAutenticato{
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param idPuntoVendita
-	 */
 	public void scegliPuntoVendita(Long idPuntoVendita) {
 		// TODO - implement ICliente.scegliPuntoVendita
 		throw new UnsupportedOperationException();

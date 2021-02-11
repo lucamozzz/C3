@@ -1185,3 +1185,9 @@ select cliente0_.id as id1_0_, cliente0_.cognome as cognome2_0_, cliente0_.email
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.base/java.lang.Thread.run(Thread.java:834)
+2021-02-11 19:01:14 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE FROM *[*]"; expected "identifier"; SQL statement:
+DELETE FROM * [42001-200]
+2021-02-11 19:01:41 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE *[*] FROM CATEGORIA"; expected "identifier"; SQL statement:
+DELETE * FROM CATEGORIA [42001-200]

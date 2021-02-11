@@ -27,8 +27,11 @@ public class GestoreCarrello {
 		return instance;
 	}
 
+	//Qui avevamo messo findById() ma in quel modo avrebbe ritornato il carrello
+	// con idCarrello = idCliente invece che il carrello con idCliente = idCliente.
+	// Perciò ho aggiunto il metodo findByCliente alla classe CarrelloRepository.
 	public Carrello getCarrello(Long idCliente) {
-		return carrelloRepository.findById(idCliente).get();
+		return carrelloRepository.findByCliente(idCliente).get();
 	}
 
 	public void createCarrello(Cliente cliente) {
