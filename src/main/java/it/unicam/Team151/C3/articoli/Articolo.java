@@ -1,16 +1,16 @@
 package it.unicam.Team151.C3.articoli;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Articolo {
 
 	@Id
+	@Column(name = "idArticolo")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	@ManyToOne
+	@JoinColumn(name = "idDescrizioneArticolo")
 	private DescrizioneArticolo descrizioneArticolo;
 
 	public Articolo() {

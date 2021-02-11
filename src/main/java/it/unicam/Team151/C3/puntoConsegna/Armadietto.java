@@ -9,11 +9,14 @@ import java.util.List;
 public class Armadietto {
 
 	@Id
+	@Column(name = "idArmadietto")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idArmadietto;
 	private boolean disponibilita;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Pacco> pacchi;
+	@ManyToOne
+	@JoinColumn(name = "idPuntoConsegna")
 	private PuntoConsegna puntoConsegna;
 
 	public Armadietto() {

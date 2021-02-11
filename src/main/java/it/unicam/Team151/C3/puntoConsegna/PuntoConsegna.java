@@ -10,10 +10,11 @@ import java.util.List;
 public class PuntoConsegna {
 
 	@Id
+	@Column(name = "idPuntoConsegna")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String ubicazione;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Armadietto> armadietti;
 
 	public PuntoConsegna() {

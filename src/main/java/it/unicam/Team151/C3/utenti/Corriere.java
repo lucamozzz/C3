@@ -8,6 +8,7 @@ import java.util.List;
 public class Corriere implements UtenteAutenticato {
 
     @Id
+    @Column(name = "idCorriere")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;

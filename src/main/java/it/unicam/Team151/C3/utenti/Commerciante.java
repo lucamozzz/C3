@@ -7,6 +7,7 @@ import java.util.List;
 public class Commerciante implements UtenteAutenticato {
 
     @Id
+    @Column(name = "idCorriere")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;

@@ -3,22 +3,27 @@ package it.unicam.Team151.C3.articoli;
 import it.unicam.Team151.C3.utenti.Cliente;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Carrello {
 
 	@Id
+	@Column(name = "idCarrello")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<ArticoloCarrello> articoliCarrello;
+	@OneToOne
+	@JoinColumn(name = "idCliente")
 	private Cliente cliente;
 
 	public Carrello() {
 	}
 
 	public Carrello(Cliente cliente) {
+		this.articoliCarrello = new ArrayList<>();
 		this.cliente = cliente;
 	}
 

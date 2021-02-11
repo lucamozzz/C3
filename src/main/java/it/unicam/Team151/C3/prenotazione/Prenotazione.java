@@ -23,11 +23,17 @@ public class Prenotazione {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private Ricevuta ricevuta;
+	@OneToOne
+	@JoinColumn(name = "idCliente")
 	private Cliente cliente;
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Pacco> pacchi;
 	private Stato stato;
+	@OneToOne
+	@JoinColumn(name = "idCorriere")
 	private Corriere corriere;
+	@OneToOne
+	@JoinColumn(name = "idPuntoConsegna")
 	private PuntoConsegna puntoConsegna;
 
 	public Prenotazione() {
