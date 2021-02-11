@@ -6,7 +6,6 @@ import javax.persistence.*;
 public class ArticoloCarrello {
 
 	@Id
-	@Column(name = "idArticoloCarrello")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private int quantita;
@@ -17,9 +16,10 @@ public class ArticoloCarrello {
 	public ArticoloCarrello() {
 	}
 
+	//TODO da rivedere
 	public ArticoloCarrello(DescrizioneArticolo descrizioneArticolo, int quantita) {
-	/*	this.quantita = quantita;
-		this.descrizioneArticolo = descrizioneArticolo;*/
+		this.quantita = quantita;
+		this.descrizioneArticolo = descrizioneArticolo;
 	}
 
 	public DescrizioneArticolo getDescrizioneArticolo() {
