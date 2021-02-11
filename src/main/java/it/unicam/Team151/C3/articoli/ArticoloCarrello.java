@@ -1,9 +1,6 @@
 package it.unicam.Team151.C3.articoli;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class ArticoloCarrello {
@@ -18,8 +15,9 @@ public class ArticoloCarrello {
 	}
 
 	//TODO da rivedere
-	public ArticoloCarrello(Long idDescArticolo, int quantita) {
+	public ArticoloCarrello(DescrizioneArticolo descrizioneArticolo, int quantita) {
 		this.quantita = quantita;
+		this.descrizioneArticolo = descrizioneArticolo;
 	}
 
 	public DescrizioneArticolo getDescrizioneArticolo() {
