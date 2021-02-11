@@ -1,21 +1,34 @@
 package it.unicam.Team151.C3.puntoConsegna;
 
+import it.unicam.Team151.C3.puntoVendita.Pacco;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
 public class Armadietto {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int idArmadietto;
-	/**
-	 * attributo per verificare se un armadietto � disponibile o no per la consegna di una merce.
-	 */
 	private boolean disponibilita;
+	@OneToMany
+	private List<Pacco> pacchi;
 	private PuntoConsegna puntoConsegna;
+
+	public Armadietto() {
+	}
+
+	public void svuota() {
+		this.pacchi.clear();
+	}
 
 	public PuntoConsegna getPuntoConsegna() {
 		return this.puntoConsegna;
 	}
 
-	public void svuota() {
-		// TODO - implement Armadietto.svuota
-		throw new UnsupportedOperationException();
+	public void setPuntoConsegna(PuntoConsegna puntoConsegna) {
+		this.puntoConsegna = puntoConsegna;
 	}
 
 	/**
@@ -27,8 +40,7 @@ public class Armadietto {
 	}
 
 	public boolean isDisponibile() {
-		// TODO - implement Armadietto.isDisponibile
-		throw new UnsupportedOperationException();
+		return this.disponibilita;
 	}
 
 }
