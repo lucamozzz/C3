@@ -8,17 +8,17 @@ import java.util.List;
 public class DescrizioneArticolo {
 
 	@Id
-	@Column(name = "idDescrizioneArticolo")
+	@Column(name = "idDescrizioneArticolo", unique = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String nome;
 	private String descrizione;
 	private double prezzo;
 	private int quantita;
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name = "idPuntoVendita")
 	private PuntoVendita puntoVendita;
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name = "idCategoria")
 	private Categoria categoria;
 

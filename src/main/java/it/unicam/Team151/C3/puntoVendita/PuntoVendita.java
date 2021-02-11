@@ -8,16 +8,16 @@ import javax.persistence.*;
 public class PuntoVendita {
 
 	@Id
-	@Column(name = "idPuntoVendita")
+	@Column(name = "idPuntoVendita",unique = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name = "idCommerciante")
 	private Commerciante commerciante;
 	private String ubicazione;
 	private String nome;
 
-	public PuntoVendita() {
+	public PuntoVendita(){
 	}
 
 	public PuntoVendita(String nome, Commerciante commerciante, String ubicazione) {

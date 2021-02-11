@@ -1,14 +1,13 @@
 package it.unicam.Team151.C3.articoli;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Categoria {
 
 	@Id
-	@Column(name = "idCategoria")
+	@Column(name = "idCategoria",unique=true, nullable = false)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String nome;
 	private String descrizione;

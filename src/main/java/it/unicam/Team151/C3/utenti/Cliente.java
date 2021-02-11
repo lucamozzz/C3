@@ -32,6 +32,16 @@ public class Cliente implements UtenteAutenticato {
         this.password = form.get(5);
         this.logged = false;
     }
+    //per test CommandLineRunner
+    public Cliente(String nome, String cognome, String indirizzo, String ruolo, String email, String password) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.indirizzo = indirizzo;
+        this.ruolo = ruolo;
+        this.email = email;
+        this.password = password;
+        this.logged = false;
+    }
 
     @Override
     public Long getId() {

@@ -10,25 +10,26 @@ import it.unicam.Team151.C3.repositories.*;
 import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.utenti.Commerciante;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
-@ComponentScan("it.unicam.Team151.C3")
-@EnableJpaRepositories({ "it.unicam.Team151.C3.repositories"})
-public class C3Application /*implements ApplicationRunner */{
+@Component
+@EnableJpaRepositories("it.unicam.Team151.C3.repositories")
+public class C3Application implements CommandLineRunner{
 
 	public static void main(String[] args) {
 		SpringApplication.run(C3Application.class, args);
 	}
 
-	/*
+
 	@Autowired
 	PuntoVenditaRepository puntoVenditaRepository;
 	@Autowired
@@ -47,7 +48,7 @@ public class C3Application /*implements ApplicationRunner */{
 	CarrelloRepository carrelloRepository;
 
 	@Override
-	public void run(ApplicationArguments args) throws Exception {
+	public void run(String... args) throws Exception {
 			Categoria categoria1 = new Categoria("Cucina", "");
 			Categoria categoria2 = new Categoria("Fai da te", "");
 			Categoria categoria3 = new Categoria("Ferramerda", "");
@@ -90,7 +91,7 @@ public class C3Application /*implements ApplicationRunner */{
 			paramCommerciante.add("succhia.cazzi@matteocontestabile.contestabile");
 			paramCommerciante.add("ded");
 
-			Cliente cliente = new Cliente(paramCliente);
+			Cliente cliente = new Cliente("Giorgio","Paoletti", "Camerino", "Cliente", "succhia.cazzi@matteocontestabile.contestabile", "ded");
 			clienteRepository.save(cliente);
 
 			Carrello carrello = new Carrello(cliente);
@@ -100,5 +101,5 @@ public class C3Application /*implements ApplicationRunner */{
 			ArticoloCarrello articoloCarrello2 = new ArticoloCarrello(descrizioneArticolo2, 3, carrello);
 			articoloCarrelloRepository.save(articoloCarrello1);
 			articoloCarrelloRepository.save(articoloCarrello2);
-		}*/
+		}
 }

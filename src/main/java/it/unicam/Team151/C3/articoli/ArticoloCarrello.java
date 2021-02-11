@@ -6,14 +6,14 @@ import javax.persistence.*;
 public class ArticoloCarrello {
 
 	@Id
-	@Column(name = "idArticoloCarrello")
+	@Column(name = "idArticoloCarrello", unique = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private int quantita;
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name = "idDescrizioneArticolo")
 	private DescrizioneArticolo descrizioneArticolo;
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name = "idCarrello")
 	private Carrello carrello;
 

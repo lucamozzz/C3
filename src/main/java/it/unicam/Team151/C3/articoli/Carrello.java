@@ -10,12 +10,12 @@ import java.util.List;
 public class Carrello {
 
 	@Id
-	@Column(name = "idCarrello")
+	@Column(name = "idCarrello", unique = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Transient
 	private List<ArticoloCarrello> articoliCarrello;
-	@OneToOne(cascade = {CascadeType.ALL})
+	@OneToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name = "idCliente")
 	private Cliente cliente;
 
