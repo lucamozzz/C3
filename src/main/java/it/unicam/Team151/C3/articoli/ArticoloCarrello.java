@@ -16,8 +16,8 @@ public class ArticoloCarrello {
 
 	//TODO da rivedere
 	public ArticoloCarrello(DescrizioneArticolo descrizioneArticolo, int quantita) {
-		this.quantita = quantita;
-		this.descrizioneArticolo = descrizioneArticolo;
+	/*	this.quantita = quantita;
+		this.descrizioneArticolo = descrizioneArticolo;*/
 	}
 
 	public DescrizioneArticolo getDescrizioneArticolo() {
