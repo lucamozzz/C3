@@ -1,6 +1,7 @@
 package it.unicam.Team151.C3.articoli;
 
 import it.unicam.Team151.C3.repositories.CarrelloRepository;
+import it.unicam.Team151.C3.utenti.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +31,8 @@ public class GestoreCarrello {
 		return carrelloRepository.findById(idCliente).get();
 	}
 
-	public void createCarrello(Long id) {
-		Carrello carrello = new Carrello(id);
+	public void createCarrello(Cliente cliente) {
+		Carrello carrello = new Carrello(cliente);
 		carrelloRepository.save(carrello);
 	}
 

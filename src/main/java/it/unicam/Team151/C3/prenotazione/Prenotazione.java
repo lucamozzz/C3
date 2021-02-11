@@ -1,14 +1,13 @@
 package it.unicam.Team151.C3.prenotazione;
 
-
 import it.unicam.Team151.C3.articoli.Articolo;
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
 import it.unicam.Team151.C3.articoli.Carrello;
 import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
+import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.utenti.Corriere;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,11 +19,12 @@ import java.util.stream.Collectors;
 public class Prenotazione {
 
 	@Id
+	@Column(name = "idPrenotazione")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private Long idCliente;
 	private Ricevuta ricevuta;
-	@OneToMany
+	private Cliente cliente;
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Pacco> pacchi;
 	private Stato stato;
 	private Corriere corriere;
@@ -45,7 +45,7 @@ public class Prenotazione {
 																	getPuntoVendita().
 																	equals(puntoVendita)).
 																	collect(Collectors.toList())));
-		this.idCliente = carrello.getId();
+		this.cliente = carrello.getCliente();
 		this.puntoConsegna = puntoConsegna;
 		this.corriere = null;
 		this.ricevuta = null;
@@ -54,8 +54,8 @@ public class Prenotazione {
 	/**
 	 * getter del cliente della prenotazione.
 	 */
-	public Long getCliente() {
-		return this.idCliente;
+	public Cliente getCliente() {
+		return this.cliente;
 	}
 
 	/**
@@ -71,31 +71,25 @@ public class Prenotazione {
 	 * getter della lista degli articoli della prenotazione.
 	 */
 	public List<Articolo> getArticoli() {
-		// TODO - implement Prenotazione.getArticoli
-		throw new UnsupportedOperationException();
+		List<Articolo> articoli = new ArrayList<>();
+		for (Pacco pacco : pacchi) {
+			articoli.addAll(pacco.getArticoli());
+		}
+		return articoli;
 	}
 
 	public Long getID() {
-		// TODO - implement Prenotazione.getID
-		throw new UnsupportedOperationException();
+		return this.id;
 	}
 
 	public Stato getStato() {
 		return this.stato;
 	}
 
-	/**
-	 * 
-	 * @param nuovoStato
-	 */
 	public void setStato(Stato nuovoStato) {
 		this.stato = nuovoStato;
 	}
 
-	/**
-	 * 
-	 * @param corriere
-	 */
 	public void setCorriere(Corriere corriere) {
 		this.corriere = corriere;
 	}
@@ -109,8 +103,6 @@ public class Prenotazione {
 	}
 
 	public PuntoConsegna getPuntoConsegna() {
-		// TODO - implement Prenotazione.getPuntoConsegna
-		throw new UnsupportedOperationException();
+		return this.puntoConsegna;
 	}
-
 }

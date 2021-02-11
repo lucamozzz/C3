@@ -1,6 +1,5 @@
 package it.unicam.Team151.C3.prenotazione;
 
-
 import it.unicam.Team151.C3.articoli.Carrello;
 import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
 
@@ -10,7 +9,6 @@ public class GestorePrenotazione {
 
 	private List<Prenotazione> prenotazioni;
 
-
 	public Prenotazione getPrenotazione(Long idPrenotazione) {
 		// TODO - implement GestorePrenotazione.getPrenotazione
 		throw new UnsupportedOperationException();
@@ -19,7 +17,6 @@ public class GestorePrenotazione {
 	public List<Prenotazione> getPrenotazioni() {
 		return this.prenotazioni;
 	}
-
 
 	public Prenotazione createPrenotazione(Carrello carrello, PuntoConsegna puntoConsegna) {
 		return new Prenotazione(carrello, puntoConsegna);

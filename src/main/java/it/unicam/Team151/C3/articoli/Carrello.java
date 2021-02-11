@@ -2,24 +2,24 @@ package it.unicam.Team151.C3.articoli;
 
 import it.unicam.Team151.C3.utenti.Cliente;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class Carrello {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@OneToMany
 	private List<ArticoloCarrello> articoliCarrello;
+	private Cliente cliente;
 
 	public Carrello() {
 	}
 
-	public Carrello(Long id) {
-		this.id = id;
+	public Carrello(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	public double getTotale() {
@@ -60,5 +60,9 @@ public class Carrello {
 
 	public Long getId() {
 		return id;
+	}
+
+	public Cliente getCliente() {
+		return this.cliente;
 	}
 }
