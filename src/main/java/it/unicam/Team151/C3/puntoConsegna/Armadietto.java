@@ -10,7 +10,7 @@ public class Armadietto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int idArmadietto;
+	private Long idArmadietto;
 	private boolean disponibilita;
 	@OneToMany
 	private List<Pacco> pacchi;

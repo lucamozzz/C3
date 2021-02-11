@@ -1,17 +1,29 @@
 package it.unicam.Team151.C3.articoli;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class ArticoloCarrello {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	private int quantita;
 	private DescrizioneArticolo descrizioneArticolo;
 
-	public DescrizioneArticolo getDescrizioneArticolo() {
-		return this.descrizioneArticolo;
+	public ArticoloCarrello() {
 	}
 
+	//TODO da rivedere
 	public ArticoloCarrello(Long idDescArticolo, int quantita) {
-		// TODO - implement ArticoloCarrello.ArticoloCarrello
-		throw new UnsupportedOperationException();
+		this.quantita = quantita;
+	}
+
+	public DescrizioneArticolo getDescrizioneArticolo() {
+		return this.descrizioneArticolo;
 	}
 
     public double getPrezzo() {
@@ -20,5 +32,9 @@ public class ArticoloCarrello {
 
 	public int getQuantita() {
 		return this.quantita;
+	}
+
+	public void setQuantita(int quantita) {
+		this.quantita = quantita;
 	}
 }
