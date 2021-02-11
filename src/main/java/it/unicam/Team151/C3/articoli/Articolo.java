@@ -12,6 +12,9 @@ public class Articolo {
 	@ManyToOne
 	@JoinColumn(name = "idDescrizioneArticolo")
 	private DescrizioneArticolo descrizioneArticolo;
+	@ManyToOne
+	@JoinColumn(name = "idPacco")
+	private Long idPacco;
 
 	public Articolo() {
 	}
