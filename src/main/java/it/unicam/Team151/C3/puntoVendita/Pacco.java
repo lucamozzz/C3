@@ -12,11 +12,16 @@ import java.util.List;
 public class Pacco {
 
 	@Id
+	@Column(name = "idPacco")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Articolo> articoli;
+	@OneToOne
+	@JoinColumn(name = "idPuntoVendita")
 	private PuntoVendita puntoVendita;
+	@ManyToOne
+	@JoinColumn(name = "idPrenotazione")
 	private Prenotazione prenotazione;
 	private Stato stato;
 

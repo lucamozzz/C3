@@ -25,7 +25,7 @@ public class UtenteManager {
 		switch (form.get(3)) {
 			case "Cliente":
 				newUser = new Cliente(form);
-				GestoreCarrello.getInstance().createCarrello(newUser.getId());
+				GestoreCarrello.getInstance().createCarrello((Cliente) newUser);
 				break;
 			case "Commerciante":
 				newUser = new Commerciante(form);

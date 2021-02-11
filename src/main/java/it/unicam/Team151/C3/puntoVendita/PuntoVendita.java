@@ -2,10 +2,19 @@ package it.unicam.Team151.C3.puntoVendita;
 
 import it.unicam.Team151.C3.utenti.Commerciante;
 
+import javax.persistence.*;
+
+@Entity
 public class PuntoVendita {
 
+	@Id
+	@Column(name = "idPuntoVendita")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	@ManyToOne
+	@JoinColumn(name = "idCommerciante")
 	private Commerciante commerciante;
-	private int ubicazione;
+	private String ubicazione;
 	private String nome;
 
 	/**
@@ -40,7 +49,7 @@ public class PuntoVendita {
 	 * 
 	 * @param ubicazione
 	 */
-	public void setUbicazione(int ubicazione) {
+	public void setUbicazione(String ubicazione) {
 		this.ubicazione = ubicazione;
 	}
 

@@ -1,15 +1,21 @@
 package it.unicam.Team151.C3.articoli;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Categoria {
 
+	@Id
+	@Column(name = "idCategoria")
+	private Long id;
 	private String nome;
-	private String descsrizione;
+	private String descrizione;
 
-	/**
-	 * 
-	 * @param nome
-	 * @param descrizione
-	 */
+	public Categoria() {
+	}
+
 	public Categoria(String nome, String descrizione) {
 		// TODO - implement Categoria.Categoria
 		throw new UnsupportedOperationException();

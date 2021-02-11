@@ -2,22 +2,24 @@ package it.unicam.Team151.C3.articoli;
 
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class DescrizioneArticolo {
 
 	@Id
+	@Column(name = "idDescrizioneArticolo")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String descrizione;
 	private double prezzo;
 	private int quantita;
+	@OneToOne
+	@JoinColumn(name = "idPuntoVendita")
 	private PuntoVendita puntoVendita;
+	@OneToOne
+	@JoinColumn(name = "idCategoria")
 	private Categoria categoria;
 
 	public DescrizioneArticolo() {
