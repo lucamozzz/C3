@@ -16,6 +16,7 @@ public class Pacco {
 	private Long id;
 	@Transient
 	private List<Articolo> articoli;
+	@Transient
 	private PuntoVendita puntoVendita;
 	@ManyToOne
 	@JoinColumn(name = "idPrenotazione")
