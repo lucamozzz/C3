@@ -14,7 +14,7 @@ public class PuntoConsegna {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String ubicazione;
-	@OneToMany(cascade = CascadeType.ALL)
+	@Transient
 	private List<Armadietto> armadietti;
 
 	public PuntoConsegna() {

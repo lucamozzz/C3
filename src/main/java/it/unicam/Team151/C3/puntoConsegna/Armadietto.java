@@ -11,9 +11,9 @@ public class Armadietto {
 	@Id
 	@Column(name = "idArmadietto")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idArmadietto;
+	private Long id;
 	private boolean disponibilita;
-	@OneToMany(cascade = CascadeType.ALL)
+	@Transient
 	private List<Pacco> pacchi;
 	@ManyToOne
 	@JoinColumn(name = "idPuntoConsegna")

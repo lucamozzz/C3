@@ -13,7 +13,7 @@ public class Carrello {
 	@Column(name = "idCarrello")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@OneToMany(cascade = CascadeType.ALL)
+	@Transient
 	private List<ArticoloCarrello> articoliCarrello;
 	@OneToOne
 	@JoinColumn(name = "idCliente")

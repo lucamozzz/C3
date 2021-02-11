@@ -2,9 +2,8 @@ package it.unicam.Team151.C3.puntoVendita;
 
 import it.unicam.Team151.C3.articoli.Articolo;
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
-import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
 import it.unicam.Team151.C3.prenotazione.*;
-
+import it.unicam.Team151.C3.puntoConsegna.Armadietto;
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,14 +14,15 @@ public class Pacco {
 	@Column(name = "idPacco")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@OneToMany(cascade = CascadeType.ALL)
+	@Transient
 	private List<Articolo> articoli;
-	@OneToOne
-	@JoinColumn(name = "idPuntoVendita")
 	private PuntoVendita puntoVendita;
 	@ManyToOne
 	@JoinColumn(name = "idPrenotazione")
 	private Prenotazione prenotazione;
+	@ManyToOne
+	@JoinColumn(name = "idArmadietto")
+	private Armadietto armadietto;
 	private Stato stato;
 
 	public Pacco() {
@@ -34,6 +34,8 @@ public class Pacco {
 	 * @param articoli
 	 */
 	public Pacco(Prenotazione prenotazione, List<ArticoloCarrello> articoli) {
+		this.puntoVendita = articoli.get(0).getDescrizioneArticolo().getPuntoVendita();
+		this.armadietto = null;
 		this.prenotazione = prenotazione;
 		for (ArticoloCarrello articoloCarrello : articoli) {
 			for (int i = 0; i < articoloCarrello.getQuantita(); i++)

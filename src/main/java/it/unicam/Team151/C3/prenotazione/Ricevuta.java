@@ -1,15 +1,32 @@
 package it.unicam.Team151.C3.prenotazione;
 
+import javax.persistence.*;
 
+@Entity
 public class Ricevuta {
 
-	/**
-	 * 
-	 * @param prenotazione
-	 */
-	public Ricevuta(Prenotazione prenotazione) {
-		// TODO - implement Ricevuta.Ricevuta
-		throw new UnsupportedOperationException();
+	@Id
+	@Column(name = "idRicevuta")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	@OneToOne
+	@JoinColumn(name = "idPrenotazione")
+	private Prenotazione prenotazione;
+
+	public Ricevuta() {
 	}
 
+	public Ricevuta(Prenotazione prenotazione) {
+		this.prenotazione = prenotazione;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public Prenotazione getPrenotazione() {
+		return prenotazione;
+	}
+
+	//TODO implementare il resto
 }

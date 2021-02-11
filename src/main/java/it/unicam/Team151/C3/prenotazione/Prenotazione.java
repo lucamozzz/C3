@@ -22,11 +22,12 @@ public class Prenotazione {
 	@Column(name = "idPrenotazione")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	@Transient
 	private Ricevuta ricevuta;
 	@OneToOne
 	@JoinColumn(name = "idCliente")
 	private Cliente cliente;
-	@OneToMany(cascade = CascadeType.ALL)
+	@Transient
 	private List<Pacco> pacchi;
 	private Stato stato;
 	@OneToOne

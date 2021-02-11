@@ -1,7 +1,6 @@
 package it.unicam.Team151.C3.articoli;
 
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class DescrizioneArticolo {
 	}
 
 	public DescrizioneArticolo(List<String> datiArticolo) {
-		// TODO - implement DescrizioneArticolo.DescrizioneArticolo
+		// TODO implementare costruttore
 	}
 
 	public Long getId() {

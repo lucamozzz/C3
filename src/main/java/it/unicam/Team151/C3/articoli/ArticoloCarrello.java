@@ -13,11 +13,13 @@ public class ArticoloCarrello {
 	@OneToOne
 	@JoinColumn(name = "idDescrizioneArticolo")
 	private DescrizioneArticolo descrizioneArticolo;
+	@ManyToOne
+	@JoinColumn(name = "idCarrello")
+	private Carrello carrello;
 
 	public ArticoloCarrello() {
 	}
 
-	//TODO da rivedere
 	public ArticoloCarrello(DescrizioneArticolo descrizioneArticolo, int quantita) {
 		this.quantita = quantita;
 		this.descrizioneArticolo = descrizioneArticolo;

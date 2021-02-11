@@ -17,53 +17,40 @@ public class PuntoVendita {
 	private String ubicazione;
 	private String nome;
 
-	/**
-	 * 
-	 * @param nome
-	 * @param commerciante
-	 * @param ubicazione
-	 */
+	public PuntoVendita() {
+	}
+
 	public PuntoVendita(String nome, Commerciante commerciante, String ubicazione) {
-		// TODO - implement PuntoVendita.PuntoVendita
-		throw new UnsupportedOperationException();
+		this.nome = nome;
+		this.commerciante = commerciante;
+		this.ubicazione = ubicazione;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public Commerciante getCommerciante() {
-		return this.commerciante;
+		return commerciante;
 	}
 
-	/**
-	 * 
-	 * @param commerciante
-	 */
+	public String getUbicazione() {
+		return ubicazione;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
 	public void setCommerciante(Commerciante commerciante) {
 		this.commerciante = commerciante;
 	}
 
-	public String getUbicazione() {
-		// TODO - implement PuntoVendita.getUbicazione
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param ubicazione
-	 */
 	public void setUbicazione(String ubicazione) {
 		this.ubicazione = ubicazione;
 	}
 
-	public String getNome() {
-		return this.nome;
-	}
-
-	/**
-	 * 
-	 * @param nome
-	 */
 	public void setNome(String nome) {
-		// TODO - implement PuntoVendita.setNome
-		throw new UnsupportedOperationException();
+		this.nome = nome;
 	}
-
 }

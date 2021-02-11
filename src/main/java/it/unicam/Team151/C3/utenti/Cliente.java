@@ -1,7 +1,5 @@
 package it.unicam.Team151.C3.utenti;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
 import java.util.List;
 

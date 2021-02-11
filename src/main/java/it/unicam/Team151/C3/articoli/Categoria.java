@@ -17,34 +17,28 @@ public class Categoria {
 	}
 
 	public Categoria(String nome, String descrizione) {
-		// TODO - implement Categoria.Categoria
-		throw new UnsupportedOperationException();
+		this.nome = nome;
+		this.descrizione = descrizione;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getNome() {
-		return this.nome;
+		return nome;
 	}
 
 	public String getDescrizione() {
-		// TODO - implement Categoria.getDescrizione
-		throw new UnsupportedOperationException();
+		return descrizione;
 	}
 
-	/**
-	 * 
-	 * @param nome
-	 */
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	/**
-	 * 
-	 * @param description
-	 */
-	public void setDescrizione(String description) {
-		// TODO - implement Categoria.setDescrizione
-		throw new UnsupportedOperationException();
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
 	}
 
 }

@@ -1,5 +1,7 @@
 package it.unicam.Team151.C3.articoli;
 
+import it.unicam.Team151.C3.puntoVendita.Pacco;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,7 +16,7 @@ public class Articolo {
 	private DescrizioneArticolo descrizioneArticolo;
 	@ManyToOne
 	@JoinColumn(name = "idPacco")
-	private Long idPacco;
+	private Pacco pacco;
 
 	public Articolo() {
 	}
@@ -29,6 +31,10 @@ public class Articolo {
 
 	public DescrizioneArticolo getDescrizioneArticolo() {
 		return this.descrizioneArticolo;
+	}
+
+	public Pacco getIdPacco(){
+		return this.pacco;
 	}
 
 }
