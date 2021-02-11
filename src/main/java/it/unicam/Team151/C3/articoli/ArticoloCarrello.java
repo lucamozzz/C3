@@ -41,4 +41,9 @@ public class ArticoloCarrello {
 	public void setQuantita(int quantita) {
 		this.quantita = quantita;
 	}
+
+	//ho aggiunto questo semplice get.
+	public Carrello getCarrello(){
+		return carrello;
+	}
 }

@@ -47,6 +47,11 @@ public class Prenotazione {
 		for (ArticoloCarrello articoloCarrello : carrello.getArticoliCarrello())
 			puntiVendita.add(articoloCarrello.getDescrizioneArticolo().getPuntoVendita());
 		for (PuntoVendita puntoVendita : puntiVendita)
+			//PROBLEMA. quando qui vengono istanziati i nuovi pacchi li dovremmo aggiungere al db.
+			//Il pacco non può essere aggiunto nel db da qui. Ho pensato di creare una classe PaccoManager
+			//che ha un metodo che permette la creazione del pacco e poi salvarlo nel db.
+			//avevo pensato di richiamare il metodo della classe PaccoManager qui ma non so se si può fare
+			//per via dei tag.
 			pacchi.add(new Pacco(this, carrello.getArticoliCarrello().stream().filter(articoloCarrello -> articoloCarrello.
 																	getDescrizioneArticolo().
 																	getPuntoVendita().

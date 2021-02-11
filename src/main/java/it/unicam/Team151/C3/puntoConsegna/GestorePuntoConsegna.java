@@ -34,13 +34,10 @@ public class GestorePuntoConsegna {
 		return puntiConsegna;
 	}
 
-	/**
-	 * 
-	 * @param idPuntoConsegna
-	 */
+	//ALESSANDRO TESTA
+	//ho implementato questo metodo per poter far funzionare il confermaPrenotazione.
 	public PuntoConsegna getPuntoConsegna(Long idPuntoConsegna) {
-		// TODO - implement GestorePuntoConsegna.getPuntoConsegna
-		throw new UnsupportedOperationException();
+		return puntoConsegnaRepository.findById(idPuntoConsegna).get();
 	}
 
 	/**
