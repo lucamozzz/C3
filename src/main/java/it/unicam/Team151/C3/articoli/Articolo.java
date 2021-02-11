@@ -11,10 +11,10 @@ public class Articolo {
 	@Column(name = "idArticolo")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idDescrizioneArticolo")
 	private DescrizioneArticolo descrizioneArticolo;
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idPacco")
 	private Pacco pacco;
 

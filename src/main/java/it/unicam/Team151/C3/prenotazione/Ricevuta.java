@@ -9,7 +9,7 @@ public class Ricevuta {
 	@Column(name = "idRicevuta")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idPrenotazione")
 	private Prenotazione prenotazione;
 

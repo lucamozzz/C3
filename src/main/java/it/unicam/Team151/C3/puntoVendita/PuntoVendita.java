@@ -11,7 +11,7 @@ public class PuntoVendita {
 	@Column(name = "idPuntoVendita")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCommerciante")
 	private Commerciante commerciante;
 	private String ubicazione;

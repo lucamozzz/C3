@@ -24,16 +24,16 @@ public class Prenotazione {
 	private Long id;
 	@Transient
 	private Ricevuta ricevuta;
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCliente")
 	private Cliente cliente;
 	@Transient
 	private List<Pacco> pacchi;
 	private Stato stato;
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCorriere")
 	private Corriere corriere;
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idPuntoConsegna")
 	private PuntoConsegna puntoConsegna;
 

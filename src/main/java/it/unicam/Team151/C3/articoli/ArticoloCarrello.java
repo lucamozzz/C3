@@ -10,19 +10,20 @@ public class ArticoloCarrello {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private int quantita;
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idDescrizioneArticolo")
 	private DescrizioneArticolo descrizioneArticolo;
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCarrello")
 	private Carrello carrello;
 
 	public ArticoloCarrello() {
 	}
 
-	public ArticoloCarrello(DescrizioneArticolo descrizioneArticolo, int quantita) {
+	public ArticoloCarrello(DescrizioneArticolo descrizioneArticolo, int quantita, Carrello carrello) {
 		this.quantita = quantita;
 		this.descrizioneArticolo = descrizioneArticolo;
+		this.carrello = carrello;
 	}
 
 	public DescrizioneArticolo getDescrizioneArticolo() {

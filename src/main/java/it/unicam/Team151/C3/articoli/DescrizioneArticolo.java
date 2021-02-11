@@ -11,21 +11,27 @@ public class DescrizioneArticolo {
 	@Column(name = "idDescrizioneArticolo")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	private String nome;
 	private String descrizione;
 	private double prezzo;
 	private int quantita;
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idPuntoVendita")
 	private PuntoVendita puntoVendita;
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCategoria")
 	private Categoria categoria;
 
 	public DescrizioneArticolo() {
 	}
 
-	public DescrizioneArticolo(List<String> datiArticolo) {
-		// TODO implementare costruttore
+	public DescrizioneArticolo(String nome, String descrizione, double prezzo, int quantita, PuntoVendita puntoVendita, Categoria categoria) {
+		this.nome = nome;
+		this.descrizione = descrizione;
+		this.prezzo = prezzo;
+		this.quantita = quantita;
+		this.puntoVendita = puntoVendita;
+		this.categoria = categoria;
 	}
 
 	public Long getId() {

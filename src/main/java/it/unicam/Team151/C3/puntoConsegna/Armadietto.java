@@ -15,7 +15,7 @@ public class Armadietto {
 	private boolean disponibilita;
 	@Transient
 	private List<Pacco> pacchi;
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idPuntoConsegna")
 	private PuntoConsegna puntoConsegna;
 
@@ -34,10 +34,6 @@ public class Armadietto {
 		this.puntoConsegna = puntoConsegna;
 	}
 
-	/**
-	 * 
-	 * @param stato
-	 */
 	public void setDisponibilita(boolean stato) {
 		this.disponibilita = stato;
 	}

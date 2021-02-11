@@ -22,6 +22,7 @@ public class Cliente implements UtenteAutenticato {
     public Cliente() {
     }
 
+    //TODO inserire parametri costruttore anche per Comm e Corr
     public Cliente(List<String> form) {
         this.nome = form.get(0);
         this.cognome = form.get(1);

@@ -15,7 +15,7 @@ public class Carrello {
 	private Long id;
 	@Transient
 	private List<ArticoloCarrello> articoliCarrello;
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCliente")
 	private Cliente cliente;
 
@@ -39,21 +39,11 @@ public class Carrello {
 		this.articoliCarrello.clear();
 	}
 
-	/**
-	 * 
-	 * @param idDescArticolo
-	 * @param quantita
-	 */
 	public void createArticoloCarrello(Long idDescArticolo, int quantita) {
 		// TODO - implement Carrello.createArticoloCarrello
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param idDescArticolo
-	 * @param quantita
-	 */
 	public void rimuoviArticoloCarrello(Long idDescArticolo, int quantita) {
 		// TODO - implement Carrello.rimuoviArticoloCarrello
 		throw new UnsupportedOperationException();

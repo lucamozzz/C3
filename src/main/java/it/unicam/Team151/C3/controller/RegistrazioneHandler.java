@@ -16,6 +16,9 @@ import java.util.List;
 public class RegistrazioneHandler {
 
 	@Autowired
+	UtenteManager utenteManager;
+
+	@Autowired
 	private UtenteRepository utenteRepository;
 
 	//TODO un po' de refactoring
@@ -28,7 +31,7 @@ public class RegistrazioneHandler {
 		form.add(email);
 		form.add(password);
 		if (this.checkDatiInseriti(form)) {
-			UtenteAutenticato newUser = UtenteManager.getInstance().createUtente(form);
+			UtenteAutenticato newUser = utenteManager.createUtente(form);
 			switch (form.get(3)) {
 				case "Cliente":
 					utenteRepository.getClienteRepository().save((Cliente) newUser);

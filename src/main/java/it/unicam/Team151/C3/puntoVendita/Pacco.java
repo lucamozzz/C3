@@ -18,10 +18,10 @@ public class Pacco {
 	private List<Articolo> articoli;
 	@Transient
 	private PuntoVendita puntoVendita;
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idPrenotazione")
 	private Prenotazione prenotazione;
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idArmadietto")
 	private Armadietto armadietto;
 	private Stato stato;
@@ -29,11 +29,6 @@ public class Pacco {
 	public Pacco() {
 	}
 
-	/**
-	 * 
-	 * @param prenotazione
-	 * @param articoli
-	 */
 	public Pacco(Prenotazione prenotazione, List<ArticoloCarrello> articoli) {
 		this.puntoVendita = articoli.get(0).getDescrizioneArticolo().getPuntoVendita();
 		this.armadietto = null;
@@ -63,10 +58,6 @@ public class Pacco {
 		return this.stato;
 	}
 
-	/**
-	 * 
-	 * @param stato
-	 */
 	public void setStato(Stato stato) {
 		this.stato = stato;
 	}
