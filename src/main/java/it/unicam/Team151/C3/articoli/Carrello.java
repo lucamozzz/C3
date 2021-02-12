@@ -39,13 +39,32 @@ public class Carrello {
 		this.articoliCarrello.clear();
 	}
 
-	public void aggiungiArticoloCarrello(ArticoloCarrello articoloCarrello) {
-		this.articoliCarrello.add(articoloCarrello);
+	//TODO ottimizzare
+	public ArticoloCarrello aggiungiArticoloCarrello(ArticoloCarrello articoloCarrello, int quantita) {
+		ArticoloCarrello articoloCarrelloDaAggiungere = articoloCarrello;
+		boolean flag = false;
+		for (ArticoloCarrello artCart : articoliCarrello) {
+			if (artCart.getId().equals(articoloCarrelloDaAggiungere.getId())) {
+				artCart.setQuantita(artCart.getQuantita() + quantita);
+				articoloCarrelloDaAggiungere = artCart;
+				flag = true;
+				break;
+			}
+		}
+		if (!flag){
+			this.articoliCarrello.add(articoloCarrelloDaAggiungere);
+		}
+		return articoloCarrelloDaAggiungere;
 	}
 
-	public void rimuoviArticoloCarrello(Long idDescArticolo, int quantita) {
-		// TODO - implement Carrello.rimuoviArticoloCarrello
-		throw new UnsupportedOperationException();
+	//TODO ottimizzare
+	public void rimuoviArticoloCarrello(ArticoloCarrello articoloCarrello, int quantita) {
+		if (articoloCarrello.getQuantita() < quantita)
+			throw new IllegalArgumentException("La quantità da rimuovere è errata");
+		ArticoloCarrello articoloCarrelloDaRimuovere = articoloCarrello;
+		if (articoloCarrello.getQuantita() == quantita)
+			this.articoliCarrello.remove(articoloCarrello);
+		else articoloCarrello.setQuantita(articoloCarrello.getQuantita() - quantita);
 	}
 
 	public List<ArticoloCarrello> getArticoliCarrello() {

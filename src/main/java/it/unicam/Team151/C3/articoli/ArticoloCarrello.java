@@ -46,4 +46,8 @@ public class ArticoloCarrello {
 	public Carrello getCarrello(){
 		return carrello;
 	}
+
+	public Long getId() {
+		return id;
+	}
 }

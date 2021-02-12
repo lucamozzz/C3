@@ -1,5 +1,6 @@
 package it.unicam.Team151.C3.view;
 
+import it.unicam.Team151.C3.articoli.ArticoloCarrello;
 import it.unicam.Team151.C3.articoli.Categoria;
 import it.unicam.Team151.C3.articoli.GestoreCarrello;
 import it.unicam.Team151.C3.controller.ConfermaPrenotazioneHandler;
@@ -50,14 +51,13 @@ public class ICliente implements IUtenteAutenticato{
 	}
 
 	@PostMapping("rimuoviArticolo")
-	public void rimuoviArticoloCarrello(@RequestParam Long idDescArticolo, @RequestParam int quantita) {
-		// TODO - implement ICliente.rimuoviArticoloCarrello
-		throw new UnsupportedOperationException();
+	public void rimuoviArticoloCarrello(@RequestParam Long idDescArticolo, @RequestParam int quantita, @RequestParam Long idCliente) {
+		gestioneCarrelloHandler.rimuoviArticoloCarrello(idDescArticolo, quantita, idCliente);
 	}
 
-	public void rimuoviArticoloCarrello() {
-		// TODO - implement ICliente.rimuoviArticoloCarrello
-		throw new UnsupportedOperationException();
+	@PostMapping("getCarrello")
+	public List<ArticoloCarrello> mostraArticoliCarrello(@RequestParam Long idCliente){
+		return gestioneCarrelloHandler.mostraArticoliCarrello(idCliente);
 	}
 
 	public List<Categoria> ricercaArticoliCategoria() {
