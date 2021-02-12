@@ -15,8 +15,8 @@ public class Carrello {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Transient
-	private List<ArticoloCarrello> articoliCarrello;
-	@OneToOne(cascade = {CascadeType.MERGE})
+	private List<ArticoloCarrello> articoliCarrello = new ArrayList<>();
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCliente")
 	private Cliente cliente;
 
@@ -24,7 +24,7 @@ public class Carrello {
 	}
 
 	public Carrello(Cliente cliente) {
-		this.articoliCarrello = new ArrayList<>();
+	//	this.articoliCarrello = new ArrayList<>();
 		this.cliente = cliente;
 	}
 

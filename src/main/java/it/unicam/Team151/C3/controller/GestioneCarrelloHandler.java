@@ -19,6 +19,7 @@ public class GestioneCarrelloHandler {
 	@Autowired
 	ArticoloCarrelloRepository articoloCarrelloRepository;
 
+
 	//TODO ottimizzare
 	public void aggiungiArticoloCarrello(Long idDescArticolo, int quantita, Long idCliente) {
 		Carrello carrello = gestoreCarrello.getCarrello(idCliente);

@@ -5,12 +5,15 @@ import it.unicam.Team151.C3.articoli.ArticoloCarrello;
 import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
 import it.unicam.Team151.C3.repositories.ArticoloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.Column;
 
 @Service
 public class ArticoloManager implements IManager {
 
-    private static ArticoloManager instance;
+    private static ArticoloManager instance = null;
 
     @Autowired
     ArticoloRepository articoloRepository;
@@ -31,6 +34,6 @@ public class ArticoloManager implements IManager {
 
     @Override
     public void save(Articolo articolo) {
-        articoloRepository.save(articolo);
+        this.articoloRepository.save(articolo);
     }
 }

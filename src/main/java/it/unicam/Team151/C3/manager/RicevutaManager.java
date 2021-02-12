@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RicevutaManager {
 
-    private static RicevutaManager instance;
+    private static RicevutaManager instance = null;
 
     @Autowired
     RicevutaRepository ricevutaRepository;

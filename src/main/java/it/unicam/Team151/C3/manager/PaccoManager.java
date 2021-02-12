@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class PaccoManager {
 
-    private static PaccoManager instance;
+    private static PaccoManager instance = null;
 
     @Autowired
     PaccoRepository paccoRepository;

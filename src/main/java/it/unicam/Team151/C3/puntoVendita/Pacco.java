@@ -6,6 +6,7 @@ import it.unicam.Team151.C3.manager.ArticoloManager;
 import it.unicam.Team151.C3.prenotazione.*;
 import it.unicam.Team151.C3.puntoConsegna.Armadietto;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,6 +32,7 @@ public class Pacco {
 	}
 
 	public Pacco(Prenotazione prenotazione, List<ArticoloCarrello> articoliCarrello) {
+		this.articoli = new ArrayList<>();
 		this.puntoVendita = articoliCarrello.get(0).getDescrizioneArticolo().getPuntoVendita();
 		this.armadietto = null;
 		this.prenotazione = prenotazione;
