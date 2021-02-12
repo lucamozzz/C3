@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface CarrelloRepository extends CrudRepository<Carrello, Long> {
 
-    Optional<Carrello> findByCliente(Long idCliente);
+    Optional<Carrello> findByCliente(Cliente cliente);
 }

@@ -103,8 +103,8 @@ public class C3Application implements CommandLineRunner{
 			articoloCarrelloRepository.save(articoloCarrello1);
 			articoloCarrelloRepository.save(articoloCarrello2);*/
 		//test
-		for(ArticoloCarrello a : articoloCarrelloRepository.findAll()){
-			carrelloRepository.findById((long) 240).get().getArticoliCarrello().add(a);
-		}
+		//for(ArticoloCarrello a : articoloCarrelloRepository.findAll()){
+		//	carrelloRepository.findById((long) 240).get().getArticoliCarrello().add(a);
+		//}
 	}
 }

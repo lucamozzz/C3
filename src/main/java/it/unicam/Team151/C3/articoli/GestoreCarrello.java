@@ -2,6 +2,7 @@ package it.unicam.Team151.C3.articoli;
 
 import it.unicam.Team151.C3.repositories.ArticoloCarrelloRepository;
 import it.unicam.Team151.C3.repositories.CarrelloRepository;
+import it.unicam.Team151.C3.repositories.ClienteRepository;
 import it.unicam.Team151.C3.utenti.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ public class GestoreCarrello {
 	CarrelloRepository carrelloRepository;
 	@Autowired
 	ArticoloCarrelloRepository articoloCarrelloRepository;
+	@Autowired
+	ClienteRepository clienteRepository;
 
 	private static GestoreCarrello instance;
 	private List<Carrello> carrelli;
@@ -30,8 +33,9 @@ public class GestoreCarrello {
 	}
 
 	public Carrello getCarrello(Long idCliente) {
-		Carrello carrello = carrelloRepository.findByCliente(idCliente).get();
-		articoloCarrelloRepository.findAllByCarrello(carrello.getId()).forEach(carrello.getArticoliCarrello()::add);
+		Cliente cliente = clienteRepository.findById(idCliente).get();
+		Carrello carrello = carrelloRepository.findByCliente(cliente).get();
+		articoloCarrelloRepository.findAllByCarrello(carrello).forEach(carrello.getArticoliCarrello()::add);
 		return carrello;
 	}
 

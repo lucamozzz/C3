@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface ArticoloCarrelloRepository extends CrudRepository<ArticoloCarrello, Long> {
 
-    Iterable<ArticoloCarrello> findAllByCarrello(Long idCarrello);
+    Iterable<ArticoloCarrello> findAllByCarrello(Carrello idCarrello);
 }
