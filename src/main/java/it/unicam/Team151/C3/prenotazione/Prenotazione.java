@@ -4,6 +4,7 @@ import it.unicam.Team151.C3.articoli.Articolo;
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
 import it.unicam.Team151.C3.articoli.Carrello;
 import it.unicam.Team151.C3.manager.PaccoManager;
+import it.unicam.Team151.C3.manager.RicevutaManager;
 import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
@@ -79,8 +80,10 @@ public class Prenotazione {
 	 * getter della ricevuta della prenotazione.
 	 */
 	public Ricevuta getRicevuta() {
-		if (ricevuta == null)
-			this.ricevuta = new Ricevuta(this);
+		if (ricevuta == null){
+			this.ricevuta = RicevutaManager.getInstance().createRicevuta(this);
+			RicevutaManager.getInstance().saveRicevuta(ricevuta);
+		}
 		return this.ricevuta;
 	}
 

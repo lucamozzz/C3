@@ -12,12 +12,14 @@ public class Ricevuta {
 	@OneToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idPrenotazione")
 	private Prenotazione prenotazione;
+	private int codice;
 
 	public Ricevuta() {
 	}
 
 	public Ricevuta(Prenotazione prenotazione) {
 		this.prenotazione = prenotazione;
+		this.generateCodice();
 	}
 
 	public Long getId() {
@@ -28,5 +30,11 @@ public class Ricevuta {
 		return prenotazione;
 	}
 
-	//TODO implementare il resto
+	public int getCodice(){
+		return codice;
+	}
+
+	public void generateCodice() {
+		this.codice = (int)(Math.random() * (999999999 - 100000000 + 1) + 100000000);
+	}
 }
