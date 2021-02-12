@@ -13,9 +13,8 @@ public class Carrello {
 	@Column(name = "idCarrello", unique = true, nullable = false)
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	//per test ho inizializzato l'array list qui. da togliere.
 	@Transient
-	private List<ArticoloCarrello> articoliCarrello = new ArrayList<>();
+	private List<ArticoloCarrello> articoliCarrello;
 	@OneToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name = "idCliente")
 	private Cliente cliente;

@@ -3,11 +3,14 @@ package it.unicam.Team151.C3.prenotazione;
 import it.unicam.Team151.C3.articoli.Articolo;
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
 import it.unicam.Team151.C3.articoli.Carrello;
+import it.unicam.Team151.C3.manager.PaccoManager;
 import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.utenti.Corriere;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -52,11 +55,13 @@ public class Prenotazione {
 			//che ha un metodo che permette la creazione del pacco e poi salvarlo nel db.
 			//avevo pensato di richiamare il metodo della classe PaccoManager qui ma non so se si può fare
 			//per via dei tag.
-			pacchi.add(new Pacco(this, carrello.getArticoliCarrello().stream().filter(articoloCarrello -> articoloCarrello.
-																	getDescrizioneArticolo().
-																	getPuntoVendita().
-																	equals(puntoVendita)).
-																	collect(Collectors.toList())));
+			pacchi.add(PaccoManager.getInstance().createPacco(this, carrello.getArticoliCarrello().stream().filter(articoloCarrello -> articoloCarrello.
+																				getDescrizioneArticolo().
+																				getPuntoVendita().
+																				equals(puntoVendita)).
+																				collect(Collectors.toList())));
+		for (Pacco pacco : pacchi)
+			PaccoManager.getInstance().savePacco(pacco);
 		this.cliente = carrello.getCliente();
 		this.puntoConsegna = puntoConsegna;
 		this.corriere = null;

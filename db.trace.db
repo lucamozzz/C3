@@ -1473,3 +1473,6 @@ org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE F
 DELETE[*] FROM CARRELLO WHERE ID_CLIENTE = 151"; SQL statement:
 DELETE FROM CLIENTE WHERE ID_CLIENTE = 151
 DELETE FROM CARRELLO WHERE ID_CLIENTE = 151 [42000-200]
+2021-02-12 11:09:41 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "DELETE FROM *[*]"; expected "identifier"; SQL statement:
+delete from * [42001-200]
