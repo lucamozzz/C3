@@ -1,5 +1,6 @@
 package it.unicam.Team151.C3.articoli;
 
+import it.unicam.Team151.C3.manager.ArticoloCarrelloManager;
 import it.unicam.Team151.C3.utenti.Cliente;
 
 import javax.persistence.*;
@@ -29,9 +30,8 @@ public class Carrello {
 
 	public double getTotale() {
 		double totale = 0.0;
-		for (ArticoloCarrello articoloCarrello : articoliCarrello) {
+		for (ArticoloCarrello articoloCarrello : articoliCarrello)
 			totale += articoloCarrello.getPrezzo();
-		}
 		return totale;
 	}
 
@@ -39,9 +39,8 @@ public class Carrello {
 		this.articoliCarrello.clear();
 	}
 
-	public void createArticoloCarrello(Long idDescArticolo, int quantita) {
-		// TODO - implement Carrello.createArticoloCarrello
-		throw new UnsupportedOperationException();
+	public void aggiungiArticoloCarrello(ArticoloCarrello articoloCarrello) {
+		this.articoliCarrello.add(articoloCarrello);
 	}
 
 	public void rimuoviArticoloCarrello(Long idDescArticolo, int quantita) {

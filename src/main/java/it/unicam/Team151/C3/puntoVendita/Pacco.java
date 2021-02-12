@@ -34,6 +34,7 @@ public class Pacco {
 		this.puntoVendita = articoliCarrello.get(0).getDescrizioneArticolo().getPuntoVendita();
 		this.armadietto = null;
 		this.prenotazione = prenotazione;
+		this.stato = Stato.PresoInCarico;
 		for (ArticoloCarrello articoloCarrello : articoliCarrello) {
 			for (int i = 0; i < articoloCarrello.getQuantita(); i++)
 				this.articoli.add(ArticoloManager.getInstance().create(articoloCarrello.getDescrizioneArticolo()));
