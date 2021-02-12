@@ -1,14 +1,20 @@
 package it.unicam.Team151.C3.articoli;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import javax.persistence.*;
-import java.util.List;
 
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "id",
+		scope = DescrizioneArticolo.class)
 @Entity
 public class DescrizioneArticolo {
 
 	@Id
-	@Column(name = "idDescrizioneArticolo", unique = true, nullable = false)
+	@Column(name = "idDescrizioneArticolo")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String nome;

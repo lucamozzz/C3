@@ -35,9 +35,8 @@ public class GestoreCarrello {
 	public Carrello getCarrello(Long idCliente) {
 		Cliente cliente = clienteRepository.findById(idCliente).get();
 		Carrello carrello = carrelloRepository.findByCliente(cliente).get();
-		for(ArticoloCarrello a : articoloCarrelloRepository.findAllByCarrello(carrello))
-			carrello.getArticoliCarrello().add(a);
-	//	articoloCarrelloRepository.findAllByCarrello(carrello).forEach(carrello.getArticoliCarrello()::add);
+		//Testato con Postman e funziona
+		articoloCarrelloRepository.findAllByCarrello(carrello).forEach(carrello.getArticoliCarrello()::add);
 		return carrello;
 	}
 

@@ -1,17 +1,22 @@
 package it.unicam.Team151.C3.articoli;
 
-import it.unicam.Team151.C3.manager.ArticoloCarrelloManager;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unicam.Team151.C3.utenti.Cliente;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "id",
+		scope = Carrello.class)
 @Entity
 public class Carrello {
 
 	@Id
-	@Column(name = "idCarrello", unique = true, nullable = false)
+	@Column(name = "idCarrello")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Transient

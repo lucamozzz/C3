@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class ArticoloCarrello {
 
 	@Id
-	@Column(name = "idArticoloCarrello", unique = true, nullable = false)
+	@Column(name = "idArticoloCarrello")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private int quantita;
@@ -49,5 +49,12 @@ public class ArticoloCarrello {
 
 	public Long getId() {
 		return id;
+	}
+
+	@Override
+	public String toString() {
+		return "ArticoloCarrello{" +
+				"id=" + id +
+				'}';
 	}
 }
