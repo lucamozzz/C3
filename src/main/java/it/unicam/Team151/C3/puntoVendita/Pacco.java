@@ -6,6 +6,7 @@ import it.unicam.Team151.C3.manager.ArticoloManager;
 import it.unicam.Team151.C3.prenotazione.*;
 import it.unicam.Team151.C3.puntoConsegna.Armadietto;
 import javax.persistence.*;
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
