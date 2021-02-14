@@ -1,9 +1,16 @@
 package it.unicam.Team151.C3.articoli;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
+import it.unicam.Team151.C3.utenti.Commerciante;
 
 import javax.persistence.*;
 
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "id",
+		scope = Articolo.class)
 @Entity
 public class Articolo {
 

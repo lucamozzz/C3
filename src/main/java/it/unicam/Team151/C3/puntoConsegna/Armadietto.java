@@ -1,10 +1,17 @@
 package it.unicam.Team151.C3.puntoConsegna;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
+import it.unicam.Team151.C3.utenti.Commerciante;
 
 import javax.persistence.*;
 import java.util.List;
 
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "id",
+		scope = Armadietto.class)
 @Entity
 public class Armadietto {
 
