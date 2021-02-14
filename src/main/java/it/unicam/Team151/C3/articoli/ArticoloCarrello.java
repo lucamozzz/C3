@@ -34,35 +34,45 @@ public class ArticoloCarrello {
 		this.carrello = carrello;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 	public DescrizioneArticolo getDescrizioneArticolo() {
 		return this.descrizioneArticolo;
 	}
 
-    public double getPrezzo() {
-		return this.getDescrizioneArticolo().getPrezzo() * this.quantita;
-    }
-
 	public int getQuantita() {
 		return this.quantita;
+	}
+
+	public Carrello getCarrello(){
+		return carrello;
+	}
+
+	public double getPrezzo() {
+		return this.getDescrizioneArticolo().getPrezzo() * this.quantita;
+	}
+
+	public void setDescrizioneArticolo(DescrizioneArticolo descrizioneArticolo) {
+		this.descrizioneArticolo = descrizioneArticolo;
+	}
+
+	public void setCarrello(Carrello carrello) {
+		this.carrello = carrello;
 	}
 
 	public void setQuantita(int quantita) {
 		this.quantita = quantita;
 	}
 
-	//ho aggiunto questo semplice get.
-	public Carrello getCarrello(){
-		return carrello;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
 	@Override
 	public String toString() {
 		return "ArticoloCarrello{" +
 				"id=" + id +
+				", quantita=" + quantita +
+				", descrizioneArticolo=" + descrizioneArticolo +
+				", carrello=" + carrello +
 				'}';
 	}
 }

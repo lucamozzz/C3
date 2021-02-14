@@ -3,7 +3,6 @@ package it.unicam.Team151.C3.articoli;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
-import it.unicam.Team151.C3.utenti.Commerciante;
 
 import javax.persistence.*;
 
@@ -33,15 +32,31 @@ public class Articolo {
 	}
 
 	public Long getId() {
-		return this.id;
+		return id;
 	}
 
 	public DescrizioneArticolo getDescrizioneArticolo() {
-		return this.descrizioneArticolo;
+		return descrizioneArticolo;
 	}
 
-	public Pacco getIdPacco(){
-		return this.pacco;
+	public Pacco getPacco() {
+		return pacco;
 	}
 
+	public void setDescrizioneArticolo(DescrizioneArticolo descrizioneArticolo) {
+		this.descrizioneArticolo = descrizioneArticolo;
+	}
+
+	public void setPacco(Pacco pacco) {
+		this.pacco = pacco;
+	}
+
+	@Override
+	public String toString() {
+		return "Articolo{" +
+				"id=" + id +
+				", descrizioneArticolo=" + descrizioneArticolo +
+				", pacco=" + pacco +
+				'}';
+	}
 }

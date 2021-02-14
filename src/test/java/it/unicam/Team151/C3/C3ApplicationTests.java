@@ -1,4 +1,4 @@
-package it.unicam.team151.C3;
+package it.unicam.Team151.C3;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
