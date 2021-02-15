@@ -24,7 +24,7 @@ public class DescrizioneArticolo {
 	@OneToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name = "idPuntoVendita")
 	private PuntoVendita puntoVendita;
-	@OneToOne(cascade = {CascadeType.MERGE})
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name = "idCategoria")
 	private Categoria categoria;
 

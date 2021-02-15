@@ -31,13 +31,11 @@ public class CatalogoArticoli {
 		return this.categorie;
 	}
 
-	/**
-	 * 
-	 * @param categoria
-	 */
-	public Articolo getArticoli(Categoria categoria) {
-		// TODO - implement CatalogoArticoli.getArticoli
-		throw new UnsupportedOperationException();
+	public List<DescrizioneArticolo> getArticoliPerCategoria(Long idCategoria) {
+		allDescrizioneArticoli.clear();
+		for(DescrizioneArticolo d : descrizioneArticoloRepository.findAllByCategoria(idCategoria))
+			allDescrizioneArticoli.add(d);
+		return allDescrizioneArticoli;
 	}
 
 	/**
@@ -49,11 +47,8 @@ public class CatalogoArticoli {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param idCommerciante
-	 */
-	public List<DescrizioneArticolo> getArticoli(Long idCommerciante) {
+
+	public List<DescrizioneArticolo> getArticoliPerCommerciante(Long idCommerciante) {
 		// TODO - implement CatalogoArticoli.getArticoli
 		throw new UnsupportedOperationException();
 	}
@@ -82,12 +77,10 @@ public class CatalogoArticoli {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param puntoVendita
-	 */
-	public List<DescrizioneArticolo> getArticoli(PuntoVendita puntoVendita) {
-		// TODO - implement CatalogoArticoli.getArticoli
-		throw new UnsupportedOperationException();
+	public List<DescrizioneArticolo> getArticoliPerPuntoVendita(Long idPuntoVendita) {
+		allDescrizioneArticoli.clear();
+		for(DescrizioneArticolo d : descrizioneArticoloRepository.findAllByPuntoVendita(idPuntoVendita))
+			allDescrizioneArticoli.add(d);
+		return allDescrizioneArticoli;
 	}
 }

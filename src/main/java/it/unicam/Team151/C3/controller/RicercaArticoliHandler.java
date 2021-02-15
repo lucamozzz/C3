@@ -1,38 +1,42 @@
 package it.unicam.Team151.C3.controller;
 
 import it.unicam.Team151.C3.articoli.*;
+import it.unicam.Team151.C3.puntoVendita.GestorePuntoVendita;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
+import org.aspectj.lang.annotation.Around;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class RicercaArticoliHandler {
 
+	@Autowired
+	CatalogoArticoli catalogoArticoli;
+	@Autowired
+	GestorePuntoVendita gestorePuntoVendita;
+
 	public List<Categoria> ricercaArticoliCategoria() {
-		// TODO - implement RicercaArticoliHandler.ricercaArticoliCategoria
-		throw new UnsupportedOperationException();
+		return catalogoArticoli.getCategorie();
 	}
 
-	/**
-	 * 
-	 * @param idCategoria
-	 */
+
 	public List<DescrizioneArticolo> scegliCategoria(Long idCategoria) {
-		// TODO - implement RicercaArticoliHandler.scegliCategoria
-		throw new UnsupportedOperationException();
+		return catalogoArticoli.getArticoliPerCategoria(idCategoria);
 	}
 
 	public List<PuntoVendita> ricercaArticoliPuntoVendita() {
-		// TODO - implement RicercaArticoliHandler.ricercaArticoliPuntoVendita
-		throw new UnsupportedOperationException();
+		return gestorePuntoVendita.getPuntiVendita();
 	}
 
-	/**
-	 * 
-	 * @param idPuntoVendita
-	 */
-	public List<DescrizioneArticolo> scegliPuntoVendita(List<PuntoVendita> idPuntoVendita) {
-		// TODO - implement RicercaArticoliHandler.scegliPuntoVendita
-		throw new UnsupportedOperationException();
+	public List<DescrizioneArticolo> scegliPuntoVendita(Long idPuntoVendita) {
+		List<DescrizioneArticolo> descrizioneArticoli = new ArrayList<>();
+		PuntoVendita puntoVenditaScelto = gestorePuntoVendita.get(idPuntoVendita);
+		for(DescrizioneArticolo d : catalogoArticoli.getArticoliPerPuntoVendita(puntoVenditaScelto.getId()))
+			descrizioneArticoli.add(d);
+		return descrizioneArticoli;
 	}
 
 }

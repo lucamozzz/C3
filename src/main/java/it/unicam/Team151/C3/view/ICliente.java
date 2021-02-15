@@ -2,11 +2,9 @@ package it.unicam.Team151.C3.view;
 
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
 import it.unicam.Team151.C3.articoli.Categoria;
+import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
 import it.unicam.Team151.C3.articoli.GestoreCarrello;
-import it.unicam.Team151.C3.controller.ConfermaPrenotazioneHandler;
-import it.unicam.Team151.C3.controller.ElaboraPrenotazioneHandler;
-import it.unicam.Team151.C3.controller.GestioneCarrelloHandler;
-import it.unicam.Team151.C3.controller.LogoutHandler;
+import it.unicam.Team151.C3.controller.*;
 import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +24,8 @@ public class ICliente implements IUtenteAutenticato{
 	ConfermaPrenotazioneHandler confermaPrenotazioneHandler;
 	@Autowired
 	GestioneCarrelloHandler gestioneCarrelloHandler;
+	@Autowired
+	RicercaArticoliHandler ricercaArticoliHandler;
 
 	/**
 	 * metodo per l'avvio della procedura di prenotazione.
@@ -60,24 +60,24 @@ public class ICliente implements IUtenteAutenticato{
 		return gestioneCarrelloHandler.mostraArticoliCarrello(idCliente);
 	}
 
+	@GetMapping("categorie")
 	public List<Categoria> ricercaArticoliCategoria() {
-		// TODO - implement ICliente.ricercaArticoliCategoria
-		throw new UnsupportedOperationException();
+		return ricercaArticoliHandler.ricercaArticoliCategoria();
 	}
 
-	public void scegliCategoria(Long idCategoria) {
-		// TODO - implement ICliente.scegliCategoria
-		throw new UnsupportedOperationException();
+	@PostMapping("scegliCategoria")
+	public void scegliCategoria(@RequestParam Long idCategoria) {
+		ricercaArticoliHandler.scegliCategoria(idCategoria);
 	}
 
+	@GetMapping("puntiVendita")
 	public List<PuntoVendita> ricercaArticoliPuntoVendita() {
-		// TODO - implement ICliente.ricercaArticoliPuntoVendita
-		throw new UnsupportedOperationException();
+		return ricercaArticoliHandler.ricercaArticoliPuntoVendita();
 	}
 
-	public void scegliPuntoVendita(Long idPuntoVendita) {
-		// TODO - implement ICliente.scegliPuntoVendita
-		throw new UnsupportedOperationException();
+	@PostMapping("scegliPuntoVendita")
+	public void scegliPuntoVendita(@RequestParam Long idPuntoVendita) {
+		ricercaArticoliHandler.scegliPuntoVendita(idPuntoVendita);
 	}
 
 	@Override

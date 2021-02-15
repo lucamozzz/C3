@@ -44,6 +44,12 @@ public class GestorePuntoVendita {
 		return puntoVenditaRepository.findAllByCommerciante(commerciante);
 	}
 
+	public List<PuntoVendita> getPuntiVendita(){
+		for(PuntoVendita p : puntoVenditaRepository.findAll())
+			puntiVendita.add(p);
+		return puntiVendita;
+	}
+
 	public void save(PuntoVendita puntoVendita) {
 		puntoVenditaRepository.save(puntoVendita);
 	}
