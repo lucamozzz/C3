@@ -30,10 +30,11 @@ public class RicercaArticoliHandler {
 		return gestorePuntoVendita.getPuntiVendita();
 	}
 
-	public void scegliPuntoVendita(Long idPuntoVendita) {
+	public List<DescrizioneArticolo> scegliPuntoVendita(Long idPuntoVendita) {
 		List<DescrizioneArticolo> descrizioneArticoli = new ArrayList<>();
 		PuntoVendita puntoVenditaScelto = gestorePuntoVendita.get(idPuntoVendita);
 		descrizioneArticoli.addAll(catalogoArticoli.getArticoliPerPuntoVendita(puntoVenditaScelto.getId()));
+		return descrizioneArticoli;
 	}
 
 }

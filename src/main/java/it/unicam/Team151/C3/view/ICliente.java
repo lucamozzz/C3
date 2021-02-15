@@ -66,8 +66,8 @@ public class ICliente implements IUtenteAutenticato{
 	}
 
 	@PostMapping("scegliCategoria")
-	public void scegliCategoria(@RequestParam Long idCategoria) {
-		ricercaArticoliHandler.scegliCategoria(idCategoria);
+	public List<DescrizioneArticolo> scegliCategoria(@RequestParam Long idCategoria) {
+		return ricercaArticoliHandler.scegliCategoria(idCategoria);
 	}
 
 	@GetMapping("puntiVendita")
@@ -76,8 +76,8 @@ public class ICliente implements IUtenteAutenticato{
 	}
 
 	@PostMapping("scegliPuntoVendita")
-	public void scegliPuntoVendita(@RequestParam Long idPuntoVendita) {
-		ricercaArticoliHandler.scegliPuntoVendita(idPuntoVendita);
+	public List<DescrizioneArticolo> scegliPuntoVendita(@RequestParam Long idPuntoVendita) {
+		return ricercaArticoliHandler.scegliPuntoVendita(idPuntoVendita);
 	}
 
 	@Override
