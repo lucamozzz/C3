@@ -26,7 +26,7 @@ public class PuntoVendita {
 	public PuntoVendita(){
 	}
 
-	public PuntoVendita(String nome, Commerciante commerciante, String ubicazione) {
+	public PuntoVendita(Commerciante commerciante, String nome, String ubicazione) {
 		this.nome = nome;
 		this.commerciante = commerciante;
 		this.ubicazione = ubicazione;

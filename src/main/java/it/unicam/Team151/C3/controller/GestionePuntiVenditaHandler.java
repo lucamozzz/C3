@@ -1,82 +1,52 @@
 package it.unicam.Team151.C3.controller;
 
 
+import it.unicam.Team151.C3.puntoVendita.GestorePuntoVendita;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
+import it.unicam.Team151.C3.repositories.CommercianteRepository;
 import it.unicam.Team151.C3.utenti.Commerciante;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
+@Service
 public class GestionePuntiVenditaHandler {
 
-	/**
-	 * 
-	 * @param nome
-	 * @param commerciante
-	 * @param ubicazione
-	 */
-	public void inserimentoDatiPuntoVenditaDaAggiungere(String nome, Commerciante commerciante, int ubicazione) {
-		// TODO - implement GestionePuntiVenditaHandler.inserimentoDatiPuntoVenditaDaAggiungere
-		throw new UnsupportedOperationException();
-	}
+	@Autowired
+	GestorePuntoVendita gestorePuntoVendita;
 
-	/**
-	 * 
-	 * @param nome
-	 * @param commerciante
-	 * @param ubicazione
-	 */
-	public void inserimentoDatiPuntoVenditaDaModificare(String nome, Commerciante commerciante, int ubicazione) {
-		// TODO - implement GestionePuntiVenditaHandler.inserimentoDatiPuntoVenditaDaModificare
-		throw new UnsupportedOperationException();
-	}
+	@Autowired
+	CommercianteRepository commercianteRepository;
 
-	/**
-	 * 
-	 * @param nome
-	 * @param commerciante
-	 * @param ubicazione
-	 */
-	public boolean checkDatiInseriti(String nome, Commerciante commerciante, int ubicazione) {
-		// TODO - implement GestionePuntiVenditaHandler.checkDatiInseriti
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param idPuntoVendita
-	 */
-	public PuntoVendita selezionaPuntoVendita(Long idPuntoVendita) {
-		// TODO - implement GestionePuntiVenditaHandler.selezionaPuntoVendita
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param idCommerciante
-	 */
 	public List<PuntoVendita> getPuntiVendita(Long idCommerciante) {
-		// TODO - implement GestionePuntiVenditaHandler.getPuntiVendita
-		throw new UnsupportedOperationException();
+		return gestorePuntoVendita.getPuntiVendita(idCommerciante);
 	}
 
-	/**
-	 * 
-	 * @param idPuntoVendita
-	 */
-	public void rimozionePuntoVendita(Long idPuntoVendita) {
-		// TODO - implement GestionePuntiVenditaHandler.rimozionePuntoVendita
-		throw new UnsupportedOperationException();
+	public void aggiungiPuntoVendita(Long idCommerciante, String nome, String ubicazione) {
+		if (commercianteRepository.findById(idCommerciante).isEmpty())
+			throw new NoSuchElementException("Nessun commerciante trovato");
+		Commerciante commerciante = commercianteRepository.findById(idCommerciante).get();
+		gestorePuntoVendita.createPuntoVendita(commerciante, nome, ubicazione);
 	}
 
-	/**
-	 * 
-	 * @param nome
-	 * @param commerciante
-	 * @param ubicazione
-	 */
-	public void modificaPuntoVendita(String nome, Commerciante commerciante, int ubicazione) {
-		// TODO - implement GestionePuntiVenditaHandler.modificaPuntoVendita
-		throw new UnsupportedOperationException();
+	public void modificaPuntoVendita(Long idPuntoVendita, String nome, String ubicazione) {
+		PuntoVendita puntoVendita = gestorePuntoVendita.get(idPuntoVendita);
+		if (!nome.isEmpty())
+			puntoVendita.setNome(nome);
+		if (!ubicazione.isEmpty())
+			puntoVendita.setUbicazione(ubicazione);
+		gestorePuntoVendita.save(puntoVendita);
 	}
 
+	public void rimuoviPuntoVendita(Long idPuntoVendita) {
+		PuntoVendita puntoVendita = gestorePuntoVendita.get(idPuntoVendita);
+		gestorePuntoVendita.delete(puntoVendita);
+	}
+
+	//TODO implementare
+	public boolean checkDatiInseriti(String nome, Commerciante commerciante, String ubicazione) {
+		return false;
+	}
 }
