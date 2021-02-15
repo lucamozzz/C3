@@ -3,7 +3,6 @@ package it.unicam.Team151.C3.controller;
 import it.unicam.Team151.C3.articoli.*;
 import it.unicam.Team151.C3.puntoVendita.GestorePuntoVendita;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
-import org.aspectj.lang.annotation.Around;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,12 +30,10 @@ public class RicercaArticoliHandler {
 		return gestorePuntoVendita.getPuntiVendita();
 	}
 
-	public List<DescrizioneArticolo> scegliPuntoVendita(Long idPuntoVendita) {
+	public void scegliPuntoVendita(Long idPuntoVendita) {
 		List<DescrizioneArticolo> descrizioneArticoli = new ArrayList<>();
 		PuntoVendita puntoVenditaScelto = gestorePuntoVendita.get(idPuntoVendita);
-		for(DescrizioneArticolo d : catalogoArticoli.getArticoliPerPuntoVendita(puntoVenditaScelto.getId()))
-			descrizioneArticoli.add(d);
-		return descrizioneArticoli;
+		descrizioneArticoli.addAll(catalogoArticoli.getArticoliPerPuntoVendita(puntoVenditaScelto.getId()));
 	}
 
 }
