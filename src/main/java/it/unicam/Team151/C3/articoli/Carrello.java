@@ -29,7 +29,6 @@ public class Carrello {
 	}
 
 	public Carrello(Cliente cliente) {
-	//	this.articoliCarrello = new ArrayList<>();
 		this.cliente = cliente;
 	}
 

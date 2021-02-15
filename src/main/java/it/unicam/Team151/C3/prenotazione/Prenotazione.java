@@ -1,5 +1,7 @@
 package it.unicam.Team151.C3.prenotazione;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unicam.Team151.C3.articoli.Articolo;
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
 import it.unicam.Team151.C3.articoli.Carrello;
@@ -9,6 +11,7 @@ import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.utenti.Cliente;
+import it.unicam.Team151.C3.utenti.Commerciante;
 import it.unicam.Team151.C3.utenti.Corriere;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,6 +22,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "id",
+		scope = Prenotazione.class)
 @Entity
 public class Prenotazione {
 

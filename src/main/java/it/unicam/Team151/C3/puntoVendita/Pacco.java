@@ -1,14 +1,22 @@
 package it.unicam.Team151.C3.puntoVendita;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unicam.Team151.C3.articoli.Articolo;
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
 import it.unicam.Team151.C3.manager.ArticoloManager;
 import it.unicam.Team151.C3.prenotazione.*;
 import it.unicam.Team151.C3.puntoConsegna.Armadietto;
+import it.unicam.Team151.C3.utenti.Commerciante;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIdentityInfo(
+		generator = ObjectIdGenerators.PropertyGenerator.class,
+		property = "id",
+		scope = Pacco.class)
 @Entity
 public class Pacco {
 

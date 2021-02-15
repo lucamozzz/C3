@@ -1,8 +1,15 @@
 package it.unicam.Team151.C3.utenti;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.List;
 
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        scope = Cliente.class)
 @Entity
 public class Cliente implements UtenteAutenticato {
 

@@ -30,7 +30,7 @@ public class UtenteManager {
 		UtenteAutenticato newUser;
 		switch (form.get(3)) {
 			case "Cliente":
-				newUser = new Cliente(form);
+				newUser = new Cliente();
 				gestoreCarrello.createCarrello((Cliente) newUser);
 				break;
 			case "Commerciante":
