@@ -19,6 +19,7 @@ public class CatalogoArticoli {
 
 	private CatalogoArticoli() {
 		this.categorie = new ArrayList<>();
+		allDescrizioneArticoli = new ArrayList<>();
 	}
 
 	public static CatalogoArticoli getInstance(){
@@ -79,8 +80,7 @@ public class CatalogoArticoli {
 
 	public List<DescrizioneArticolo> getArticoliPerPuntoVendita(Long idPuntoVendita) {
 		allDescrizioneArticoli.clear();
-		for(DescrizioneArticolo d : descrizioneArticoloRepository.findAllByPuntoVendita(idPuntoVendita))
-			allDescrizioneArticoli.add(d);
+		allDescrizioneArticoli.addAll(descrizioneArticoloRepository.findAllByPuntoVendita(idPuntoVendita));
 		return allDescrizioneArticoli;
 	}
 }

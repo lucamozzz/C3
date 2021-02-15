@@ -12,5 +12,5 @@ public interface DescrizioneArticoloRepository extends CrudRepository<Descrizion
 
     List<DescrizioneArticolo> findAllByCategoria(Long idCategoria);
 
-    List<DescrizioneArticolo> findAllByPuntoVendita(Long idCategoria);
+    List<DescrizioneArticolo> findAllByPuntoVendita(Long idPuntoVendita);
 }
