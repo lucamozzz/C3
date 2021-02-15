@@ -10,7 +10,6 @@ import it.unicam.Team151.C3.puntoConsegna.Armadietto;
 import it.unicam.Team151.C3.utenti.Commerciante;
 
 import javax.persistence.*;
-import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
