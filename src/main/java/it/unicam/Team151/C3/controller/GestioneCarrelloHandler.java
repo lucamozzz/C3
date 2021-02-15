@@ -18,18 +18,29 @@ public class GestioneCarrelloHandler {
 	DescrizioneArticoloRepository descrizioneArticoloRepository;
 	@Autowired
 	ArticoloCarrelloRepository articoloCarrelloRepository;
+	@Autowired
+	ArticoloCarrelloManager articoloCarrelloManager;
 
 
-	//TODO ottimizzare
+	//TODO ottimizzare - ma funziona
 	public void aggiungiArticoloCarrello(Long idDescArticolo, int quantita, Long idCliente) {
 		Carrello carrello = gestoreCarrello.getCarrello(idCliente);
 		DescrizioneArticolo descrizioneArticolo = descrizioneArticoloRepository.findById(idDescArticolo).get();
-		ArticoloCarrello newArticoloCarrello = ArticoloCarrelloManager.getInstance().createArticoloCarrello(descrizioneArticolo, quantita, carrello);
-		ArticoloCarrello articoloCarrello = carrello.aggiungiArticoloCarrello(newArticoloCarrello, quantita);
-		ArticoloCarrelloManager.getInstance().saveArticoloCarrello(articoloCarrello);
+		if(articoloCarrelloRepository.findByDescrizioneArticolo(descrizioneArticolo).isPresent()){
+			ArticoloCarrello articoloCarrelloDB = articoloCarrelloRepository.findByDescrizioneArticolo(descrizioneArticolo).get();
+			if(quantita > descrizioneArticolo.getQuantita() || articoloCarrelloDB.getQuantita() + quantita > descrizioneArticolo.getQuantita())
+				throw new IllegalStateException("quantita errata");
+			articoloCarrelloDB.setQuantita(articoloCarrelloDB.getQuantita() + quantita);
+			articoloCarrelloManager.saveArticoloCarrello(articoloCarrelloDB);
+		}
+		else {
+			ArticoloCarrello newArticoloCarrello = articoloCarrelloManager.createArticoloCarrello(descrizioneArticolo, quantita, carrello);
+			ArticoloCarrello articoloCarrello = carrello.aggiungiArticoloCarrello(newArticoloCarrello, quantita);
+			articoloCarrelloManager.saveArticoloCarrello(articoloCarrello);
+		}
 	}
 
-	//TODO ottimizzare
+	//TODO ottimizzare - ma funziona
 	public void rimuoviArticoloCarrello(Long idDescArticolo, int quantita, Long idCliente) {
 		Carrello carrello = gestoreCarrello.getCarrello(idCliente);
 		ArticoloCarrello artCar = null;
@@ -39,9 +50,9 @@ public class GestioneCarrelloHandler {
 				artCar = articoloCarrello;
 		}
 		carrello.rimuoviArticoloCarrello(artCar, quantita);
-		if (artCar.getDescrizioneArticolo().getQuantita() == quantita)
+		if (artCar.getQuantita() == quantita)
 			articoloCarrelloRepository.delete(artCar);
-		else ArticoloCarrelloManager.getInstance().saveArticoloCarrello(artCar);
+		else articoloCarrelloManager.saveArticoloCarrello(artCar);
 	}
 
 	public List<ArticoloCarrello> mostraArticoliCarrello(Long idCliente) {
