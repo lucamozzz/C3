@@ -1754,3 +1754,9 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/Ale
 	at org.h2.mvstore.FileStore.open(FileStore.java:172)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
 	... 66 more
+2021-02-15 17:25:28 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (PACCO: ""STATO"" INTEGER)"; SQL statement:
+INSERT INTO "PUBLIC"."PACCO"("ID_PACCO","STATO","ID_ARMADIETTO","ID_PRENOTAZIONE")VALUES(?,?,?,?) [22018-200]
+2021-02-15 17:25:28 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLDataException: Data conversion error converting "'' (PACCO: ""STATO"" INTEGER)"; SQL statement:
+INSERT INTO "PUBLIC"."PACCO"("ID_PACCO","STATO","ID_ARMADIETTO","ID_PRENOTAZIONE")VALUES(?,?,?,?) [22018-200]

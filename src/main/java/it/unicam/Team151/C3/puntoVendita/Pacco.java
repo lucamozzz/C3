@@ -69,6 +69,8 @@ public class Pacco {
 		return this.prenotazione;
 	}
 
+	public Long getId(){ return this.id; }
+
 	public Stato getStato() {
 		return this.stato;
 	}
