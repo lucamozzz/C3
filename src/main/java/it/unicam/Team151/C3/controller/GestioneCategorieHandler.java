@@ -7,10 +7,6 @@ import java.util.List;
 
 public class GestioneCategorieHandler {
 
-	/**
-	 * 
-	 * @param datiCategoria
-	 */
 	public void inserimentoDatiCategoriaDaCreare(List<String> datiCategoria) {
 		// TODO - implement GestioneCategorieHandler.inserimentoDatiCategoriaDaCreare
 		throw new UnsupportedOperationException();
