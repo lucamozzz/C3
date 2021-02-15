@@ -1,15 +1,21 @@
 package it.unicam.Team151.C3.view;
 
 import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
+import it.unicam.Team151.C3.controller.LogoutHandler;
 import it.unicam.Team151.C3.prenotazione.*;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.utenti.Commerciante;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 public class ICommerciante implements IUtenteAutenticato{
-
+	@Autowired
 	private GestorePrenotazione gestorePrenotazione;
+
+	@Autowired
+	LogoutHandler logoutHandler;
+
 
 	/**
 	 * 
@@ -138,6 +144,6 @@ public class ICommerciante implements IUtenteAutenticato{
 	@Override
 	@PostMapping("logout")
 	public void logout(@RequestParam Long id) {
-		//logoutHandler.logout(utente);
+		logoutHandler.logout(id);
 	}
 }
