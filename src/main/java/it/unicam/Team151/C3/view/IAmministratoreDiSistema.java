@@ -1,8 +1,19 @@
 package it.unicam.Team151.C3.view;
 
 import it.unicam.Team151.C3.articoli.Categoria;
+import it.unicam.Team151.C3.controller.GestionePuntiConsegnaHandler;
+import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@RestController
+@RequestMapping("admin")
 public class IAmministratoreDiSistema {
+
+	@Autowired
+	GestionePuntiConsegnaHandler gestionePuntiConsegnaHandler;
 
 	public void creaCategoria() {
 		// TODO - implement IAmministratoreDiSistema.creaCategoria
@@ -14,77 +25,38 @@ public class IAmministratoreDiSistema {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param nome
-	 * @param descrizione
-	 */
 	public void inserimentoDatiCategoriaDaCreare(String nome, String descrizione) {
 		// TODO - implement IAmministratoreDiSistema.inserimentoDatiCategoriaDaCreare
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param nome
-	 * @param descrizione
-	 */
 	public void inserimentoDatiCategoriaDaAggiornare(String nome, String descrizione) {
 		// TODO - implement IAmministratoreDiSistema.inserimentoDatiCategoriaDaAggiornare
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param idCategoria
-	 */
 	public Categoria selezioneCategoria(String idCategoria) {
 		// TODO - implement IAmministratoreDiSistema.selezioneCategoria
 		throw new UnsupportedOperationException();
 	}
 
-	public void aggiungiPuntoConsegna() {
-		// TODO - implement IAmministratoreDiSistema.aggiungiPuntoConsegna
-		throw new UnsupportedOperationException();
+	@PostMapping("aggiungiPuntoConsegna")
+	public void aggiungiPuntoConsegna(@RequestParam String ubicazione, @RequestParam int numeroArmadietti) {
+		gestionePuntiConsegnaHandler.aggiungiPuntoConsegna(ubicazione, numeroArmadietti);
 	}
 
-	/**
-	 * 
-	 * @param ubicazione
-	 * @param nArmadietti
-	 */
-	public void inserimentoDatiPuntoConsegnaDaAggiungere(String ubicazione, int nArmadietti) {
-		// TODO - implement IAmministratoreDiSistema.inserimentoDatiPuntoConsegnaDaAggiungere
-		throw new UnsupportedOperationException();
+	@PostMapping("modificaPuntoConsegna")
+	public void modificaPuntoConsegna(@RequestParam Long idPuntoConsegna, @RequestParam String ubicazione) {
+		gestionePuntiConsegnaHandler.modificaPuntoConsegna(idPuntoConsegna, ubicazione);
 	}
 
-	public void modificaPuntoConsegna() {
-		// TODO - implement IAmministratoreDiSistema.modificaPuntoConsegna
-		throw new UnsupportedOperationException();
+	@PostMapping("rimuoviPuntoConsegna")
+	public void rimuoviPuntoConsegna(Long idPuntoConsegna) {
+		gestionePuntiConsegnaHandler.rimuoviPuntoConsegna(idPuntoConsegna);
 	}
 
-	/**
-	 * 
-	 * @param idPuntoConsegna
-	 */
-	public void scegliPuntoConsegna(Long idPuntoConsegna) {
-		// TODO - implement IAmministratoreDiSistema.scegliPuntoConsegna
-		throw new UnsupportedOperationException();
+	@GetMapping("getPuntiConsegna")
+	public List<PuntoConsegna> getPuntiConsegna(){
+		return gestionePuntiConsegnaHandler.getPuntiConsegna();
 	}
-
-	/**
-	 * 
-	 * @param ubicazione
-	 * @param nArmadietti
-	 */
-	public void inserimentoDatiPuntoConsegnaDaModificare(String ubicazione, int nArmadietti) {
-		// TODO - implement IAmministratoreDiSistema.inserimentoDatiPuntoConsegnaDaModificare
-		throw new UnsupportedOperationException();
-	}
-
-	public void rimuoviPuntoConsegna() {
-		// TODO - implement IAmministratoreDiSistema.rimuoviPuntoConsegna
-		throw new UnsupportedOperationException();
-	}
-
 }

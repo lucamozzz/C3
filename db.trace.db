@@ -1754,6 +1754,3 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/Ale
 	at org.h2.mvstore.FileStore.open(FileStore.java:172)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
 	... 66 more
-2021-02-15 11:38:16 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "ARTICOLO_CARRELLO[*]"; expected "ALTER, ANALYZE"; SQL statement:
-ARTICOLO_CARRELLO [42001-200]

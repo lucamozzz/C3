@@ -28,7 +28,7 @@ public class ConfermaPrenotazioneHandler {
 
 	public Ricevuta confermaPrenotazione(Long idPuntoConsegna, Long idCliente) {
 		Carrello carrello = gestoreCarrello.getCarrello(idCliente);
-		PuntoConsegna puntoConsegna = gestorePuntoConsegna.getPuntoConsegna(idPuntoConsegna);
+		PuntoConsegna puntoConsegna = gestorePuntoConsegna.get(idPuntoConsegna);
 		if (this.checkDisponibilitaArticoli(carrello.getArticoliCarrello())){
 			Prenotazione prenotazione = gestorePrenotazione.createPrenotazione(carrello, puntoConsegna);
 			this.updateCatalogo(carrello);

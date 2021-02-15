@@ -52,14 +52,7 @@ public class PuntoConsegna {
 		throw new UnsupportedOperationException();
 	}
 
-	public void setArmadietti(int nArmadietti) {
-		// TODO - implement PuntoConsegna.setArmadietti
-		throw new UnsupportedOperationException();
+	public void setUbicazione(String ubicazione) {
+		this.ubicazione = ubicazione;
 	}
-
-	public void setUbicazione(int ubicazione) {
-		// TODO - implement PuntoConsegna.setUbicazione
-		throw new UnsupportedOperationException();
-	}
-
 }

@@ -5,7 +5,6 @@ import it.unicam.Team151.C3.controller.GestionePuntiVenditaHandler;
 import it.unicam.Team151.C3.controller.LogoutHandler;
 import it.unicam.Team151.C3.prenotazione.*;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
-import it.unicam.Team151.C3.utenti.Commerciante;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -87,21 +86,6 @@ public class ICommerciante implements IUtenteAutenticato{
 	@PostMapping("rimuoviPuntoVendita")
 	public void rimuoviPuntoVendita(@RequestParam Long idPuntoVendita) {
 		gestionePuntiVenditaHandler.rimuoviPuntoVendita(idPuntoVendita);
-	}
-
-	public void inserimentoDatiPuntoVenditaDaModificare(String nome, Commerciante commerciante, int ubicazione) {
-		// TODO - implement ICommerciante.inserimentoDatiPuntoVenditaDaModificare
-		throw new UnsupportedOperationException();
-	}
-
-	public PuntoVendita selezionaPuntoVendita(Long idPuntoVendita) {
-		// TODO - implement ICommerciante.selezionaPuntoVendita
-		throw new UnsupportedOperationException();
-	}
-
-	public void rimozionePuntoVendita(Long idPuntoVendita) {
-		// TODO - implement ICommerciante.rimozionePuntoVendita
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
