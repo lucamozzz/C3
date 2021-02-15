@@ -1,13 +1,11 @@
 package it.unicam.Team151.C3.puntoConsegna;
 
-import it.unicam.Team151.C3.articoli.Carrello;
-import it.unicam.Team151.C3.articoli.GestoreCarrello;
 import it.unicam.Team151.C3.repositories.PuntoConsegnaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class GestorePuntoConsegna {
@@ -28,27 +26,28 @@ public class GestorePuntoConsegna {
 		return instance;
 	}
 
+	public void createPuntoConsegna(String ubicazione, int numeroArmadietti) {
+		PuntoConsegna puntoConsegna = new PuntoConsegna(ubicazione, numeroArmadietti);
+		puntoConsegnaRepository.save(puntoConsegna);
+	}
+
 	public List<PuntoConsegna> getPuntiConsegna() {
-		for (PuntoConsegna puntoConsegna : puntoConsegnaRepository.findAll())
-			puntiConsegna.add(puntoConsegna);
+		List<PuntoConsegna> puntiConsegna = new ArrayList<>();
+		puntoConsegnaRepository.findAll().forEach(puntiConsegna::add);
 		return puntiConsegna;
 	}
 
-	//ALESSANDRO TESTA
-	//ho implementato questo metodo per poter far funzionare il confermaPrenotazione.
-	public PuntoConsegna getPuntoConsegna(Long idPuntoConsegna) {
+	public PuntoConsegna get(Long idPuntoConsegna) {
+		if (puntoConsegnaRepository.findById(idPuntoConsegna).isEmpty())
+			throw new NoSuchElementException("Nessun punto consegna trovato.");
 		return puntoConsegnaRepository.findById(idPuntoConsegna).get();
 	}
 
-	/**
-	 * 
-	 * @param puntoConsegna
-	 */
-	public void rimuoviPuntoConsegna(PuntoConsegna puntoConsegna) {
-		// TODO - implement GestorePuntoConsegna.rimuoviPuntoConsegna
-		throw new UnsupportedOperationException();
+	public void save(PuntoConsegna puntoConsegna) {
+		puntoConsegnaRepository.save(puntoConsegna);
 	}
 
-	//TODO createPuntoConsegna()
-
+	public void delete(PuntoConsegna puntoConsegna) {
+		puntoConsegnaRepository.delete(puntoConsegna);
+	}
 }

@@ -1,63 +1,42 @@
 package it.unicam.Team151.C3.controller;
 
 
+import it.unicam.Team151.C3.puntoConsegna.GestorePuntoConsegna;
 import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
+import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class GestionePuntiConsegnaHandler {
 
-	public List<PuntoConsegna> getPuntoConsegna() {
-		// TODO - implement GestionePuntiConsegnaHandler.getPuntoConsegna
-		throw new UnsupportedOperationException();
+	@Autowired
+	GestorePuntoConsegna gestorePuntoConsegna;
+
+	public List<PuntoConsegna> getPuntiConsegna() {
+		return gestorePuntoConsegna.getPuntiConsegna();
 	}
 
-	/**
-	 * 
-	 * @param idPuntoConsegna
-	 */
-	public PuntoConsegna scegliPuntoConsegna(Long idPuntoConsegna) {
-		// TODO - implement GestionePuntiConsegnaHandler.scegliPuntoConsegna
-		throw new UnsupportedOperationException();
+	public void aggiungiPuntoConsegna(String ubicazione, int numeroArmadietti) {
+		gestorePuntoConsegna.createPuntoConsegna(ubicazione, numeroArmadietti);
 	}
 
-	/**
-	 * 
-	 * @param ubicazione
-	 * @param nArmadietti
-	 */
-	public void inserimentoDatiPuntoConsegnaDaModificare(String ubicazione, int nArmadietti) {
-		// TODO - implement GestionePuntiConsegnaHandler.inserimentoDatiPuntoConsegnaDaModificare
-		throw new UnsupportedOperationException();
+	public void modificaPuntoConsegna(Long idPuntoConsegna, String ubicazione) {
+		PuntoConsegna puntoConsegna = gestorePuntoConsegna.get(idPuntoConsegna);
+		if (!ubicazione.isEmpty())
+			puntoConsegna.setUbicazione(ubicazione);
+		gestorePuntoConsegna.save(puntoConsegna);
 	}
 
-	/**
-	 * 
-	 * @param ubicazione
-	 * @param nArmadietti
-	 */
+	public void rimuoviPuntoConsegna(Long idPuntoConsegna) {
+		PuntoConsegna puntoConsegna =gestorePuntoConsegna.get(idPuntoConsegna);
+		gestorePuntoConsegna.delete(puntoConsegna);
+	}
+
+	//TODO implementare
 	public boolean checkDatiInseriti(String ubicazione, int nArmadietti) {
-		// TODO - implement GestionePuntiConsegnaHandler.checkDatiInseriti
-		throw new UnsupportedOperationException();
+		return false;
 	}
-
-	/**
-	 * 
-	 * @param ubicazione
-	 * @param nArmadietti
-	 */
-	public void modificaDatiPuntoConsegna(String ubicazione, int nArmadietti) {
-		// TODO - implement GestionePuntiConsegnaHandler.modificaDatiPuntoConsegna
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param idPuntoConsegna
-	 */
-	public void rimozionePuntoConsegna(Long idPuntoConsegna) {
-		// TODO - implement GestionePuntiConsegnaHandler.rimozionePuntoConsegna
-		throw new UnsupportedOperationException();
-	}
-
 }
