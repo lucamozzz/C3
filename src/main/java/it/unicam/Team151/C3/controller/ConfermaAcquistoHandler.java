@@ -35,10 +35,7 @@ public class ConfermaAcquistoHandler {
 		Pacco pacco = paccoRepository.findById(idPacco).get();
 		pacco.setStato(Stato.Pronto);
 		for(Pacco p : pacchi) {
-			if (p.getStato() == Stato.Pronto)
-				flag = true;
-			else
-				flag = false;
+			flag = p.getStato() == Stato.Pronto;
 		}
 		if(flag){
 			prenotazione.getRicevuta();

@@ -1,7 +1,9 @@
 package it.unicam.Team151.C3.view;
 
+import it.unicam.Team151.C3.articoli.Categoria;
 import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
 import it.unicam.Team151.C3.controller.ConfermaAcquistoHandler;
+import it.unicam.Team151.C3.controller.GestioneArticoliHandler;
 import it.unicam.Team151.C3.controller.GestionePuntiVenditaHandler;
 import it.unicam.Team151.C3.controller.LogoutHandler;
 import it.unicam.Team151.C3.prenotazione.*;
@@ -20,9 +22,11 @@ public class ICommerciante implements IUtenteAutenticato{
 	GestionePuntiVenditaHandler gestionePuntiVenditaHandler;
 	@Autowired
 	ConfermaAcquistoHandler confermaAcquistoHandler;
-
+	@Autowired
+	GestioneArticoliHandler gestioneArticoliHandler;
 	@Autowired
 	private GestorePrenotazione gestorePrenotazione;
+
 
 	@Autowired
 	LogoutHandler logoutHandler;
@@ -43,34 +47,35 @@ public class ICommerciante implements IUtenteAutenticato{
 		throw new UnsupportedOperationException();
 	}
 
-	public void inserimentoDatiArticoloDaAggiungere(DescrizioneArticolo descArticolo) {
-		// TODO - implement ICommerciante.inserimentoDatiArticoloDaAggiungere
-		throw new UnsupportedOperationException();
+	@PostMapping("aggiungiArticolo")
+	public DescrizioneArticolo inserimentoDatiArticoloDaAggiungere(@RequestParam String nome,
+													@RequestParam String descrizione,
+													@RequestParam double prezzo,
+													@RequestParam int quantita,
+													@RequestParam PuntoVendita puntoVendita,
+													@RequestParam Categoria categoria) {
+	return gestioneArticoliHandler.inserimentoDatiArticoloDaAggiungere(nome, descrizione, prezzo, quantita, puntoVendita, categoria);
 	}
 
-	public void modificaArticolo() {
-		// TODO - implement ICommerciante.modificaArticolo
-		throw new UnsupportedOperationException();
+	public List<DescrizioneArticolo> modificaArticolo(Long idCommerciante) {
+		return gestioneArticoliHandler.getArticoli(idCommerciante);
 	}
 
 	public void scegliArticolo(Long idArticolo) {
-		// TODO - implement ICommerciante.scegliArticolo
-		throw new UnsupportedOperationException();
+		gestioneArticoliHandler.scegliArticolo(idArticolo);
 	}
 
-	public void inserimentoDatiArticoloDaModificare(DescrizioneArticolo descArticolo) {
-		// TODO - implement ICommerciante.inserimentoDatiArticoloDaModificare
-		throw new UnsupportedOperationException();
+	public void inserimentoDatiArticoloDaModificare(String nome, String descrizione, double prezzo,
+													int quantita, PuntoVendita puntoVendita, Categoria categoria) {
+		gestioneArticoliHandler.inserimentoDatiArticoloDaModificare(nome, descrizione, prezzo, quantita, puntoVendita, categoria);
 	}
 
-	public void rimuoviArticolo() {
-		// TODO - implement ICommerciante.rimuoviArticolo
-		throw new UnsupportedOperationException();
+	public List<DescrizioneArticolo> rimuoviArticolo(Long idCommerciante) {
+		return gestioneArticoliHandler.getArticoli(idCommerciante);
 	}
 
 	public void rimozioneArticolo(Long idDescArticolo) {
-		// TODO - implement ICommerciante.rimozioneArticolo
-		throw new UnsupportedOperationException();
+		gestioneArticoliHandler.rimozioneArticolo(idDescArticolo);
 	}
 
 	@PostMapping("getPuntiVendita")

@@ -5,6 +5,7 @@ import java.util.List;
 import it.unicam.Team151.C3.puntoVendita.*;
 import it.unicam.Team151.C3.repositories.CategoriaRepository;
 import it.unicam.Team151.C3.repositories.DescrizioneArticoloRepository;
+import javassist.runtime.Desc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,19 +46,22 @@ public class CatalogoArticoli {
 		return allDescrizioneArticoli;
 	}
 
-	/**
-	 * 
-	 * @param datiArticolo
-	 */
-	public DescrizioneArticolo createDescrizioneArticolo(List<String> datiArticolo) {
-		// TODO - implement CatalogoArticoli.createDescrizioneArticolo
-		throw new UnsupportedOperationException();
+
+	public DescrizioneArticolo createDescrizioneArticolo(String nome, String descrizione, double prezzo,
+														 int quantita, PuntoVendita puntoVendita, Categoria categoria) {
+		DescrizioneArticolo descrizioneArticolo = new DescrizioneArticolo(nome, descrizione, prezzo, quantita, puntoVendita, categoria);
+		descrizioneArticoloRepository.save(descrizioneArticolo);
+		return descrizioneArticolo;
 	}
 
 
 	public List<DescrizioneArticolo> getArticoliPerCommerciante(Long idCommerciante) {
-		// TODO - implement CatalogoArticoli.getArticoli
-		throw new UnsupportedOperationException();
+		List<DescrizioneArticolo> articoli = new ArrayList<>();
+		List<PuntoVendita> puntiVendita = gestorePuntoVendita.getPuntiVendita(idCommerciante);
+		for(PuntoVendita pv : puntiVendita){
+			articoli.addAll(descrizioneArticoloRepository.findAllByPuntoVendita(pv));
+		}
+		return articoli;
 	}
 
 	/**
@@ -65,8 +69,7 @@ public class CatalogoArticoli {
 	 * @param articoloDaEliminare
 	 */
 	public void rimuoviDescArticolo(DescrizioneArticolo articoloDaEliminare) {
-		// TODO - implement CatalogoArticoli.rimuoviDescArticolo
-		throw new UnsupportedOperationException();
+		descrizioneArticoloRepository.delete(articoloDaEliminare);
 	}
 
 	public void modificaQuantitaArticolo(Long idDescrizioneArticolo, int quantita){

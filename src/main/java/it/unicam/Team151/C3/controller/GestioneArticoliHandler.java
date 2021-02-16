@@ -1,45 +1,58 @@
-package it.unicam.team151.C3.controller;
+package it.unicam.Team151.C3.controller;
 
+import it.unicam.Team151.C3.articoli.CatalogoArticoli;
+import it.unicam.Team151.C3.articoli.Categoria;
 import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
+import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
+import it.unicam.Team151.C3.repositories.DescrizioneArticoloRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class GestioneArticoliHandler {
 
-	/**
-	 * 
-	 * @param datiArticolo
-	 */
-	public void inserimentoDatiArticoloDaAggiungere(List<String> datiArticolo) {
-		// TODO - implement GestioneArticoliHandler.inserimentoDatiArticoloDaAggiungere
-		throw new UnsupportedOperationException();
+	@Autowired
+	CatalogoArticoli catalogoArticoli;
+	@Autowired
+	DescrizioneArticoloRepository descrizioneArticoloRepository;
+
+
+	public DescrizioneArticolo inserimentoDatiArticoloDaAggiungere(String nome, String descrizione, double prezzo,
+													int quantita, PuntoVendita puntoVendita, Categoria categoria) {
+		if(checkDatiInseriti(nome, descrizione, prezzo, quantita, puntoVendita, categoria)) {
+			return catalogoArticoli.createDescrizioneArticolo(nome, descrizione, prezzo, quantita, puntoVendita, categoria);
+		}
+		else
+			throw new IllegalArgumentException("not ok");
+
 	}
 
-	/**
-	 * 
-	 * @param datiArticolo
-	 */
-	public boolean checkDatiInseriti(List<String> datiArticolo) {
-		// TODO - implement GestioneArticoliHandler.checkDatiInseriti
-		throw new UnsupportedOperationException();
+	public boolean checkDatiInseriti(String nome, String descrizione, double prezzo,
+									 int quantita, PuntoVendita puntoVendita, Categoria categoria) {
+		if(nome == null || descrizione == null || prezzo < 0  || quantita <= 0 || puntoVendita == null || categoria == null)
+			throw new NullPointerException("not ok");
+		//todo - aggiungere altri controlli
+		return true;
 	}
 
-	/**
-	 * 
-	 * @param datiArticolo
-	 */
-	public void inserimentoDatiArticoloDaModificare(List<String> datiArticolo) {
-		// TODO - implement GestioneArticoliHandler.inserimentoDatiArticoloDaModificare
-		throw new UnsupportedOperationException();
+	public void scegliArticolo(Long idArticolo) {
+		descrizioneArticoloRepository.findById(idArticolo).get();
 	}
 
-	/**
-	 * 
-	 * @param idCommerciante
-	 */
+	public void inserimentoDatiArticoloDaModificare(String nome, String descrizione, double prezzo,
+													int quantita, PuntoVendita puntoVendita, Categoria categoria) {
+		if(this.checkDatiInseriti(nome, descrizione, prezzo, quantita, puntoVendita, categoria))
+			this.modificaArticolo(nome, descrizione, prezzo, quantita, puntoVendita, categoria);
+	}
+
+	public void modificaArticolo(String nome, String descrizione, double prezzo, int quantita, PuntoVendita puntoVendita, Categoria categoria) {
+		//todo
+	}
+
 	public List<DescrizioneArticolo> getArticoli(Long idCommerciante) {
-		// TODO - implement GestioneArticoliHandler.getArticoli
-		throw new UnsupportedOperationException();
+		return catalogoArticoli.getArticoliPerCommerciante(idCommerciante);
 	}
 
 	/**
@@ -47,8 +60,7 @@ public class GestioneArticoliHandler {
 	 * @param idDescArticolo
 	 */
 	public void rimozioneArticolo(Long idDescArticolo) {
-		// TODO - implement GestioneArticoliHandler.rimozioneArticolo
-		throw new UnsupportedOperationException();
+		DescrizioneArticolo articoloDaEliminare = descrizioneArticoloRepository.findById(idDescArticolo).get();
+		catalogoArticoli.rimuoviDescArticolo(articoloDaEliminare);
 	}
-
 }
