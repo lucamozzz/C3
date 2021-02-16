@@ -1,12 +1,10 @@
 package it.unicam.Team151.C3.manager;
 
-import it.unicam.Team151.C3.articoli.Articolo;
-import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
+public interface IManager<E> {
 
-//TODO implementare bene le cosine
-public interface IManager<T> {
+    E get(Long id);
 
-    Articolo create(DescrizioneArticolo descrizioneArticolo);
+    void save(E e);
 
-    void save(Articolo articolo);
+    void delete(E e);
 }

@@ -1,5 +1,6 @@
 package it.unicam.Team151.C3.puntoConsegna;
 
+import it.unicam.Team151.C3.manager.ArmadiettoManager;
 import it.unicam.Team151.C3.repositories.ArmadiettoRepository;
 import it.unicam.Team151.C3.repositories.PuntoConsegnaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class GestorePuntoConsegna {
 	PuntoConsegnaRepository puntoConsegnaRepository;
 	@Autowired
 	ArmadiettoRepository armadiettoRepository;
+	@Autowired
+	ArmadiettoManager armadiettoManager;
 
 	private List<PuntoConsegna> puntiConsegna;
 	private static GestorePuntoConsegna instance;
@@ -31,6 +34,8 @@ public class GestorePuntoConsegna {
 
 	public void createPuntoConsegna(String ubicazione, int numeroArmadietti) {
 		PuntoConsegna puntoConsegna = new PuntoConsegna(ubicazione, numeroArmadietti);
+		for (int i = 0; i < numeroArmadietti; i++)
+			armadiettoManager.create(puntoConsegna);
 		puntoConsegnaRepository.save(puntoConsegna);
 	}
 
@@ -44,7 +49,9 @@ public class GestorePuntoConsegna {
 		if (puntoConsegnaRepository.findById(idPuntoConsegna).isEmpty())
 			throw new NoSuchElementException("Nessun punto consegna trovato.");
 		PuntoConsegna puntoConsegna = puntoConsegnaRepository.findById(idPuntoConsegna).get();
-		armadiettoRepository.findAllByPuntoConsegna(puntoConsegna).forEach(puntoConsegna.getArmadietti()::add);
+		List<Armadietto> armadietti = armadiettoRepository.findAllByPuntoConsegna(puntoConsegna);
+		puntoConsegna.getArmadietti().addAll(armadietti);
+		System.out.println(puntoConsegna.getArmadietti().size());
 		return puntoConsegna;
 	}
 

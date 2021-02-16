@@ -3,7 +3,6 @@ package it.unicam.Team151.C3.view;
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
 import it.unicam.Team151.C3.articoli.Categoria;
 import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
-import it.unicam.Team151.C3.articoli.GestoreCarrello;
 import it.unicam.Team151.C3.controller.*;
 import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
@@ -25,10 +24,9 @@ public class ICliente implements IUtenteAutenticato{
 	GestioneCarrelloHandler gestioneCarrelloHandler;
 	@Autowired
 	RicercaArticoliHandler ricercaArticoliHandler;
+	@Autowired
+	RitiraPrenotazioneHandler ritiraPrenotazioneHandler;
 
-	/**
-	 * metodo per l'avvio della procedura di prenotazione.
-	 */
 	@GetMapping("puntiConsegna")
 	public List<PuntoConsegna> elaboraPrenotazione() {
 		return elaboraPrenotazioneHandler.elaboraPrenotazione();
@@ -39,9 +37,9 @@ public class ICliente implements IUtenteAutenticato{
 		confermaPrenotazioneHandler.confermaPrenotazione(idPuntoConsegna, idCliente);
 	}
 
-	public void ritiraPrenotazione(Long idArmadietto) {
-		// TODO - implement ICliente.ritiraPrenotazione
-		throw new UnsupportedOperationException();
+	@PostMapping("ritiraPrenotazione")
+	public void ritiraPrenotazione(@RequestParam Long idPuntoConsegna, @RequestParam Long idArmadietto) {
+		ritiraPrenotazioneHandler.ritiraPrenotazione(idPuntoConsegna, idArmadietto);
 	}
 
 	@PostMapping("aggiungiArticolo")
