@@ -20,10 +20,18 @@ public class GestionePuntiConsegnaHandler {
 	}
 
 	public void aggiungiPuntoConsegna(String ubicazione, int numeroArmadietti) {
+		if (ubicazione == null)
+			throw new NullPointerException("Dati inseriti non validi.");
+		if (ubicazione.length() > 40 || numeroArmadietti < 1)
+			throw new IllegalArgumentException("Dati inseriti non validi.");
 		gestorePuntoConsegna.createPuntoConsegna(ubicazione, numeroArmadietti);
 	}
 
 	public void modificaPuntoConsegna(Long idPuntoConsegna, String ubicazione) {
+		if (ubicazione == null)
+			throw new NullPointerException("Dati inseriti non validi.");
+		if (ubicazione.length() > 40)
+			throw new IllegalArgumentException("Dati inseriti non validi.");
 		PuntoConsegna puntoConsegna = gestorePuntoConsegna.get(idPuntoConsegna);
 		if (!ubicazione.isEmpty())
 			puntoConsegna.setUbicazione(ubicazione);
@@ -33,10 +41,5 @@ public class GestionePuntiConsegnaHandler {
 	public void rimuoviPuntoConsegna(Long idPuntoConsegna) {
 		PuntoConsegna puntoConsegna = gestorePuntoConsegna.get(idPuntoConsegna);
 		gestorePuntoConsegna.delete(puntoConsegna);
-	}
-
-	//TODO implementare
-	public boolean checkDatiInseriti(String ubicazione, int nArmadietti) {
-		return false;
 	}
 }

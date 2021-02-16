@@ -33,7 +33,7 @@ public class GestorePuntoConsegna {
 	}
 
 	public void createPuntoConsegna(String ubicazione, int numeroArmadietti) {
-		PuntoConsegna puntoConsegna = new PuntoConsegna(ubicazione, numeroArmadietti);
+		PuntoConsegna puntoConsegna = new PuntoConsegna(ubicazione);
 		for (int i = 0; i < numeroArmadietti; i++)
 			armadiettoManager.create(puntoConsegna);
 		puntoConsegnaRepository.save(puntoConsegna);
@@ -51,7 +51,6 @@ public class GestorePuntoConsegna {
 		PuntoConsegna puntoConsegna = puntoConsegnaRepository.findById(idPuntoConsegna).get();
 		List<Armadietto> armadietti = armadiettoRepository.findAllByPuntoConsegna(puntoConsegna);
 		puntoConsegna.getArmadietti().addAll(armadietti);
-		System.out.println(puntoConsegna.getArmadietti().size());
 		return puntoConsegna;
 	}
 

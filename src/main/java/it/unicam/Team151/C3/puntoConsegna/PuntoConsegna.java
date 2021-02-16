@@ -25,7 +25,7 @@ public class PuntoConsegna {
 	public PuntoConsegna() {
 	}
 
-	public PuntoConsegna(String ubicazione, int nArmadietti) {
+	public PuntoConsegna(String ubicazione) {
 		this.ubicazione = ubicazione;
 		this.armadietti = new ArrayList<>();
 	}

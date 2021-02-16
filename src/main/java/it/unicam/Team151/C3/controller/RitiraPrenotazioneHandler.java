@@ -21,21 +21,6 @@ public class RitiraPrenotazioneHandler {
 		puntoConsegna.liberaArmadietto(armadietto);
 	}
 
-	public void avvisoMancatoRitiro() {
-		// TODO - implement RitiraPrenotazioneHandler.avvisoMancatoRitiro
-		throw new UnsupportedOperationException();
-	}
-
-	public void mancatoRitiro() {
-		// TODO - implement RitiraPrenotazioneHandler.mancatoRitiro
-		throw new UnsupportedOperationException();
-	}
-
-	public void generateMessage(String message) {
-		// TODO - implement RitiraPrenotazioneHandler.generateMessage
-		throw new UnsupportedOperationException();
-	}
-
     public Armadietto checkCodice(Long idPuntoConsegna, int codice) {
 		PuntoConsegna puntoConsegna = gestorePuntoConsegna.get(idPuntoConsegna);
 		return puntoConsegna.checkCodice(codice);
