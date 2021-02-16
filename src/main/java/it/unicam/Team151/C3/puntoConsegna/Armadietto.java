@@ -26,7 +26,9 @@ public class Armadietto {
 	@JoinColumn(name = "idPuntoConsegna")
 	private PuntoConsegna puntoConsegna;
 
-	public Armadietto() {
+	public Armadietto(PuntoConsegna puntoConsegna) {
+		this.puntoConsegna=puntoConsegna;
+		disponibilita= true;
 	}
 
 	public void svuota() {

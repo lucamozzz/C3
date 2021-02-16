@@ -31,7 +31,7 @@ public class PuntoConsegna {
 		this.ubicazione = ubicazione;
 		this.armadietti = new ArrayList<>();
 		for (int i = 0; i < nArmadietti; i++)
-			this.armadietti.add(new Armadietto());
+			this.armadietti.add(new Armadietto(this));
 	}
 
 	public Armadietto checkCodice(int codice) {
