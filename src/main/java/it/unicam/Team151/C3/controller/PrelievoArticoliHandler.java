@@ -60,6 +60,8 @@ public class PrelievoArticoliHandler {
 				break;
 			}
 		}
+		if (flag==false && pacchiPrenotazione.get(pacchiPrenotazione.size()-1).getStato().equals(prenotazione.getStato()))
+			flag=true;
 		if (flag==true){
 			prenotazione.setStato(pacchiPrenotazione.get(0).getStato());
 			prenotazioneRepository.save(prenotazione);
