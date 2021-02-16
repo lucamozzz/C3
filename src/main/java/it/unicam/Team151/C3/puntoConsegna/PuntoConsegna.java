@@ -35,8 +35,10 @@ public class PuntoConsegna {
 	}
 
 	public Armadietto checkCodice(int codice) {
-		// TODO - implement PuntoConsegna.checkCodice
-		throw new UnsupportedOperationException();
+		for (Armadietto armadietto : armadietti)
+			if (armadietto.getCodice() == codice)
+				return armadietto;
+		return null;
 	}
 
 	public String getUbicazione() {

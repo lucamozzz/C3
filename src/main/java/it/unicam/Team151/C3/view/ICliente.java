@@ -17,7 +17,6 @@ public class ICliente implements IUtenteAutenticato{
 
 	@Autowired
 	LogoutHandler logoutHandler;
-
 	@Autowired
 	ElaboraPrenotazioneHandler elaboraPrenotazioneHandler;
 	@Autowired

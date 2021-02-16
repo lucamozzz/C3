@@ -1,5 +1,6 @@
 package it.unicam.Team151.C3.puntoConsegna;
 
+import it.unicam.Team151.C3.repositories.ArmadiettoRepository;
 import it.unicam.Team151.C3.repositories.PuntoConsegnaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ public class GestorePuntoConsegna {
 
 	@Autowired
 	PuntoConsegnaRepository puntoConsegnaRepository;
+	@Autowired
+	ArmadiettoRepository armadiettoRepository;
 
 	private List<PuntoConsegna> puntiConsegna;
 	private static GestorePuntoConsegna instance;
@@ -40,7 +43,9 @@ public class GestorePuntoConsegna {
 	public PuntoConsegna get(Long idPuntoConsegna) {
 		if (puntoConsegnaRepository.findById(idPuntoConsegna).isEmpty())
 			throw new NoSuchElementException("Nessun punto consegna trovato.");
-		return puntoConsegnaRepository.findById(idPuntoConsegna).get();
+		PuntoConsegna puntoConsegna = puntoConsegnaRepository.findById(idPuntoConsegna).get();
+		armadiettoRepository.findAllByPuntoConsegna(puntoConsegna).forEach(puntoConsegna.getArmadietti()::add);
+		return puntoConsegna;
 	}
 
 	public void save(PuntoConsegna puntoConsegna) {
