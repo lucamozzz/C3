@@ -31,7 +31,7 @@ public class GestionePuntiConsegnaHandler {
 	}
 
 	public void rimuoviPuntoConsegna(Long idPuntoConsegna) {
-		PuntoConsegna puntoConsegna =gestorePuntoConsegna.get(idPuntoConsegna);
+		PuntoConsegna puntoConsegna = gestorePuntoConsegna.get(idPuntoConsegna);
 		gestorePuntoConsegna.delete(puntoConsegna);
 	}
 

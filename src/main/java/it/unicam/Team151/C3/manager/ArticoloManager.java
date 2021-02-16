@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.Column;
 
 @Service
-public class ArticoloManager implements IManager {
+public class ArticoloManager{
 
     private static ArticoloManager instance = null;
 
@@ -27,12 +27,10 @@ public class ArticoloManager implements IManager {
         return instance;
     }
 
-    @Override
     public Articolo create(DescrizioneArticolo descrizioneArticolo){
         return new Articolo(descrizioneArticolo);
     }
 
-    @Override
     public void save(Articolo articolo) {
         this.articoloRepository.save(articolo);
     }

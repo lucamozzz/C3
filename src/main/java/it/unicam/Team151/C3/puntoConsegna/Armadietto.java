@@ -1,5 +1,6 @@
 package it.unicam.Team151.C3.puntoConsegna;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unicam.Team151.C3.prenotazione.Prenotazione;
@@ -30,11 +31,18 @@ public class Armadietto {
 	private PuntoConsegna puntoConsegna;
 	private int codice;
 
+	public Armadietto() {
+	}
+
 	public Armadietto(PuntoConsegna puntoConsegna) {
 		this.puntoConsegna = puntoConsegna;
 		this.disponibilita= true;
 		this.codice = (int) (Math.random() * (999999 - 100000)) + 100000;
 		this.prenotazione = null;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public void svuota() {
@@ -61,7 +69,7 @@ public class Armadietto {
 		return codice;
 	}
 
-	public void setCodice() {
+	public void resetCodice() {
 		this.codice = (int) (Math.random() * (999999 - 100000)) + 100000;
 	}
 
@@ -71,5 +79,16 @@ public class Armadietto {
 
 	public void riempiArmadietto(Prenotazione prenotazione) {
 		this.prenotazione = prenotazione;
+	}
+
+	@Override
+	public String toString() {
+		return "Armadietto{" +
+				"id=" + id +
+				", disponibilita=" + disponibilita +
+				", prenotazione=" + prenotazione +
+				", puntoConsegna=" + puntoConsegna +
+				", codice=" + codice +
+				'}';
 	}
 }

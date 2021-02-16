@@ -3,6 +3,7 @@ package it.unicam.Team151.C3.puntoConsegna;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unicam.Team151.C3.prenotazione.Prenotazione;
+import it.unicam.Team151.C3.utenti.Commerciante;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -46,21 +47,9 @@ public class PuntoConsegna {
 		return this.armadietti;
 	}
 
-	public Long getId(){
-		return this.id;
-	}
-
-	public Armadietto assegnaArmadietto(Prenotazione prenotazione, List<Armadietto> armadietti) {
-		Armadietto result= null;
-		for (Armadietto armadietto : armadietti) {
-			if (armadietto.isDisponibile()){
-				armadietto.setDisponibilita(false);
-				armadietto.riempiArmadietto(prenotazione);
-				result=armadietto;
-				break;
-			}
-		}
-		return result;
+	public void assegnaArmadietto(Prenotazione prenotazione) {
+		// TODO - implement PuntoConsegna.assegnaArmadietto
+		throw new UnsupportedOperationException();
 	}
 
 	public void setUbicazione(String ubicazione) {
