@@ -44,10 +44,7 @@ public class PrelievoArticoliHandler {
 		List<Pacco> pacchiCorriere = new ArrayList<>();
 		Iterable<Prenotazione> it = prenotazioneRepository.findAllByCorriere(corriere);
 		for (Prenotazione prenotazione : it) {
-			Iterable<Pacco> pacPrenotazione = paccoRepository.findAllByPrenotazione(prenotazione);
-			for (Pacco pacco : pacPrenotazione) {
-				pacchiCorriere.add(pacco);
-			}
+			pacchiCorriere.addAll(paccoRepository.findAllByPrenotazione(prenotazione));
 		}
 		return pacchiCorriere;
 	}
@@ -55,11 +52,9 @@ public class PrelievoArticoliHandler {
 	//TODO da ridevere (cosuccia in più)
 	private void checkStatoPrenotazione(Prenotazione prenotazione){
 		boolean flag = true;
-		Iterable<Pacco> it = paccoRepository.findAllByPrenotazione(prenotazione);
 		List<Pacco> pacchiPrenotazione= new ArrayList<>();
-		for (Pacco pacco : it)
-			pacchiPrenotazione.add(pacco);
-		for (Pacco paccoPren : it) {
+		pacchiPrenotazione.addAll(paccoRepository.findAllByPrenotazione(prenotazione));
+		for (Pacco paccoPren : pacchiPrenotazione) {
 			if(!paccoPren.getStato().equals(prenotazione.getStato())){
 				flag=false;
 				break;

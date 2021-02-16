@@ -1,14 +1,42 @@
 package it.unicam.Team151.C3.controller;
 
+import it.unicam.Team151.C3.prenotazione.Prenotazione;
+import it.unicam.Team151.C3.prenotazione.Stato;
+import it.unicam.Team151.C3.puntoConsegna.Armadietto;
+import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
+import it.unicam.Team151.C3.repositories.ArmadiettoRepository;
+import it.unicam.Team151.C3.repositories.PrenotazioneRepository;
+import it.unicam.Team151.C3.repositories.PuntoConsegnaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
 public class ConsegnaArticoliHandler {
 
-	/**
-	 * 
-	 * @param idPrenotazione
-	 */
+	@Autowired
+	PrenotazioneRepository prenotazioneRepository;
+
+	@Autowired
+	ArmadiettoRepository armadiettoRepository;
+
+	@Autowired
+	PuntoConsegnaRepository puntoConsegnaRepository;
+
 	public void consegnaArticolo(Long idPrenotazione) {
-		// TODO - implement ConsegnaArticoliHandler.consegnaArticolo
-		throw new UnsupportedOperationException();
+		Prenotazione prenotazione = prenotazioneRepository.findById(idPrenotazione).get();
+		if(!prenotazione.getStato().equals(Stato.Ritirato))
+			throw new IllegalStateException("Errore di stato: la prenotazione non è in stato di ritirato");
+		else {
+			prenotazione.setStato(Stato.Consegnato);
+			prenotazioneRepository.save(prenotazione);
+			PuntoConsegna puntoConsegna = puntoConsegnaRepository.findById(prenotazione.getPuntoConsegna().getId()).get();
+			List<Armadietto> armadietti = armadiettoRepository.findAllByPuntoConsegna(puntoConsegna);
+			Armadietto armadietto = puntoConsegna.assegnaArmadietto(prenotazione, armadietti);
+			armadiettoRepository.save(armadietto);
+		}
+
 	}
 
 }

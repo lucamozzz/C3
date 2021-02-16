@@ -1,5 +1,6 @@
 package it.unicam.Team151.C3.view;
 
+import it.unicam.Team151.C3.controller.ConsegnaArticoliHandler;
 import it.unicam.Team151.C3.controller.LogoutHandler;
 import it.unicam.Team151.C3.controller.PrelievoArticoliHandler;
 import it.unicam.Team151.C3.prenotazione.*;
@@ -17,6 +18,9 @@ import java.util.List;
 public class ICorriere implements IUtenteAutenticato{
 
 	@Autowired
+	ConsegnaArticoliHandler consegnaArticoliHandler;
+
+	@Autowired
 	PrelievoArticoliHandler prelievoArticoliHandler;
 
 	@Autowired
@@ -25,9 +29,9 @@ public class ICorriere implements IUtenteAutenticato{
 	@Autowired
 	LogoutHandler logoutHandler;
 
-	public void consegnaArticoli() {
-		// TODO - implement ICorriere.consegnaArticoli
-		throw new UnsupportedOperationException();
+	@PostMapping("consegnaArticoli")
+	public void consegnaArticoli(@RequestParam Long idPrenotazione) {
+		consegnaArticoliHandler.consegnaArticolo(idPrenotazione);
 	}
 
 	@PostMapping("mostraPacchi")
