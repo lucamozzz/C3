@@ -31,9 +31,7 @@ public class RicercaArticoliHandler {
 	}
 
 	public List<DescrizioneArticolo> scegliPuntoVendita(Long idPuntoVendita) {
-		List<DescrizioneArticolo> descrizioneArticoli = new ArrayList<>();
-		PuntoVendita puntoVenditaScelto = gestorePuntoVendita.get(idPuntoVendita);
-		descrizioneArticoli.addAll(catalogoArticoli.getArticoliPerPuntoVendita(puntoVenditaScelto.getId()));
+		List<DescrizioneArticolo> descrizioneArticoli = new ArrayList<>(catalogoArticoli.getArticoliPerPuntoVendita(idPuntoVendita));
 		return descrizioneArticoli;
 	}
 

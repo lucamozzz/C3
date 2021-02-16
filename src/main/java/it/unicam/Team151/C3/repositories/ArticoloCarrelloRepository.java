@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface ArticoloCarrelloRepository extends CrudRepository<ArticoloCarrello, Long> {
 
-    List<ArticoloCarrello> findAllByCarrello(Carrello idCarrello);
+    List<ArticoloCarrello> findAllByCarrello(Carrello carrello);
 
     Optional<ArticoloCarrello> findByDescrizioneArticolo(DescrizioneArticolo descrizioneArticolo);
 }

@@ -20,7 +20,7 @@ public class GestorePuntoVendita {
 	@Autowired
 	CommercianteRepository commercianteRepository;
 
-	private List<PuntoVendita> puntiVendita;
+	private List<PuntoVendita> puntiVendita = new ArrayList<>();
 
 	public void createPuntoVendita(Commerciante commerciante, String nome, String ubicazione) {
 		PuntoVendita puntoVendita = new PuntoVendita(commerciante, nome, ubicazione);

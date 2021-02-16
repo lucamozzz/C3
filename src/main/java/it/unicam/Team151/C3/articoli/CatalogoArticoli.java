@@ -3,6 +3,7 @@ package it.unicam.Team151.C3.articoli;
 import java.util.ArrayList;
 import java.util.List;
 import it.unicam.Team151.C3.puntoVendita.*;
+import it.unicam.Team151.C3.repositories.CategoriaRepository;
 import it.unicam.Team151.C3.repositories.DescrizioneArticoloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,10 @@ public class CatalogoArticoli {
 
 	@Autowired
 	DescrizioneArticoloRepository descrizioneArticoloRepository;
+	@Autowired
+	CategoriaRepository categoriaRepository;
+	@Autowired
+	GestorePuntoVendita gestorePuntoVendita;
 
 	private static CatalogoArticoli instance;
 	private List<Categoria> categorie;
@@ -32,10 +37,11 @@ public class CatalogoArticoli {
 		return this.categorie;
 	}
 
+	//TODO - un po de refactoring dai. questo e il metodo getArticoliPerPuntoVendita
 	public List<DescrizioneArticolo> getArticoliPerCategoria(Long idCategoria) {
 		allDescrizioneArticoli.clear();
-		for(DescrizioneArticolo d : descrizioneArticoloRepository.findAllByCategoria(idCategoria))
-			allDescrizioneArticoli.add(d);
+		Categoria categoriaScelta = categoriaRepository.findById(idCategoria).get();
+		allDescrizioneArticoli.addAll(descrizioneArticoloRepository.findAllByCategoria(categoriaScelta));
 		return allDescrizioneArticoli;
 	}
 
@@ -78,9 +84,11 @@ public class CatalogoArticoli {
 		throw new UnsupportedOperationException();
 	}
 
+	//TODO - un po de refactoring dai.
 	public List<DescrizioneArticolo> getArticoliPerPuntoVendita(Long idPuntoVendita) {
 		allDescrizioneArticoli.clear();
-		allDescrizioneArticoli.addAll(descrizioneArticoloRepository.findAllByPuntoVendita(idPuntoVendita));
+		PuntoVendita puntoVenditaScelto = gestorePuntoVendita.get(idPuntoVendita);
+		allDescrizioneArticoli.addAll(descrizioneArticoloRepository.findAllByPuntoVendita(puntoVenditaScelto));
 		return allDescrizioneArticoli;
 	}
 }
