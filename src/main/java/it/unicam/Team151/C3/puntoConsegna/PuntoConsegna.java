@@ -2,10 +2,7 @@ package it.unicam.Team151.C3.puntoConsegna;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import it.unicam.Team151.C3.manager.ArmadiettoManager;
 import it.unicam.Team151.C3.prenotazione.Prenotazione;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +28,6 @@ public class PuntoConsegna {
 	public PuntoConsegna(String ubicazione, int nArmadietti) {
 		this.ubicazione = ubicazione;
 		this.armadietti = new ArrayList<>();
-//		for (int i = 0; i < nArmadietti; i++)
-//			this.armadietti.add(armadiettoManager != null ? armadiettoManager.create(this) : null);
 	}
 
 	public Armadietto checkCodice(int codice) {
