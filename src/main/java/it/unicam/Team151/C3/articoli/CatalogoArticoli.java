@@ -45,8 +45,7 @@ public class CatalogoArticoli {
 
 	public List<DescrizioneArticolo> getArticoliPerCategoria(Categoria categoria) {
 		allDescrizioneArticoli.clear();
-		for(DescrizioneArticolo d : descrizioneArticoloRepository.findAllByCategoria(categoria))
-			allDescrizioneArticoli.add(d);
+		allDescrizioneArticoli.addAll(descrizioneArticoloRepository.findAllByCategoria(categoria));
 		return allDescrizioneArticoli;
 	}
 

@@ -4,7 +4,10 @@ import it.unicam.Team151.C3.articoli.CatalogoArticoli;
 import it.unicam.Team151.C3.articoli.Categoria;
 import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
+import it.unicam.Team151.C3.repositories.CategoriaRepository;
 import it.unicam.Team151.C3.repositories.DescrizioneArticoloRepository;
+import it.unicam.Team151.C3.repositories.PuntoConsegnaRepository;
+import it.unicam.Team151.C3.repositories.PuntoVenditaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +20,16 @@ public class GestioneArticoliHandler {
 	CatalogoArticoli catalogoArticoli;
 	@Autowired
 	DescrizioneArticoloRepository descrizioneArticoloRepository;
+	@Autowired
+	PuntoVenditaRepository puntoVenditaRepository;
+	@Autowired
+	CategoriaRepository categoriaRepository;
 
 
 	public DescrizioneArticolo inserimentoDatiArticoloDaAggiungere(String nome, String descrizione, double prezzo,
-													int quantita, PuntoVendita puntoVendita, Categoria categoria) {
+													int quantita, Long idPuntoVendita, Long idCategoria) {
+		PuntoVendita puntoVendita = puntoVenditaRepository.findById(idPuntoVendita).get();
+		Categoria categoria = categoriaRepository.findById(idCategoria).get();
 		if(checkDatiInseriti(nome, descrizione, prezzo, quantita, puntoVendita, categoria)) {
 			return catalogoArticoli.createDescrizioneArticolo(nome, descrizione, prezzo, quantita, puntoVendita, categoria);
 		}

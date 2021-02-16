@@ -16,6 +16,8 @@ public class GestoreCorriere {
 
 	@Autowired
 	CorriereRepository corriereRepository;
+	@Autowired
+	PrenotazioneRepository prenotazioneRepository;
 
 	public void assegnaCorriere(Prenotazione prenotazione) {
 		List<Long> idCorrieri = new ArrayList<>();
@@ -28,5 +30,6 @@ public class GestoreCorriere {
 //				return false;
 		Corriere corriereDaAssegnare = corriereRepository.findById(randomElement).get();
 		prenotazione.setCorriere(corriereDaAssegnare);
+		prenotazioneRepository.save(prenotazione);
 	}
 }

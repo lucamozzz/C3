@@ -52,29 +52,36 @@ public class ICommerciante implements IUtenteAutenticato{
 													@RequestParam String descrizione,
 													@RequestParam double prezzo,
 													@RequestParam int quantita,
-													@RequestParam PuntoVendita puntoVendita,
-													@RequestParam Categoria categoria) {
-	return gestioneArticoliHandler.inserimentoDatiArticoloDaAggiungere(nome, descrizione, prezzo, quantita, puntoVendita, categoria);
+													@RequestParam Long idPuntoVendita,
+													@RequestParam Long idCategoria) {
+	return gestioneArticoliHandler.inserimentoDatiArticoloDaAggiungere(nome, descrizione, prezzo, quantita, idPuntoVendita, idCategoria);
 	}
 
-	public List<DescrizioneArticolo> modificaArticolo(Long idCommerciante) {
+	@PostMapping("getArticoloDaModificare")
+	public List<DescrizioneArticolo> modificaArticolo(@RequestParam Long idCommerciante) {
 		return gestioneArticoliHandler.getArticoli(idCommerciante);
 	}
 
-	public void scegliArticolo(Long idArticolo) {
+	@PostMapping("scegliArticoloDaModificare")
+	public void scegliArticolo(@RequestParam Long idArticolo) {
 		gestioneArticoliHandler.scegliArticolo(idArticolo);
 	}
 
-	public void inserimentoDatiArticoloDaModificare(String nome, String descrizione, double prezzo,
-													int quantita, PuntoVendita puntoVendita, Categoria categoria) {
+	@PostMapping("modificareArticolo")
+	public void inserimentoDatiArticoloDaModificare(@RequestParam String nome, @RequestParam String descrizione,
+													@RequestParam double prezzo, @RequestParam int quantita,
+													@RequestParam PuntoVendita puntoVendita,
+													@RequestParam Categoria categoria) {
 		gestioneArticoliHandler.inserimentoDatiArticoloDaModificare(nome, descrizione, prezzo, quantita, puntoVendita, categoria);
 	}
 
-	public List<DescrizioneArticolo> rimuoviArticolo(Long idCommerciante) {
+	@PostMapping("getArticoloDaRimuovere")
+	public List<DescrizioneArticolo> rimuoviArticolo(@RequestParam Long idCommerciante) {
 		return gestioneArticoliHandler.getArticoli(idCommerciante);
 	}
 
-	public void rimozioneArticolo(Long idDescArticolo) {
+	@PostMapping("rimuoviArticolo")
+	public void rimozioneArticolo(@RequestParam Long idDescArticolo) {
 		gestioneArticoliHandler.rimozioneArticolo(idDescArticolo);
 	}
 
