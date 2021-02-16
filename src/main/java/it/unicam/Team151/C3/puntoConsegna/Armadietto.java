@@ -2,11 +2,13 @@ package it.unicam.Team151.C3.puntoConsegna;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import it.unicam.Team151.C3.prenotazione.Prenotazione;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
 import it.unicam.Team151.C3.utenti.Commerciante;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Random;
 
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -20,19 +22,23 @@ public class Armadietto {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private boolean disponibilita;
-	@Transient
-	private List<Pacco> pacchi;
+	@OneToOne(cascade = {CascadeType.MERGE})
+	@JoinColumn(name = "idPrenotazione")
+	private Prenotazione prenotazione;
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idPuntoConsegna")
 	private PuntoConsegna puntoConsegna;
+	private int codice;
 
 	public Armadietto(PuntoConsegna puntoConsegna) {
-		this.puntoConsegna=puntoConsegna;
-		disponibilita= true;
+		this.puntoConsegna = puntoConsegna;
+		this.disponibilita= true;
+		this.codice = (int) (Math.random() * (999999 - 100000)) + 100000;
+		this.prenotazione = null;
 	}
 
 	public void svuota() {
-		this.pacchi.clear();
+		this.prenotazione = null;
 	}
 
 	public PuntoConsegna getPuntoConsegna() {
@@ -51,4 +57,19 @@ public class Armadietto {
 		return this.disponibilita;
 	}
 
+	public int getCodice() {
+		return codice;
+	}
+
+	public void setCodice() {
+		this.codice = (int) (Math.random() * (999999 - 100000)) + 100000;
+	}
+
+	public Prenotazione getPrenotazione() {
+		return prenotazione;
+	}
+
+	public void riempiArmadietto(Prenotazione prenotazione) {
+		this.prenotazione = prenotazione;
+	}
 }
