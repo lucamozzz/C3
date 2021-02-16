@@ -17,8 +17,7 @@ public class GestorePrenotazione {
 	private List<Prenotazione> prenotazioni;
 
 	public Prenotazione getPrenotazione(Long idPrenotazione) {
-		// TODO - implement GestorePrenotazione.getPrenotazione
-		throw new UnsupportedOperationException();
+		return prenotazioneRepository.findById(idPrenotazione).get();
 	}
 
 	public List<Prenotazione> getPrenotazioni() {

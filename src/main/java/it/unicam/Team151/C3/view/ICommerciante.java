@@ -1,9 +1,11 @@
 package it.unicam.Team151.C3.view;
 
 import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
+import it.unicam.Team151.C3.controller.ConfermaAcquistoHandler;
 import it.unicam.Team151.C3.controller.GestionePuntiVenditaHandler;
 import it.unicam.Team151.C3.controller.LogoutHandler;
 import it.unicam.Team151.C3.prenotazione.*;
+import it.unicam.Team151.C3.puntoVendita.Pacco;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,8 @@ public class ICommerciante implements IUtenteAutenticato{
 
 	@Autowired
 	GestionePuntiVenditaHandler gestionePuntiVenditaHandler;
+	@Autowired
+	ConfermaAcquistoHandler confermaAcquistoHandler;
 
 	@Autowired
 	private GestorePrenotazione gestorePrenotazione;
@@ -23,14 +27,15 @@ public class ICommerciante implements IUtenteAutenticato{
 	@Autowired
 	LogoutHandler logoutHandler;
 
-	public void confermaAcquisto(Long idPrenotazione) {
-		// TODO - implement ICommerciante.confermaAcquisto
-		throw new UnsupportedOperationException();
+	//sono passi che non abbiamo scritto nel caso d'uso.
+	@PostMapping("confermaAcquisto")
+	public List<Pacco> confermaAcquisto(@RequestParam Long idPrenotazione) {
+		return confermaAcquistoHandler.confermaAcquisto(idPrenotazione);
 	}
 
-	public void confermaPagamento(Long idPacco) {
-		// TODO - implement ICommerciante.confermaPagamento
-		throw new UnsupportedOperationException();
+	@PostMapping("confermaPagamento")
+	public void confermaPagamento(@RequestParam Long idPrenotazione, @RequestParam Long idPacco) {
+		confermaAcquistoHandler.confermaPagamento(idPrenotazione, idPacco);
 	}
 
 	public void aggiungiArticolo() {
