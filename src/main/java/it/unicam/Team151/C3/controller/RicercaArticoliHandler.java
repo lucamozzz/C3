@@ -3,6 +3,7 @@ package it.unicam.Team151.C3.controller;
 import it.unicam.Team151.C3.articoli.*;
 import it.unicam.Team151.C3.puntoVendita.GestorePuntoVendita;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
+import it.unicam.Team151.C3.repositories.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ public class RicercaArticoliHandler {
 	CatalogoArticoli catalogoArticoli;
 	@Autowired
 	GestorePuntoVendita gestorePuntoVendita;
+	@Autowired
+	CategoriaRepository categoriaRepository;
 
 	public List<Categoria> ricercaArticoliCategoria() {
 		return catalogoArticoli.getCategorie();
@@ -23,7 +26,7 @@ public class RicercaArticoliHandler {
 
 
 	public List<DescrizioneArticolo> scegliCategoria(Long idCategoria) {
-		return catalogoArticoli.getArticoliPerCategoria(idCategoria);
+		return catalogoArticoli.getArticoliPerCategoria(categoriaRepository.findById(idCategoria).get());
 	}
 
 	public List<PuntoVendita> ricercaArticoliPuntoVendita() {
@@ -31,7 +34,7 @@ public class RicercaArticoliHandler {
 	}
 
 	public List<DescrizioneArticolo> scegliPuntoVendita(Long idPuntoVendita) {
-		return new ArrayList<>(catalogoArticoli.getArticoliPerPuntoVendita(idPuntoVendita));
+		return new ArrayList<>(catalogoArticoli.getArticoliPerPuntoVendita(gestorePuntoVendita.get(idPuntoVendita)));
 	}
 
 }

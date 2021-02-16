@@ -2,7 +2,10 @@ package it.unicam.Team151.C3.articoli;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import antlr.ASTNULLType;
 import it.unicam.Team151.C3.puntoVendita.*;
+import it.unicam.Team151.C3.repositories.CategoriaRepository;
 import it.unicam.Team151.C3.repositories.DescrizioneArticoloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +15,10 @@ public class CatalogoArticoli {
 
 	@Autowired
 	DescrizioneArticoloRepository descrizioneArticoloRepository;
+	@Autowired
+	CategoriaRepository categoriaRepository;
+	@Autowired
+	GestorePuntoVendita gestorePuntoVendita;
 
 	private static CatalogoArticoli instance;
 	private List<Categoria> categorie;
@@ -29,38 +36,39 @@ public class CatalogoArticoli {
 	}
 
 	public List<Categoria> getCategorie() {
-		return this.categorie;
+		Iterable<Categoria> it= categoriaRepository.findAll();
+		for (Categoria categoria : it) {
+			categorie.add(categoria);
+		}
+		return categorie;
 	}
 
-	public List<DescrizioneArticolo> getArticoliPerCategoria(Long idCategoria) {
+	public List<DescrizioneArticolo> getArticoliPerCategoria(Categoria categoria) {
 		allDescrizioneArticoli.clear();
-		for(DescrizioneArticolo d : descrizioneArticoloRepository.findAllByCategoria(idCategoria))
+		for(DescrizioneArticolo d : descrizioneArticoloRepository.findAllByCategoria(categoria))
 			allDescrizioneArticoli.add(d);
 		return allDescrizioneArticoli;
 	}
 
-	/**
-	 * 
-	 * @param datiArticolo
-	 */
-	public DescrizioneArticolo createDescrizioneArticolo(List<String> datiArticolo) {
-		// TODO - implement CatalogoArticoli.createDescrizioneArticolo
-		throw new UnsupportedOperationException();
+	public DescrizioneArticolo createDescrizioneArticolo(String nome, String descrizione, double prezzo,
+														 int quantita, PuntoVendita puntoVendita, Categoria categoria) {
+		DescrizioneArticolo descrizioneArticolo = new DescrizioneArticolo(nome, descrizione, prezzo, quantita, puntoVendita, categoria);
+		descrizioneArticoloRepository.save(descrizioneArticolo);
+		return descrizioneArticolo;
 	}
 
 
 	public List<DescrizioneArticolo> getArticoliPerCommerciante(Long idCommerciante) {
-		// TODO - implement CatalogoArticoli.getArticoli
-		throw new UnsupportedOperationException();
+		List<DescrizioneArticolo> articoli = new ArrayList<>();
+		List<PuntoVendita> puntiVendita = gestorePuntoVendita.getPuntiVendita(idCommerciante);
+		for(PuntoVendita pv : puntiVendita){
+			articoli.addAll(descrizioneArticoloRepository.findAllByPuntoVendita(pv));
+		}
+		return articoli;
 	}
 
-	/**
-	 * 
-	 * @param articoloDaEliminare
-	 */
 	public void rimuoviDescArticolo(DescrizioneArticolo articoloDaEliminare) {
-		// TODO - implement CatalogoArticoli.rimuoviDescArticolo
-		throw new UnsupportedOperationException();
+		descrizioneArticoloRepository.delete(articoloDaEliminare);
 	}
 
 	public void modificaQuantitaArticolo(Long idDescrizioneArticolo, int quantita){
@@ -69,18 +77,32 @@ public class CatalogoArticoli {
 		descrizioneArticoloRepository.save(descrizioneArticolo);
 	}
 
-	/**
-	 * 
-	 * @param datiCategoria
-	 */
-	public void createCategoria(List<String> datiCategoria) {
-		// TODO - implement CatalogoArticoli.createCategoria
-		throw new UnsupportedOperationException();
+	public void createCategoria(String nome, String descrizione) {
+		Categoria categoria = new Categoria(nome, descrizione);
+		categoriaRepository.save(categoria);
 	}
 
-	public List<DescrizioneArticolo> getArticoliPerPuntoVendita(Long idPuntoVendita) {
+	public void aggiornaCategoria(Long idCategoria, String nome, String descrizione){
+		if(!categoriaRepository.findById(idCategoria).isPresent())
+			throw new IllegalStateException("La categoria richiesta da modificare non esiste");
+		Categoria categoria=categoriaRepository.findById(idCategoria).get();
+		categoria.setNome(nome);
+		categoria.setDescrizione(descrizione);
+		categoriaRepository.save(categoria);
+	}
+
+	public boolean checkDatiInseriti(String nome, String descrizione) {
+		Categoria categoria = new Categoria(nome, descrizione);
+		for (Categoria cat : this.getCategorie()) {
+			if(cat.getNome().equals(categoria.getNome()))
+				throw new IllegalStateException("Esiste già una categoria con questo nome");
+		}
+		return true;
+	}
+
+	public List<DescrizioneArticolo> getArticoliPerPuntoVendita(PuntoVendita puntoVendita) {
 		allDescrizioneArticoli.clear();
-		allDescrizioneArticoli.addAll(descrizioneArticoloRepository.findAllByPuntoVendita(idPuntoVendita));
+		allDescrizioneArticoli.addAll(descrizioneArticoloRepository.findAllByPuntoVendita(puntoVendita));
 		return allDescrizioneArticoli;
 	}
 }
