@@ -49,9 +49,17 @@ public class PuntoConsegna {
 		return this.armadietti;
 	}
 
-	public void assegnaArmadietto(Prenotazione prenotazione) {
-		// TODO - implement PuntoConsegna.assegnaArmadietto
-		throw new UnsupportedOperationException();
+	public Armadietto assegnaArmadietto(Prenotazione prenotazione, List<Armadietto> armadietti) {
+		Armadietto result= null;
+		for (Armadietto armadietto : armadietti) {
+			if (armadietto.isDisponibile()){
+				armadietto.setDisponibilita(false);
+				armadietto.riempiArmadietto(prenotazione);
+				result=armadietto;
+				break;
+			}
+		}
+		return result;
 	}
 
 	public void setUbicazione(String ubicazione) {

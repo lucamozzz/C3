@@ -6,6 +6,7 @@ import it.unicam.Team151.C3.repositories.ArmadiettoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -36,6 +37,10 @@ public class ArmadiettoManager implements IManager<Armadietto> {
         if (armadiettoRepository.findById(idArmadietto).isEmpty())
             throw new NoSuchElementException("Nessun armadietto trovato.");
         return armadiettoRepository.findById(idArmadietto).get();
+    }
+
+    public List<Armadietto> getArmadietti(PuntoConsegna puntoConsegna){
+        return armadiettoRepository.findAllByPuntoConsegna(puntoConsegna);
     }
 
     @Override

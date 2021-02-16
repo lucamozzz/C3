@@ -1,5 +1,6 @@
 package it.unicam.Team151.C3.controller;
 
+import it.unicam.Team151.C3.manager.ArmadiettoManager;
 import it.unicam.Team151.C3.prenotazione.Prenotazione;
 import it.unicam.Team151.C3.prenotazione.Stato;
 import it.unicam.Team151.C3.puntoConsegna.Armadietto;
@@ -19,7 +20,7 @@ public class ConsegnaArticoliHandler {
 	PrenotazioneRepository prenotazioneRepository;
 
 	@Autowired
-	ArmadiettoRepository armadiettoRepository;
+	ArmadiettoManager armadiettoManager;
 
 	@Autowired
 	PuntoConsegnaRepository puntoConsegnaRepository;
@@ -32,9 +33,9 @@ public class ConsegnaArticoliHandler {
 			prenotazione.setStato(Stato.Consegnato);
 			prenotazioneRepository.save(prenotazione);
 			PuntoConsegna puntoConsegna = puntoConsegnaRepository.findById(prenotazione.getPuntoConsegna().getId()).get();
-			List<Armadietto> armadietti = armadiettoRepository.findAllByPuntoConsegna(puntoConsegna);
+			List<Armadietto> armadietti = armadiettoManager.getArmadietti(puntoConsegna);
 			Armadietto armadietto = puntoConsegna.assegnaArmadietto(prenotazione, armadietti);
-			armadiettoRepository.save(armadietto);
+			armadiettoManager.save(armadietto);
 		}
 
 	}
