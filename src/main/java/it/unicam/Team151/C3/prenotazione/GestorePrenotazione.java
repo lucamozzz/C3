@@ -1,7 +1,10 @@
 package it.unicam.Team151.C3.prenotazione;
 
 import it.unicam.Team151.C3.articoli.Carrello;
+import it.unicam.Team151.C3.manager.PaccoManager;
 import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
+import it.unicam.Team151.C3.puntoVendita.Pacco;
+import it.unicam.Team151.C3.repositories.PaccoRepository;
 import it.unicam.Team151.C3.repositories.PrenotazioneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,8 @@ public class GestorePrenotazione {
 
 	@Autowired
 	private PrenotazioneRepository prenotazioneRepository;
+	@Autowired
+	PaccoRepository paccoRepository;
 
 	private List<Prenotazione> prenotazioni;
 
@@ -24,12 +29,12 @@ public class GestorePrenotazione {
 		return this.prenotazioni;
 	}
 
-	//in questo metodo ritornavamo la nuova prenotazione. Ok ma ci siamo dimenticati di salvarla nel DB!
-	//ho messo la nuova prenotazione in una variabile cosi che poi ho potuto aggiungerla nel DB.
-	//per fare questo ho aggiunto alla classe la variabile prenotazioneRepository.
-	//funziona tutto ma chiarisco quello che ho fatto per correttezza.
+
 	public Prenotazione createPrenotazione(Carrello carrello, PuntoConsegna puntoConsegna) {
 		Prenotazione prenotazione = new Prenotazione(carrello, puntoConsegna);
+		for (Pacco pacco : prenotazione.getPacchi())
+			paccoRepository.save(pacco);
+
 		prenotazioneRepository.save(prenotazione);
 		return prenotazione;
 	}

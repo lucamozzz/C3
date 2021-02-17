@@ -54,15 +54,8 @@ public class Prenotazione {
 	//TODO un po' de refactoring
 	public Prenotazione(Carrello carrello, PuntoConsegna puntoConsegna) {
 		this.pacchi = new ArrayList<>();
-		Set<PuntoVendita> puntiVendita = new HashSet<>();
-		for (ArticoloCarrello articoloCarrello : carrello.getArticoliCarrello())
-			puntiVendita.add(articoloCarrello.getDescrizioneArticolo().getPuntoVendita());
-		for (PuntoVendita puntoVendita : puntiVendita)
-			pacchi.add(PaccoManager.getInstance().createPacco(this, carrello.getArticoliCarrello().stream().filter(articoloCarrello -> articoloCarrello.
-																				getDescrizioneArticolo().
-																				getPuntoVendita().
-																				equals(puntoVendita)).
-																				collect(Collectors.toList())));
+
+
 		for (Pacco pacco : pacchi)
 			PaccoManager.getInstance().savePacco(pacco);
 		this.cliente = carrello.getCliente();
@@ -127,5 +120,19 @@ public class Prenotazione {
 
 	public PuntoConsegna getPuntoConsegna() {
 		return this.puntoConsegna;
+	}
+
+	public void createPacco(Carrello carrello){
+		Set<PuntoVendita> puntiVendita = new HashSet<>();
+		for (ArticoloCarrello ac : carrello.getArticoliCarrello())
+			puntiVendita.add(ac.getDescrizioneArticolo().getPuntoVendita());
+		for (PuntoVendita puntoVendita : puntiVendita) {
+			Pacco pacco = new Pacco(this, carrello.getArticoliCarrello().stream().filter(articoloCarrello -> articoloCarrello.
+					getDescrizioneArticolo().
+					getPuntoVendita().
+					equals(puntoVendita)).
+					collect(Collectors.toList()));
+			pacchi.add(pacco);
+		}
 	}
 }
