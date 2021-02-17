@@ -54,7 +54,7 @@ public class PuntoConsegna {
 		for (Armadietto armadietto : armadietti) {
 			if (armadietto.isDisponibile()){
 				armadietto.setDisponibilita(false);
-				armadietto.riempiArmadietto(prenotazione);
+				armadietto.setPrenotazione(prenotazione);
 				result=armadietto;
 				break;
 			}

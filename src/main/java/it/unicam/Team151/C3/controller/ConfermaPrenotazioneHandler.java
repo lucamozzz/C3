@@ -6,6 +6,7 @@ import it.unicam.Team151.C3.prenotazione.Prenotazione;
 import it.unicam.Team151.C3.prenotazione.Ricevuta;
 import it.unicam.Team151.C3.puntoConsegna.GestorePuntoConsegna;
 import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
+import it.unicam.Team151.C3.repositories.ArticoloCarrelloRepository;
 import it.unicam.Team151.C3.repositories.DescrizioneArticoloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,8 @@ public class ConfermaPrenotazioneHandler {
 	DescrizioneArticoloRepository descrizioneArticoloRepository;
 	@Autowired
 	CatalogoArticoli catalogoArticoli;
+	@Autowired
+	ArticoloCarrelloRepository articoloCarrelloRepository;
 
 	public Ricevuta confermaPrenotazione(Long idPuntoConsegna, Long idCliente) {
 		Carrello carrello = gestoreCarrello.getCarrello(idCliente);
@@ -32,6 +35,8 @@ public class ConfermaPrenotazioneHandler {
 		if (this.checkDisponibilitaArticoli(carrello.getArticoliCarrello())){
 			Prenotazione prenotazione = gestorePrenotazione.createPrenotazione(carrello, puntoConsegna);
 			this.updateCatalogo(carrello);
+			for (ArticoloCarrello articoloCarrello : carrello.getArticoliCarrello())
+				articoloCarrelloRepository.delete(articoloCarrello);
 			carrello.svuota();
 			gestoreCarrello.saveCarrello(carrello);
 			return prenotazione.getRicevuta();

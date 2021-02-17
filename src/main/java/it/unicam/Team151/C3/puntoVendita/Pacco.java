@@ -4,11 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unicam.Team151.C3.articoli.Articolo;
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
-import it.unicam.Team151.C3.manager.ArticoloManager;
-import it.unicam.Team151.C3.prenotazione.*;
+import it.unicam.Team151.C3.prenotazione.Prenotazione;
+import it.unicam.Team151.C3.prenotazione.Stato;
 import it.unicam.Team151.C3.puntoConsegna.Armadietto;
-import it.unicam.Team151.C3.utenti.Commerciante;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +29,6 @@ public class Pacco {
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idPrenotazione")
 	private Prenotazione prenotazione;
-	@ManyToOne(cascade = {CascadeType.ALL})
-	@JoinColumn(name = "idArmadietto")
-	private Armadietto armadietto;
 	private Stato stato;
 
 	public Pacco() {
@@ -42,15 +37,11 @@ public class Pacco {
 	public Pacco(Prenotazione prenotazione, List<ArticoloCarrello> articoliCarrello) {
 		this.articoli = new ArrayList<>();
 		this.puntoVendita = articoliCarrello.get(0).getDescrizioneArticolo().getPuntoVendita();
-		this.armadietto = null;
 		this.prenotazione = prenotazione;
 		this.stato = Stato.PresoInCarico;
 		for (ArticoloCarrello articoloCarrello : articoliCarrello) {
 			for (int i = 0; i < articoloCarrello.getQuantita(); i++)
-				this.articoli.add(ArticoloManager.getInstance().create(articoloCarrello.getDescrizioneArticolo()));
-		}
-		for (Articolo articolo : articoli) {
-			ArticoloManager.getInstance().save(articolo);
+				this.articoli.add(new Articolo(articoloCarrello.getDescrizioneArticolo()));
 		}
 	}
 

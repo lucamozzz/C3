@@ -5,15 +5,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unicam.Team151.C3.articoli.Articolo;
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
 import it.unicam.Team151.C3.articoli.Carrello;
-import it.unicam.Team151.C3.manager.PaccoManager;
 import it.unicam.Team151.C3.manager.RicevutaManager;
 import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.utenti.Cliente;
-import it.unicam.Team151.C3.utenti.Commerciante;
 import it.unicam.Team151.C3.utenti.Corriere;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -51,13 +48,8 @@ public class Prenotazione {
 	public Prenotazione() {
 	}
 
-	//TODO un po' de refactoring
 	public Prenotazione(Carrello carrello, PuntoConsegna puntoConsegna) {
-		this.pacchi = new ArrayList<>();
-
-
-		for (Pacco pacco : pacchi)
-			PaccoManager.getInstance().savePacco(pacco);
+		this.pacchi = this.createPacchi(carrello);
 		this.cliente = carrello.getCliente();
 		this.puntoConsegna = puntoConsegna;
 		this.corriere = null;
@@ -122,8 +114,9 @@ public class Prenotazione {
 		return this.puntoConsegna;
 	}
 
-	public void createPacco(Carrello carrello){
+	public List<Pacco> createPacchi(Carrello carrello){
 		Set<PuntoVendita> puntiVendita = new HashSet<>();
+		List<Pacco> pacchi = new ArrayList<>();
 		for (ArticoloCarrello ac : carrello.getArticoliCarrello())
 			puntiVendita.add(ac.getDescrizioneArticolo().getPuntoVendita());
 		for (PuntoVendita puntoVendita : puntiVendita) {
@@ -134,5 +127,6 @@ public class Prenotazione {
 					collect(Collectors.toList()));
 			pacchi.add(pacco);
 		}
+		return pacchi;
 	}
 }

@@ -1,15 +1,9 @@
 package it.unicam.Team151.C3.puntoConsegna;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unicam.Team151.C3.prenotazione.Prenotazione;
-import it.unicam.Team151.C3.puntoVendita.Pacco;
-import it.unicam.Team151.C3.utenti.Commerciante;
-
 import javax.persistence.*;
-import java.util.List;
-import java.util.Random;
 
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -77,7 +71,7 @@ public class Armadietto {
 		return prenotazione;
 	}
 
-	public void riempiArmadietto(Prenotazione prenotazione) {
+	public void setPrenotazione(Prenotazione prenotazione) {
 		this.prenotazione = prenotazione;
 	}
 
