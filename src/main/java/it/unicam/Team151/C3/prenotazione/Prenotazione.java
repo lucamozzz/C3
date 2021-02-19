@@ -9,6 +9,9 @@ import it.unicam.Team151.C3.puntoVendita.Pacco;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.utenti.Corriere;
+import it.unicam.Team151.C3.utenti.InterfaceCliente;
+import it.unicam.Team151.C3.utenti.InterfaceCorriere;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -31,13 +34,13 @@ public class Prenotazione {
 	private Ricevuta ricevuta;
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCliente")
-	private Cliente cliente;
+	private InterfaceCliente cliente;
 	@Transient
 	private List<Pacco> pacchi;
 	private Stato stato;
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCorriere")
-	private Corriere corriere;
+	private InterfaceCorriere corriere;
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idPuntoConsegna")
 	private PuntoConsegna puntoConsegna;
@@ -57,7 +60,7 @@ public class Prenotazione {
 	/**
 	 * getter del cliente della prenotazione.
 	 */
-	public Cliente getCliente() {
+	public InterfaceCliente getCliente() {
 		return this.cliente;
 	}
 
@@ -91,11 +94,11 @@ public class Prenotazione {
 		this.stato = nuovoStato;
 	}
 
-	public void setCorriere(Corriere corriere) {
+	public void setCorriere(InterfaceCorriere corriere) {
 		this.corriere = corriere;
 	}
 
-	public Corriere getCorriere() {
+	public InterfaceCorriere getCorriere() {
 		return this.corriere;
 	}
 

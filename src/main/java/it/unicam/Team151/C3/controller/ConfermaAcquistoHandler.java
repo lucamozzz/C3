@@ -7,8 +7,7 @@ import it.unicam.Team151.C3.prenotazione.Stato;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.repositories.IRepositoryMaster;
-import it.unicam.Team151.C3.utenti.Commerciante;
-import it.unicam.Team151.C3.utenti.Corriere;
+import it.unicam.Team151.C3.utenti.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +29,7 @@ public class ConfermaAcquistoHandler {
 	public List<Pacco> confermaAcquisto(Long idCommerciante) {
 		if(repositoryMaster.getCommercianteRepository().findById(idCommerciante).isEmpty())
 			throw new NullPointerException("il commerciante non esiste");
-		Commerciante commerciante = repositoryMaster.getCommercianteRepository().findById(idCommerciante).get();
+		InterfaceCommerciante commerciante = repositoryMaster.getCommercianteRepository().findById(idCommerciante).get();
 		List<PuntoVendita> puntiVenditaCommerciante = repositoryMaster.getPuntoVenditaRepository().findAllByCommerciante(commerciante);
 		List<Pacco> pacchiCommerciante = new ArrayList<>();
 		for (PuntoVendita puntoVendita : puntiVenditaCommerciante)
@@ -59,12 +58,12 @@ public class ConfermaAcquistoHandler {
 	public void assegnaCorriere(Prenotazione prenotazione) {
 		List<Long> idCorrieri = new ArrayList<>();
 		Random rand = new Random();
-		for(Corriere corriere : repositoryMaster.getCorriereRepository().findAll())
+		for(InterfaceCorriere corriere : repositoryMaster.getCorriereRepository().findAll())
 			idCorrieri.add(corriere.getId());
 		Long randomElement = idCorrieri.get(rand.nextInt(idCorrieri.size()));
 		if (repositoryMaster.getCorriereRepository().findById(randomElement).isEmpty())
 			throw new NoSuchElementException("Nessun corriere trovato.");
-		Corriere corriereDaAssegnare = repositoryMaster.getCorriereRepository().findById(randomElement).get();
+		InterfaceCorriere corriereDaAssegnare = repositoryMaster.getCorriereRepository().findById(randomElement).get();
 		prenotazione.setCorriere(corriereDaAssegnare);
 		repositoryMaster.getPrenotazioneRepository().save(prenotazione);
 	}
