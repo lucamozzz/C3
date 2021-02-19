@@ -1,11 +1,10 @@
 package it.unicam.Team151.C3.repositories;
 
-import javassist.runtime.Desc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RepositoryMaster {
+public class RepositoryMaster implements IRepositoryMaster {
 
     private static RepositoryMaster instance = null;
 
@@ -46,58 +45,72 @@ public class RepositoryMaster {
         return instance;
     }
 
+    @Override
     public ClienteRepository getClienteRepository() {
         return clienteRepository;
     }
 
+    @Override
     public CommercianteRepository getCommercianteRepository() {
         return commercianteRepository;
     }
 
+    @Override
     public CorriereRepository getCorriereRepository() {
         return corriereRepository;
     }
 
+    @Override
     public ArmadiettoRepository getArmadiettoRepository() {
         return armadiettoRepository;
     }
 
+    @Override
     public ArticoloCarrelloRepository getArticoloCarrelloRepository() {
         return articoloCarrelloRepository;
     }
 
+    @Override
     public ArticoloRepository getArticoloRepository() {
         return articoloRepository;
     }
 
+    @Override
     public CarrelloRepository getCarrelloRepository() {
         return carrelloRepository;
     }
 
+    @Override
     public CategoriaRepository getCategoriaRepository() {
         return categoriaRepository;
     }
 
+    @Override
     public DescrizioneArticoloRepository getDescrizioneArticoloRepository() {
         return descrizioneArticoloRepository;
     }
 
+    @Override
     public PaccoRepository getPaccoRepository() {
         return paccoRepository;
     }
 
+    @Override
     public PrenotazioneRepository getPrenotazioneRepository() {
         return prenotazioneRepository;
     }
 
+    @Override
     public PuntoConsegnaRepository getPuntoConsegnaRepository() {
         return puntoConsegnaRepository;
     }
 
+    @Override
     public PuntoVenditaRepository getPuntoVenditaRepository() {
         return puntoVenditaRepository;
     }
 
+    @Override
     public RicevutaRepository getRicevutaRepository() {
         return ricevutaRepository;
     }

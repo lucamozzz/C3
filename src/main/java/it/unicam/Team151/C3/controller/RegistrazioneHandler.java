@@ -2,7 +2,7 @@ package it.unicam.Team151.C3.controller;
 
 import it.unicam.Team151.C3.exceptions.AlreadyExistingUserException;
 import it.unicam.Team151.C3.manager.UtenteManager;
-import it.unicam.Team151.C3.repositories.RepositoryMaster;
+import it.unicam.Team151.C3.repositories.IRepositoryMaster;
 import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.utenti.Commerciante;
 import it.unicam.Team151.C3.utenti.Corriere;
@@ -19,7 +19,7 @@ public class RegistrazioneHandler {
 	UtenteManager utenteManager;
 
 	@Autowired
-	private RepositoryMaster repositoryMaster;
+	private IRepositoryMaster repositoryMaster;
 
 	//TODO un po' de refactoring
 	public void compilaForm(String nome, String cognome, String indirizzo, String ruolo, String email, String password) throws AlreadyExistingUserException {

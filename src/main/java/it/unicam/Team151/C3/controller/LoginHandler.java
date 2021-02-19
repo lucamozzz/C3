@@ -2,7 +2,7 @@ package it.unicam.Team151.C3.controller;
 
 import it.unicam.Team151.C3.exceptions.NotExistingUserException;
 import it.unicam.Team151.C3.exceptions.WrongPasswordException;
-import it.unicam.Team151.C3.repositories.RepositoryMaster;
+import it.unicam.Team151.C3.repositories.IRepositoryMaster;
 import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.utenti.Commerciante;
 import it.unicam.Team151.C3.utenti.Corriere;
@@ -21,7 +21,7 @@ public class LoginHandler {
 	private UtenteAutenticato utente = null;
 
 	@Autowired
-	private RepositoryMaster repositoryMaster;
+	private IRepositoryMaster repositoryMaster;
 
 	/**
 	 *  @param email
