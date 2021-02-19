@@ -2,7 +2,7 @@ package it.unicam.Team151.C3.controller;
 
 import it.unicam.Team151.C3.exceptions.NotExistingUserException;
 import it.unicam.Team151.C3.exceptions.WrongPasswordException;
-import it.unicam.Team151.C3.repositories.UtenteRepository;
+import it.unicam.Team151.C3.repositories.RepositoryMaster;
 import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.utenti.Commerciante;
 import it.unicam.Team151.C3.utenti.Corriere;
@@ -21,7 +21,7 @@ public class LoginHandler {
 	private UtenteAutenticato utente = null;
 
 	@Autowired
-	private UtenteRepository utenteRepository;
+	private RepositoryMaster repositoryMaster;
 
 	/**
 	 *  @param email
@@ -59,7 +59,7 @@ public class LoginHandler {
 	}
 
 	private void caseCliente(String email, String pwd) throws NotExistingUserException, WrongPasswordException {
-		Optional<Cliente> cliente = utenteRepository.getClienteRepository().findByEmail(email);
+		Optional<Cliente> cliente = repositoryMaster.getClienteRepository().findByEmail(email);
 		if (cliente.isEmpty())
 			throw new NotExistingUserException();
 		if(cliente.get().getPassword().equals(pwd)) {
@@ -69,7 +69,7 @@ public class LoginHandler {
 	}
 
 	private void caseCommerciante(String email, String pwd) throws NotExistingUserException, WrongPasswordException {
-		Optional<Commerciante> commerciante = utenteRepository.getCommercianteRepository().findByEmail(email);
+		Optional<Commerciante> commerciante = repositoryMaster.getCommercianteRepository().findByEmail(email);
 		if (commerciante.isEmpty())
 			throw new NotExistingUserException();
 		if(commerciante.get().getPassword().equals(pwd))
@@ -78,7 +78,7 @@ public class LoginHandler {
 	}
 
 	private void caseCorriere(String email, String pwd) throws NotExistingUserException, WrongPasswordException {
-		Optional<Corriere> corriere = utenteRepository.getCorriereRepository().findByEmail(email);
+		Optional<Corriere> corriere = repositoryMaster.getCorriereRepository().findByEmail(email);
 		if (corriere.isEmpty())
 			throw new NotExistingUserException();
 		if(corriere.get().getPassword().equals(pwd))

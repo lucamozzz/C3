@@ -2,33 +2,33 @@ package it.unicam.Team151.C3.utenti;
 
 public interface UtenteAutenticato {
 
-    Long getId();
+     Long getId();
 
-    String getNome();
+     String getNome();
 
-    String getCognome();
+     String getCognome();
 
-    String getIndirizzo();
+     String getIndirizzo();
 
-    String getRuolo();
+     String getRuolo();
 
-    String getEmail();
+     String getEmail();
 
-    String getPassword();
+     String getPassword();
 
-    void setNome(String nome);
+     void setNome(String nome);
 
-    void setCognome(String cognome);
+     void setCognome(String cognome);
 
-    void setIndirizzo(String indirizzo);
+     void setIndirizzo(String indirizzo);
 
-    void setRuolo(String ruolo);
+     void setRuolo(String ruolo);
 
-    void setEmail(String email);
+     void setEmail(String email);
 
-    void setPassword(String password);
+     void setPassword(String password);
 
-    boolean getLogged();
+     boolean getLogged();
 
-    void setLogged(boolean logged);
+     void setLogged(boolean logged);
 }

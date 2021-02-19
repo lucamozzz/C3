@@ -42,6 +42,10 @@ public class Ricevuta {
 		return codice;
 	}
 
+	public void setCodice(int codice){
+		this.codice = codice;
+	}
+
 	public void generateCodice() {
 		this.codice = (int)(Math.random() * (999999999 - 100000000 + 1) + 100000000);
 	}

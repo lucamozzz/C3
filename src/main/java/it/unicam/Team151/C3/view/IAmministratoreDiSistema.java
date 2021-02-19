@@ -3,7 +3,9 @@ package it.unicam.Team151.C3.view;
 import it.unicam.Team151.C3.articoli.Categoria;
 import it.unicam.Team151.C3.controller.GestioneCategorieHandler;
 import it.unicam.Team151.C3.controller.GestionePuntiConsegnaHandler;
-import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
+import it.unicam.Team151.C3.controller.VisualizzaCategorieHandler;
+import it.unicam.Team151.C3.controller.VisualizzaPuntiConsegnaHandler;
+import it.unicam.Team151.C3.prenotazione.PuntoConsegna;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +17,16 @@ public class IAmministratoreDiSistema {
 
 	@Autowired
 	GestionePuntiConsegnaHandler gestionePuntiConsegnaHandler;
-
 	@Autowired
 	GestioneCategorieHandler gestioneCategorieHandler;
+	@Autowired
+	VisualizzaPuntiConsegnaHandler visualizzaPuntiConsegnaHandler;
+	@Autowired
+	VisualizzaCategorieHandler visualizzaCategorieHandler;
 
 	@GetMapping("mostraCategorie")
 	public List<Categoria> getCategorie() {
-		return gestioneCategorieHandler.getCategorie();
+		return visualizzaCategorieHandler.getCategorie();
 	}
 
 	@PostMapping("creaCategoria")
@@ -32,6 +37,11 @@ public class IAmministratoreDiSistema {
 	@PostMapping("aggiornaCategoria")
 	public void aggiornaCategoria(@RequestParam Long idCategoria, @RequestParam String nome,@RequestParam String descrizione) {
 		gestioneCategorieHandler.aggiornaCategoria(idCategoria,nome,descrizione);
+	}
+
+	@GetMapping("mostraPuntiConsegna")
+	public List<PuntoConsegna> getPuntiConsegna(){
+		return visualizzaPuntiConsegnaHandler.getPuntiConsegna();
 	}
 
 	@PostMapping("aggiungiPuntoConsegna")
@@ -47,10 +57,5 @@ public class IAmministratoreDiSistema {
 	@PostMapping("rimuoviPuntoConsegna")
 	public void rimuoviPuntoConsegna(@RequestParam Long idPuntoConsegna) {
 		gestionePuntiConsegnaHandler.rimuoviPuntoConsegna(idPuntoConsegna);
-	}
-
-	@GetMapping("getPuntiConsegna")
-	public List<PuntoConsegna> getPuntiConsegna(){
-		return gestionePuntiConsegnaHandler.getPuntiConsegna();
 	}
 }

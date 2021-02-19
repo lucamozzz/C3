@@ -1,6 +1,7 @@
 package it.unicam.Team151.C3.utenti;
 
 
+import it.unicam.Team151.C3.manager.IGestore;
 import it.unicam.Team151.C3.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.NoSuchElementException;
 
 @Service
-public class GestoreCliente extends GestoreUtenti {
+public class GestoreCliente implements IGestore<Cliente> {
 
     private static GestoreCliente instance;
 
@@ -24,9 +25,20 @@ public class GestoreCliente extends GestoreUtenti {
         return instance;
     }
 
-    public Cliente getCliente(Long idCliente){
-        if (clienteRepository.findById(idCliente).isEmpty())
+    @Override
+    public Cliente get(Long id) {
+        if (clienteRepository.findById(id).isEmpty())
             throw new NoSuchElementException("Nessun cliente trovato.");
-        else return clienteRepository.findById(idCliente).get();
+        else return clienteRepository.findById(id).get();
+    }
+
+    @Override
+    public void save(Cliente cliente) {
+        clienteRepository.save(cliente);
+    }
+
+    @Override
+    public void delete(Cliente cliente) {
+        clienteRepository.delete(cliente);
     }
 }

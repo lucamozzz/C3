@@ -29,14 +29,14 @@ public class ICorriere implements IUtenteAutenticato{
 	@Autowired
 	LogoutHandler logoutHandler;
 
-	@PostMapping("consegnaArticoli")
-	public void consegnaArticoli(@RequestParam Long idPrenotazione) {
-		consegnaArticoliHandler.consegnaArticolo(idPrenotazione);
+	@PostMapping("getPrenotazioni")
+	public List<Prenotazione> consegnaArticoli(@RequestParam Long idCorriere) {
+		return consegnaArticoliHandler.getPrenotazioni(idCorriere);
 	}
 
-	@PostMapping("mostraPacchi")
-	public List<Pacco> mostraPacchiCorriere(@RequestParam Long idCorriere) {
-		return prelievoArticoliHandler.getPacchi(idCorriere);
+	@PostMapping("consegnaPrenotazione")
+	public void consegnaPrenotazione(@RequestParam Long idPrenotazione) {
+		consegnaArticoliHandler.consegnaPrenotazione(idPrenotazione);
 	}
 
 	@PostMapping("prelievoArticoli")

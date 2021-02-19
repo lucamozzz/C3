@@ -12,7 +12,7 @@ import java.util.List;
         property = "id",
         scope = Cliente.class)
 @Entity
-public class Corriere implements UtenteAutenticato {
+public class Corriere implements InterfaceCorriere {
 
     @Id
     @Column(name = "idCorriere")

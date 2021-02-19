@@ -21,10 +21,10 @@ public class DescrizioneArticolo {
 	private String descrizione;
 	private double prezzo;
 	private int quantita;
-	@OneToOne(cascade = {CascadeType.MERGE})
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idPuntoVendita")
 	private PuntoVendita puntoVendita;
-	@ManyToOne(cascade = {CascadeType.MERGE})
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCategoria")
 	private Categoria categoria;
 
@@ -83,4 +83,8 @@ public class DescrizioneArticolo {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+
+    public void setNome(String nome) {
+		this.nome = nome;
+    }
 }

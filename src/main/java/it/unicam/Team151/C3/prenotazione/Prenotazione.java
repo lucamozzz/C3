@@ -5,13 +5,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unicam.Team151.C3.articoli.Articolo;
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
 import it.unicam.Team151.C3.articoli.Carrello;
-import it.unicam.Team151.C3.manager.RicevutaManager;
-import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.utenti.Corriere;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,16 +29,16 @@ public class Prenotazione {
 	private Long id;
 	@Transient
 	private Ricevuta ricevuta;
-	@OneToOne(cascade = {CascadeType.ALL})
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCliente")
 	private Cliente cliente;
 	@Transient
 	private List<Pacco> pacchi;
 	private Stato stato;
-	@OneToOne(cascade = {CascadeType.ALL})
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCorriere")
 	private Corriere corriere;
-	@OneToOne(cascade = {CascadeType.ALL})
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idPuntoConsegna")
 	private PuntoConsegna puntoConsegna;
 
@@ -68,10 +65,6 @@ public class Prenotazione {
 	 * getter della ricevuta della prenotazione.
 	 */
 	public Ricevuta getRicevuta() {
-		if (ricevuta == null){
-			this.ricevuta = RicevutaManager.getInstance().createRicevuta(this);
-			RicevutaManager.getInstance().saveRicevuta(ricevuta);
-		}
 		return this.ricevuta;
 	}
 
@@ -128,5 +121,13 @@ public class Prenotazione {
 			pacchi.add(pacco);
 		}
 		return pacchi;
+	}
+
+	public void createRicevuta(){
+		this.ricevuta = new Ricevuta(this);
+	}
+
+	public void setRicevuta(Ricevuta ricevuta) {
+		this.ricevuta = ricevuta;
 	}
 }

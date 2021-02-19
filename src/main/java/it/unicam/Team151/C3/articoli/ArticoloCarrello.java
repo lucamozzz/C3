@@ -2,8 +2,6 @@ package it.unicam.Team151.C3.articoli;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import it.unicam.Team151.C3.utenti.Commerciante;
-
 import javax.persistence.*;
 
 @JsonIdentityInfo(
@@ -18,10 +16,10 @@ public class ArticoloCarrello {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private int quantita;
-	@OneToOne(cascade = {CascadeType.MERGE})
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idDescrizioneArticolo")
 	private DescrizioneArticolo descrizioneArticolo;
-	@ManyToOne(cascade = {CascadeType.MERGE})
+	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCarrello")
 	private Carrello carrello;
 

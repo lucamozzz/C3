@@ -1,25 +1,12 @@
 package it.unicam.Team151.C3;
 
-import it.unicam.Team151.C3.articoli.ArticoloCarrello;
-import it.unicam.Team151.C3.articoli.Carrello;
-import it.unicam.Team151.C3.articoli.Categoria;
-import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
-import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
-import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.repositories.*;
-import it.unicam.Team151.C3.utenti.Cliente;
-import it.unicam.Team151.C3.utenti.Commerciante;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 @SpringBootApplication
 @Component

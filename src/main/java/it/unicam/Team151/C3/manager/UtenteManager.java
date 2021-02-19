@@ -16,7 +16,7 @@ public class UtenteManager {
 	private static UtenteManager instance;
 
 	@Autowired
-	GestoreCarrello gestoreCarrello;
+	CarrelloManager carrelloManager;
 
 	private UtenteManager(){}
 
@@ -31,7 +31,7 @@ public class UtenteManager {
 		switch (form.get(3)) {
 			case "Cliente":
 				newUser = new Cliente(form);
-				gestoreCarrello.createCarrello((Cliente) newUser);
+				carrelloManager.createCarrello((Cliente) newUser);
 				break;
 			case "Commerciante":
 				newUser = new Commerciante(form);

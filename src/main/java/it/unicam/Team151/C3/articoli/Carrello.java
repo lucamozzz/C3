@@ -42,7 +42,7 @@ public class Carrello {
 		this.articoliCarrello.clear();
 	}
 
-	//TODO ottimizzare
+	//TODO - eliminare metodo(?)
 	public ArticoloCarrello aggiungiArticoloCarrello(ArticoloCarrello articoloCarrello, int quantita) {
 		ArticoloCarrello articoloCarrelloDaAggiungere = articoloCarrello;
 		boolean flag = false;
@@ -60,7 +60,7 @@ public class Carrello {
 		return articoloCarrelloDaAggiungere;
 	}
 
-	//TODO ottimizzare
+	//TODO - eliminare metodo(?)
 	public void rimuoviArticoloCarrello(ArticoloCarrello articoloCarrello, int quantita) {
 		if (articoloCarrello.getQuantita() < quantita)
 			throw new IllegalArgumentException("La quantità da rimuovere è errata");

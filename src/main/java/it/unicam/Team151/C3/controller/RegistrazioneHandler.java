@@ -2,7 +2,7 @@ package it.unicam.Team151.C3.controller;
 
 import it.unicam.Team151.C3.exceptions.AlreadyExistingUserException;
 import it.unicam.Team151.C3.manager.UtenteManager;
-import it.unicam.Team151.C3.repositories.UtenteRepository;
+import it.unicam.Team151.C3.repositories.RepositoryMaster;
 import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.utenti.Commerciante;
 import it.unicam.Team151.C3.utenti.Corriere;
@@ -19,7 +19,7 @@ public class RegistrazioneHandler {
 	UtenteManager utenteManager;
 
 	@Autowired
-	private UtenteRepository utenteRepository;
+	private RepositoryMaster repositoryMaster;
 
 	//TODO un po' de refactoring
 	public void compilaForm(String nome, String cognome, String indirizzo, String ruolo, String email, String password) throws AlreadyExistingUserException {
@@ -34,13 +34,13 @@ public class RegistrazioneHandler {
 			UtenteAutenticato newUser = utenteManager.createUtente(form);
 			switch (form.get(3)) {
 				case "Cliente":
-					utenteRepository.getClienteRepository().save((Cliente) newUser);
+					repositoryMaster.getClienteRepository().save((Cliente) newUser);
 					break;
 				case "Commerciante":
-					utenteRepository.getCommercianteRepository().save((Commerciante) newUser);
+					repositoryMaster.getCommercianteRepository().save((Commerciante) newUser);
 					break;
 				case "Corriere":
-					utenteRepository.getCorriereRepository().save((Corriere) newUser);
+					repositoryMaster.getCorriereRepository().save((Corriere) newUser);
 					break;
 			}
 		}
@@ -52,9 +52,9 @@ public class RegistrazioneHandler {
 			if (s.trim().equals(""))
 				throw new NullPointerException("Uno o più campi null");
 		}
-		if (utenteRepository.getClienteRepository().findByEmail(form.get(4)).isPresent() ||
-			utenteRepository.getCommercianteRepository().findByEmail(form.get(4)).isPresent() ||
-			utenteRepository.getCorriereRepository().findByEmail(form.get(4)).isPresent())
+		if (repositoryMaster.getClienteRepository().findByEmail(form.get(4)).isPresent() ||
+			repositoryMaster.getCommercianteRepository().findByEmail(form.get(4)).isPresent() ||
+			repositoryMaster.getCorriereRepository().findByEmail(form.get(4)).isPresent())
 				throw new AlreadyExistingUserException();
 		return true;
 	}

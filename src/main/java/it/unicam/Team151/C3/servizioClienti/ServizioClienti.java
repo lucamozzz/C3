@@ -1,14 +1,11 @@
 package it.unicam.Team151.C3.servizioClienti;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class ServizioClienti {
 
-	/**
-	 * genera un feedback della prenotazione effettuata dal cliente.
-	 * @param idPrenotazione
-	 */
-	public void richiestaFeedback(Long idPrenotazione) {
-		// TODO - implement ServizioClienti.richiestaFeedback
-		throw new UnsupportedOperationException();
+	public void richiestaFeedback() {
 	}
 
 }

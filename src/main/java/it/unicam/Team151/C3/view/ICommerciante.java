@@ -25,36 +25,26 @@ public class ICommerciante implements IUtenteAutenticato{
 	@Autowired
 	GestioneArticoliHandler gestioneArticoliHandler;
 	@Autowired
-	private GestorePrenotazione gestorePrenotazione;
-
-
-	@Autowired
 	LogoutHandler logoutHandler;
 
-	//sono passi che non abbiamo scritto nel caso d'uso.
 	@PostMapping("confermaAcquisto")
-	public List<Pacco> confermaAcquisto(@RequestParam Long idPrenotazione) {
-		return confermaAcquistoHandler.confermaAcquisto(idPrenotazione);
+	public List<Pacco> confermaAcquisto(@RequestParam Long idCommerciante) {
+		return confermaAcquistoHandler.confermaAcquisto(idCommerciante);
 	}
 
 	@PostMapping("confermaPagamento")
-	public void confermaPagamento(@RequestParam Long idPrenotazione, @RequestParam Long idPacco) {
-		confermaAcquistoHandler.confermaPagamento(idPrenotazione, idPacco);
-	}
-
-	public void aggiungiArticolo() {
-		// TODO - implement ICommerciante.aggiungiArticolo
-		throw new UnsupportedOperationException();
+	public void confermaPagamento(@RequestParam Long idPacco) {
+		confermaAcquistoHandler.confermaPagamento(idPacco);
 	}
 
 	@PostMapping("aggiungiArticolo")
-	public DescrizioneArticolo inserimentoDatiArticoloDaAggiungere(@RequestParam String nome,
-													@RequestParam String descrizione,
-													@RequestParam double prezzo,
-													@RequestParam int quantita,
-													@RequestParam Long idPuntoVendita,
-													@RequestParam Long idCategoria) {
-	return gestioneArticoliHandler.inserimentoDatiArticoloDaAggiungere(nome, descrizione, prezzo, quantita, idPuntoVendita, idCategoria);
+	public DescrizioneArticolo aggiungiArticolo(@RequestParam String nome,
+												@RequestParam String descrizione,
+												@RequestParam double prezzo,
+												@RequestParam int quantita,
+												@RequestParam Long idPuntoVendita,
+												@RequestParam Long idCategoria) {
+	return gestioneArticoliHandler.aggiungiArticolo(nome, descrizione, prezzo, quantita, idPuntoVendita, idCategoria);
 	}
 
 	@PostMapping("getArticoloDaModificare")
@@ -62,17 +52,11 @@ public class ICommerciante implements IUtenteAutenticato{
 		return gestioneArticoliHandler.getArticoli(idCommerciante);
 	}
 
-	@PostMapping("scegliArticoloDaModificare")
-	public void scegliArticolo(@RequestParam Long idArticolo) {
-		gestioneArticoliHandler.scegliArticolo(idArticolo);
-	}
-
-	@PostMapping("modificareArticolo")
-	public void inserimentoDatiArticoloDaModificare(@RequestParam String nome, @RequestParam String descrizione,
+	@PostMapping("modificaArticolo")
+	public void inserimentoDatiArticoloDaModificare(@RequestParam Long idDescrizioneArticolo, @RequestParam String nome, @RequestParam String descrizione,
 													@RequestParam double prezzo, @RequestParam int quantita,
-													@RequestParam PuntoVendita puntoVendita,
 													@RequestParam Categoria categoria) {
-		gestioneArticoliHandler.inserimentoDatiArticoloDaModificare(nome, descrizione, prezzo, quantita, puntoVendita, categoria);
+		gestioneArticoliHandler.inserimentoDatiArticoloDaModificare(idDescrizioneArticolo, nome, descrizione, prezzo, quantita, categoria);
 	}
 
 	@PostMapping("getArticoloDaRimuovere")

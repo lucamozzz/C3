@@ -1,16 +1,15 @@
 package it.unicam.Team151.C3.controller;
 
 import it.unicam.Team151.C3.articoli.*;
-import it.unicam.Team151.C3.prenotazione.GestorePrenotazione;
+import it.unicam.Team151.C3.manager.PrenotazioneManager;
+import it.unicam.Team151.C3.prenotazione.GestoreRicevuta;
 import it.unicam.Team151.C3.prenotazione.Prenotazione;
 import it.unicam.Team151.C3.prenotazione.Ricevuta;
 import it.unicam.Team151.C3.puntoConsegna.GestorePuntoConsegna;
-import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
-import it.unicam.Team151.C3.repositories.ArticoloCarrelloRepository;
+import it.unicam.Team151.C3.prenotazione.PuntoConsegna;
 import it.unicam.Team151.C3.repositories.DescrizioneArticoloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -21,24 +20,28 @@ public class ConfermaPrenotazioneHandler {
 	@Autowired
 	GestorePuntoConsegna gestorePuntoConsegna;
 	@Autowired
-	GestorePrenotazione gestorePrenotazione;
-	@Autowired
 	DescrizioneArticoloRepository descrizioneArticoloRepository;
 	@Autowired
 	CatalogoArticoli catalogoArticoli;
 	@Autowired
-	ArticoloCarrelloRepository articoloCarrelloRepository;
+	PrenotazioneManager prenotazioneManager;
+	@Autowired
+	GestoreArticoloCarrello gestoreArticoloCarrello;
+	@Autowired
+	GestoreRicevuta gestoreRicevuta;
 
 	public Ricevuta confermaPrenotazione(Long idPuntoConsegna, Long idCliente) {
-		Carrello carrello = gestoreCarrello.getCarrello(idCliente);
+		Carrello carrello = gestoreCarrello.get(idCliente);
 		PuntoConsegna puntoConsegna = gestorePuntoConsegna.get(idPuntoConsegna);
 		if (this.checkDisponibilitaArticoli(carrello.getArticoliCarrello())){
-			Prenotazione prenotazione = gestorePrenotazione.createPrenotazione(carrello, puntoConsegna);
+			Prenotazione prenotazione = prenotazioneManager.createPrenotazione(carrello, puntoConsegna);
 			this.updateCatalogo(carrello);
 			for (ArticoloCarrello articoloCarrello : carrello.getArticoliCarrello())
-				articoloCarrelloRepository.delete(articoloCarrello);
+				gestoreArticoloCarrello.delete(articoloCarrello);
 			carrello.svuota();
-			gestoreCarrello.saveCarrello(carrello);
+			gestoreCarrello.save(carrello);
+			prenotazione.createRicevuta();
+			gestoreRicevuta.save(prenotazione.getRicevuta());
 			return prenotazione.getRicevuta();
 		} else throw new IllegalStateException("Uno o più articoli non disponibili.");
 	}
@@ -54,8 +57,13 @@ public class ConfermaPrenotazioneHandler {
 
 	public void updateCatalogo(Carrello carrello) {
 		for (ArticoloCarrello articoloCarrello : carrello.getArticoliCarrello()){
-			catalogoArticoli.modificaQuantitaArticolo(articoloCarrello.getDescrizioneArticolo().getId(), -articoloCarrello.getQuantita());
+			DescrizioneArticolo descrizioneArticolo = catalogoArticoli.get(articoloCarrello.getDescrizioneArticolo().getId());
+			descrizioneArticolo.setQuantita(descrizioneArticolo.getQuantita() - articoloCarrello.getQuantita());
+			catalogoArticoli.save(descrizioneArticolo);
 		}
 	}
 
+	public List<PuntoConsegna> elaboraPrenotazione() {
+		return gestorePuntoConsegna.getPuntiConsegna();
+	}
 }

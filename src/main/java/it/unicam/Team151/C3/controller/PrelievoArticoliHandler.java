@@ -10,6 +10,7 @@ import it.unicam.Team151.C3.repositories.CorriereRepository;
 import it.unicam.Team151.C3.repositories.PaccoRepository;
 import it.unicam.Team151.C3.repositories.PrenotazioneRepository;
 import it.unicam.Team151.C3.utenti.Corriere;
+import it.unicam.Team151.C3.utenti.GestoreCorriere;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,11 @@ import java.util.List;
 
 @Service
 public class PrelievoArticoliHandler {
+
+	@Autowired
+	GestoreCorriere gestoreCorriere;
+	@Autowired
+	GestorePrenotazione gestorePrenotazione;
 
 	@Autowired
 	CorriereRepository corriereRepository;
@@ -39,14 +45,9 @@ public class PrelievoArticoliHandler {
 		checkStatoPrenotazione(prenotazione);
 	}
 
-	public List<Pacco> getPacchi(Long idCorriere) {
-		Corriere corriere = corriereRepository.findById(idCorriere).get();
-		List<Pacco> pacchiCorriere = new ArrayList<>();
-		Iterable<Prenotazione> it = prenotazioneRepository.findAllByCorriere(corriere);
-		for (Prenotazione prenotazione : it) {
-			pacchiCorriere.addAll(paccoRepository.findAllByPrenotazione(prenotazione));
-		}
-		return pacchiCorriere;
+	public List<Prenotazione> getPrenotazioni(Long idCorriere) {
+		Corriere corriere = gestoreCorriere.get(idCorriere);
+		return gestorePrenotazione.getAll(corriere);
 	}
 
 	//TODO da ridevere (cosuccia in più)

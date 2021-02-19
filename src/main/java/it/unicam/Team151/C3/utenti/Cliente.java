@@ -11,7 +11,7 @@ import java.util.List;
         property = "id",
         scope = Cliente.class)
 @Entity
-public class Cliente implements UtenteAutenticato {
+public class Cliente implements InterfaceCliente {
 
     @Id
     @Column(name = "idCliente")

@@ -1,24 +1,21 @@
 package it.unicam.Team151.C3.controller;
 
-
 import it.unicam.Team151.C3.puntoConsegna.GestorePuntoConsegna;
-import it.unicam.Team151.C3.puntoConsegna.PuntoConsegna;
-import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
+import it.unicam.Team151.C3.prenotazione.PuntoConsegna;
+import it.unicam.Team151.C3.repositories.PuntoConsegnaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class GestionePuntiConsegnaHandler {
 
 	@Autowired
 	GestorePuntoConsegna gestorePuntoConsegna;
+	@Autowired
+	PuntoConsegnaRepository puntoConsegnaRepository;
 
-	public List<PuntoConsegna> getPuntiConsegna() {
-		return gestorePuntoConsegna.getPuntiConsegna();
-	}
-
+	//TODO - da vedere insieme chi crea un Armadietto
 	public void aggiungiPuntoConsegna(String ubicazione, int numeroArmadietti) {
 		if (ubicazione == null)
 			throw new NullPointerException("Dati inseriti non validi.");
@@ -27,19 +24,24 @@ public class GestionePuntiConsegnaHandler {
 		gestorePuntoConsegna.createPuntoConsegna(ubicazione, numeroArmadietti);
 	}
 
+	//TODO - eliminare codice ripetuto
 	public void modificaPuntoConsegna(Long idPuntoConsegna, String ubicazione) {
 		if (ubicazione == null)
 			throw new NullPointerException("Dati inseriti non validi.");
 		if (ubicazione.length() > 40)
 			throw new IllegalArgumentException("Dati inseriti non validi.");
-		PuntoConsegna puntoConsegna = gestorePuntoConsegna.get(idPuntoConsegna);
+		if (puntoConsegnaRepository.findById(idPuntoConsegna).isEmpty())
+			throw new NoSuchElementException("Nessun punto consegna trovato.");
+		PuntoConsegna puntoConsegna = puntoConsegnaRepository.findById(idPuntoConsegna).get();
 		if (!ubicazione.isEmpty())
 			puntoConsegna.setUbicazione(ubicazione);
-		gestorePuntoConsegna.save(puntoConsegna);
+		puntoConsegnaRepository.save(puntoConsegna);
 	}
 
+	//TODO - eliminare codice ripetuto
 	public void rimuoviPuntoConsegna(Long idPuntoConsegna) {
-		PuntoConsegna puntoConsegna = gestorePuntoConsegna.get(idPuntoConsegna);
-		gestorePuntoConsegna.delete(puntoConsegna);
+		if (puntoConsegnaRepository.findById(idPuntoConsegna).isEmpty())
+			throw new NoSuchElementException("Nessun punto consegna trovato.");
+		puntoConsegnaRepository.delete(puntoConsegnaRepository.findById(idPuntoConsegna).get());
 	}
 }

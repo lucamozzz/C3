@@ -1754,3 +1754,6 @@ Caused by: java.lang.IllegalStateException: The file is locked: nio:C:/Users/Ale
 	at org.h2.mvstore.FileStore.open(FileStore.java:172)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:381)
 	... 66 more
+2021-02-17 22:07:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "PUNTO_CONSEGNA[*] SELECT * FROM PRENOTAZIONE"; expected "PREPARE"; SQL statement:
+PUNTO_CONSEGNA SELECT * FROM PRENOTAZIONE [42001-200]

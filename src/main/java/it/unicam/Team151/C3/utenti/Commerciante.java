@@ -2,6 +2,8 @@ package it.unicam.Team151.C3.utenti;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,10 +12,10 @@ import java.util.List;
         property = "id",
         scope = Commerciante.class)
 @Entity
-public class Commerciante implements UtenteAutenticato {
+public class Commerciante implements InterfaceCommerciante {
 
     @Id
-    @Column(name = "idCorriere")
+    @Column(name = "idCommerciante")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
@@ -124,5 +126,10 @@ public class Commerciante implements UtenteAutenticato {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    public PuntoVendita createPuntoVendita(String nome, String ubicazione) {
+        return new PuntoVendita(this, nome, ubicazione);
     }
 }

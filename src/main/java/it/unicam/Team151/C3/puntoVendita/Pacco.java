@@ -6,7 +6,7 @@ import it.unicam.Team151.C3.articoli.Articolo;
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
 import it.unicam.Team151.C3.prenotazione.Prenotazione;
 import it.unicam.Team151.C3.prenotazione.Stato;
-import it.unicam.Team151.C3.puntoConsegna.Armadietto;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,8 @@ public class Pacco {
 	private Long id;
 	@Transient
 	private List<Articolo> articoli;
-	@Transient
+	@ManyToOne(cascade = {CascadeType.ALL})
+	@JoinColumn(name = "idPuntoVendita")
 	private PuntoVendita puntoVendita;
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idPrenotazione")

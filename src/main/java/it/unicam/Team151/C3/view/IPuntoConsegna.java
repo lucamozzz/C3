@@ -1,7 +1,7 @@
 package it.unicam.Team151.C3.view;
 
 import it.unicam.Team151.C3.controller.RitiraPrenotazioneHandler;
-import it.unicam.Team151.C3.puntoConsegna.Armadietto;
+import it.unicam.Team151.C3.prenotazione.Armadietto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -2,8 +2,10 @@ package it.unicam.Team151.C3.articoli;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import antlr.ASTNULLType;
+import it.unicam.Team151.C3.manager.IGestore;
 import it.unicam.Team151.C3.puntoVendita.*;
 import it.unicam.Team151.C3.repositories.CategoriaRepository;
 import it.unicam.Team151.C3.repositories.DescrizioneArticoloRepository;
@@ -11,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CatalogoArticoli {
+public class CatalogoArticoli implements IGestore<DescrizioneArticolo> {
 
 	@Autowired
 	DescrizioneArticoloRepository descrizioneArticoloRepository;
@@ -44,36 +46,19 @@ public class CatalogoArticoli {
 	}
 
 	public List<DescrizioneArticolo> getArticoliPerCategoria(Categoria categoria) {
-		allDescrizioneArticoli.clear();
-		allDescrizioneArticoli.addAll(descrizioneArticoloRepository.findAllByCategoria(categoria));
-		return allDescrizioneArticoli;
+		return descrizioneArticoloRepository.findAllByCategoria(categoria);
 	}
-
-	public DescrizioneArticolo createDescrizioneArticolo(String nome, String descrizione, double prezzo,
-														 int quantita, PuntoVendita puntoVendita, Categoria categoria) {
-		DescrizioneArticolo descrizioneArticolo = new DescrizioneArticolo(nome, descrizione, prezzo, quantita, puntoVendita, categoria);
-		descrizioneArticoloRepository.save(descrizioneArticolo);
-		return descrizioneArticolo;
-	}
-
 
 	public List<DescrizioneArticolo> getArticoliPerCommerciante(Long idCommerciante) {
 		List<DescrizioneArticolo> articoli = new ArrayList<>();
 		List<PuntoVendita> puntiVendita = gestorePuntoVendita.getPuntiVendita(idCommerciante);
-		for(PuntoVendita pv : puntiVendita){
+		for(PuntoVendita pv : puntiVendita)
 			articoli.addAll(descrizioneArticoloRepository.findAllByPuntoVendita(pv));
-		}
 		return articoli;
 	}
 
 	public void rimuoviDescArticolo(DescrizioneArticolo articoloDaEliminare) {
 		descrizioneArticoloRepository.delete(articoloDaEliminare);
-	}
-
-	public void modificaQuantitaArticolo(Long idDescrizioneArticolo, int quantita){
-		DescrizioneArticolo descrizioneArticolo = descrizioneArticoloRepository.findById(idDescrizioneArticolo).get();
-		descrizioneArticolo.setQuantita(descrizioneArticolo.getQuantita() + quantita);
-		descrizioneArticoloRepository.save(descrizioneArticolo);
 	}
 
 	public void createCategoria(String nome, String descrizione) {
@@ -103,5 +88,22 @@ public class CatalogoArticoli {
 		allDescrizioneArticoli.clear();
 		allDescrizioneArticoli.addAll(descrizioneArticoloRepository.findAllByPuntoVendita(puntoVendita));
 		return allDescrizioneArticoli;
+	}
+
+	@Override
+	public DescrizioneArticolo get(Long id) {
+		if(descrizioneArticoloRepository.findById(id).isEmpty())
+			throw new NoSuchElementException("Nessuna descrizione articolo trovata.");
+		return descrizioneArticoloRepository.findById(id).get();
+	}
+
+	@Override
+	public void save(DescrizioneArticolo descrizioneArticolo) {
+		descrizioneArticoloRepository.save(descrizioneArticolo);
+	}
+
+	@Override
+	public void delete(DescrizioneArticolo descrizioneArticolo) {
+		descrizioneArticoloRepository.delete(descrizioneArticolo);
 	}
 }
