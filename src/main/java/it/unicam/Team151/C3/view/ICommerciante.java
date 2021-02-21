@@ -6,7 +6,6 @@ import it.unicam.Team151.C3.controller.ConfermaAcquistoHandler;
 import it.unicam.Team151.C3.controller.GestioneArticoliHandler;
 import it.unicam.Team151.C3.controller.GestionePuntiVenditaHandler;
 import it.unicam.Team151.C3.controller.LogoutHandler;
-import it.unicam.Team151.C3.prenotazione.*;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,24 +48,24 @@ public class ICommerciante implements IUtenteAutenticato{
 
 	@PostMapping("getArticoloDaModificare")
 	public List<DescrizioneArticolo> modificaArticolo(@RequestParam Long idCommerciante) {
-		return gestioneArticoliHandler.getArticoli(idCommerciante);
+		return gestioneArticoliHandler.getArticoliOf(idCommerciante);
 	}
 
 	@PostMapping("modificaArticolo")
 	public void inserimentoDatiArticoloDaModificare(@RequestParam Long idDescrizioneArticolo, @RequestParam String nome, @RequestParam String descrizione,
 													@RequestParam double prezzo, @RequestParam int quantita,
 													@RequestParam Categoria categoria) {
-		gestioneArticoliHandler.inserimentoDatiArticoloDaModificare(idDescrizioneArticolo, nome, descrizione, prezzo, quantita, categoria);
+		gestioneArticoliHandler.modificaArticolo(idDescrizioneArticolo, nome, descrizione, prezzo, quantita, categoria);
 	}
 
 	@PostMapping("getArticoloDaRimuovere")
 	public List<DescrizioneArticolo> rimuoviArticolo(@RequestParam Long idCommerciante) {
-		return gestioneArticoliHandler.getArticoli(idCommerciante);
+		return gestioneArticoliHandler.getArticoliOf(idCommerciante);
 	}
 
 	@PostMapping("rimuoviArticolo")
 	public void rimozioneArticolo(@RequestParam Long idDescArticolo) {
-		gestioneArticoliHandler.rimozioneArticolo(idDescArticolo);
+		gestioneArticoliHandler.rimuoviArticolo(idDescArticolo);
 	}
 
 	@PostMapping("getPuntiVendita")

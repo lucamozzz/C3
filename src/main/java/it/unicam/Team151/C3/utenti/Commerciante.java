@@ -2,6 +2,8 @@ package it.unicam.Team151.C3.utenti;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import it.unicam.Team151.C3.articoli.Categoria;
+import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 
 import javax.persistence.*;
@@ -131,5 +133,10 @@ public class Commerciante implements InterfaceCommerciante {
     @Override
     public PuntoVendita createPuntoVendita(String nome, String ubicazione) {
         return new PuntoVendita(this, nome, ubicazione);
+    }
+
+    @Override
+    public DescrizioneArticolo createDescrizioneArticolo(String nome, String descrizione, double prezzo, int quantita, PuntoVendita puntoVendita, Categoria categoria) {
+        return new DescrizioneArticolo(nome,descrizione,prezzo,quantita,puntoVendita,categoria);
     }
 }
