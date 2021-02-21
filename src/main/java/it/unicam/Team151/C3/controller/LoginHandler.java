@@ -3,10 +3,7 @@ package it.unicam.Team151.C3.controller;
 import it.unicam.Team151.C3.exceptions.NotExistingUserException;
 import it.unicam.Team151.C3.exceptions.WrongPasswordException;
 import it.unicam.Team151.C3.repositories.IRepositoryMaster;
-import it.unicam.Team151.C3.utenti.Cliente;
-import it.unicam.Team151.C3.utenti.Commerciante;
-import it.unicam.Team151.C3.utenti.Corriere;
-import it.unicam.Team151.C3.utenti.UtenteAutenticato;
+import it.unicam.Team151.C3.utenti.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -78,7 +75,7 @@ public class LoginHandler {
 	}
 
 	private void caseCorriere(String email, String pwd) throws NotExistingUserException, WrongPasswordException {
-		Optional<Corriere> corriere = repositoryMaster.getCorriereRepository().findByEmail(email);
+		Optional<InterfaceCorriere> corriere = repositoryMaster.getCorriereRepository().findByEmail(email);
 		if (corriere.isEmpty())
 			throw new NotExistingUserException();
 		if(corriere.get().getPassword().equals(pwd))
