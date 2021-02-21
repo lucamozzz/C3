@@ -2,7 +2,7 @@ package it.unicam.Team151.C3.controller;
 
 
 import it.unicam.Team151.C3.articoli.Categoria;
-import it.unicam.Team151.C3.repositories.RepositoryMaster;
+import it.unicam.Team151.C3.repositories.IRepositoryMaster;
 import it.unicam.Team151.C3.util.InterfaceAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class GestioneCategorieHandler {
 
 	@Autowired
-	RepositoryMaster repositoryMaster;
+	IRepositoryMaster repositoryMaster;
 
 	InterfaceAdmin amministratoreDiSistema;
 

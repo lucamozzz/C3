@@ -1,16 +1,13 @@
 package it.unicam.Team151.C3.controller;
 
-import it.unicam.Team151.C3.prenotazione.GestorePrenotazione;
+import it.unicam.Team151.C3.prenotazione.Armadietto;
 import it.unicam.Team151.C3.prenotazione.Prenotazione;
 import it.unicam.Team151.C3.prenotazione.Stato;
-import it.unicam.Team151.C3.prenotazione.Armadietto;
-import it.unicam.Team151.C3.puntoConsegna.GestoreArmadietto;
-import it.unicam.Team151.C3.repositories.RepositoryMaster;
-import it.unicam.Team151.C3.utenti.Corriere;
-import it.unicam.Team151.C3.utenti.GestoreCorriere;
+import it.unicam.Team151.C3.repositories.IRepositoryMaster;
 import it.unicam.Team151.C3.utenti.InterfaceCorriere;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -18,7 +15,7 @@ import java.util.NoSuchElementException;
 public class ConsegnaArticoliHandler {
 
 	@Autowired
-	RepositoryMaster repositoryMaster;
+	IRepositoryMaster repositoryMaster;
 
 	public void consegnaPrenotazione(Long idPrenotazione) {
 		if (repositoryMaster.getPrenotazioneRepository().findById(idPrenotazione).isEmpty())
