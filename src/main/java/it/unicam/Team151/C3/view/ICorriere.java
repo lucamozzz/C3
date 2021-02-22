@@ -34,13 +34,13 @@ public class ICorriere implements IUtenteAutenticato{
 	}
 
 	@PostMapping("consegnaPrenotazione")
-	public void consegnaPrenotazione(@RequestParam Long idPrenotazione) {
-		consegnaArticoliHandler.consegnaPrenotazione(idPrenotazione);
+	public void consegnaPrenotazione(@RequestParam Long idCorriere, @RequestParam Long idPrenotazione) {
+		consegnaArticoliHandler.consegnaPrenotazione(idCorriere, idPrenotazione);
 	}
 
 	@PostMapping("prelievoArticoli")
-	public void prelievoArticoli(@RequestParam Long idPacco) {
-		prelievoArticoliHandler.prelievoArticoli(idPacco);
+	public void prelievoArticoli(@RequestParam Long idCorriere, @RequestParam Long idPacco) {
+		prelievoArticoliHandler.prelievoArticoli(idCorriere, idPacco);
 	}
 
 	@Override

@@ -4,6 +4,8 @@ import it.unicam.Team151.C3.prenotazione.Armadietto;
 import it.unicam.Team151.C3.prenotazione.Prenotazione;
 import it.unicam.Team151.C3.prenotazione.Stato;
 import it.unicam.Team151.C3.repositories.IRepositoryMaster;
+import it.unicam.Team151.C3.utenti.Corriere;
+import it.unicam.Team151.C3.util.ILoginChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.NoSuchElementException;
@@ -13,8 +15,11 @@ public class ConsegnaArticoliHandler {
 
 	@Autowired
 	IRepositoryMaster repositoryMaster;
+	@Autowired
+	ILoginChecker<Corriere> loginChecker;
 
-	public void consegnaPrenotazione(Long idPrenotazione) {
+	public void consegnaPrenotazione(Long idCorriere, Long idPrenotazione) {
+		loginChecker.check(idCorriere);
 		if (repositoryMaster.getPrenotazioneRepository().findById(idPrenotazione).isEmpty())
 			throw new NoSuchElementException("Nessuna prenotazione trovata.");
 		Prenotazione prenotazione = repositoryMaster.getPrenotazioneRepository().findById(idPrenotazione).get();

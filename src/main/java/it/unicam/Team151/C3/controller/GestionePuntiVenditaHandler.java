@@ -4,6 +4,7 @@ import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.repositories.CommercianteRepository;
 import it.unicam.Team151.C3.repositories.PuntoVenditaRepository;
 import it.unicam.Team151.C3.utenti.Commerciante;
+import it.unicam.Team151.C3.util.ILoginChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -17,6 +18,8 @@ public class GestionePuntiVenditaHandler {
 	CommercianteRepository commercianteRepository;
 	@Autowired
 	PuntoVenditaRepository puntoVenditaRepository;
+	@Autowired
+	ILoginChecker<Commerciante> loginChecker;
 
 	public List<PuntoVendita> getPuntiVendita(Long idCommerciante) {
 		Commerciante commerciante = getCommerciante(idCommerciante);
@@ -31,7 +34,8 @@ public class GestionePuntiVenditaHandler {
 		puntoVenditaRepository.save(commerciante.createPuntoVendita(nome, ubicazione));
 	}
 
-	public void modificaPuntoVendita(Long idPuntoVendita, String nome, String ubicazione) {
+	public void modificaPuntoVendita(Long idCommerciante, Long idPuntoVendita, String nome, String ubicazione) {
+		loginChecker.check(idCommerciante);
 		checkDati(nome, ubicazione);
 		PuntoVendita puntoVendita = getPuntoVendita(idPuntoVendita);
 		if (!nome.isEmpty())
@@ -41,14 +45,13 @@ public class GestionePuntiVenditaHandler {
 		puntoVenditaRepository.save(puntoVendita);
 	}
 
-	public void rimuoviPuntoVendita(Long idPuntoVendita) {
+	public void rimuoviPuntoVendita(Long idCommerciante, Long idPuntoVendita) {
+		loginChecker.check(idCommerciante);
 		puntoVenditaRepository.delete(this.getPuntoVendita(idPuntoVendita));
 	}
 
 	private Commerciante getCommerciante(Long idCommerciante) {
-		if (commercianteRepository.findById(idCommerciante).isEmpty())
-			throw new NoSuchElementException("Nessun commerciante trovato.");
-		return commercianteRepository.findById(idCommerciante).get();
+		return loginChecker.check(idCommerciante);
 	}
 
 	private PuntoVendita getPuntoVendita(Long idPuntoVendita) {

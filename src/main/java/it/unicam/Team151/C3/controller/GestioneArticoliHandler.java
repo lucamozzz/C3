@@ -5,6 +5,7 @@ import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.repositories.IRepositoryMaster;
 import it.unicam.Team151.C3.utenti.Commerciante;
+import it.unicam.Team151.C3.util.ILoginChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -16,9 +17,12 @@ public class GestioneArticoliHandler {
 
 	@Autowired
 	IRepositoryMaster repositoryMaster;
+	@Autowired
+	ILoginChecker<Commerciante> loginChecker;
 
-	public DescrizioneArticolo aggiungiArticolo(String nome, String descrizione, double prezzo,
-												int quantita, Long idPuntoVendita, Long idCategoria) {
+	public DescrizioneArticolo aggiungiArticolo(Long idCommerciante, String nome, String descrizione, double prezzo,
+                                                int quantita, Long idPuntoVendita, Long idCategoria) {
+		loginChecker.check(idCommerciante);
 		if (repositoryMaster.getPuntoVenditaRepository().findById(idPuntoVendita).isEmpty())
 			throw new NoSuchElementException("Nessun punto vendita trovato.");
 		PuntoVendita puntoVendita = repositoryMaster.getPuntoVenditaRepository().findById(idPuntoVendita).get();
@@ -32,7 +36,8 @@ public class GestioneArticoliHandler {
 		return descrizioneArticolo;
 	}
 
-	public void modificaArticolo(Long idDescrizioneArticolo, String nome, String descrizione, double prezzo, int quantita, Categoria categoria) {
+	public void modificaArticolo(Long idCommerciante, Long idDescrizioneArticolo, String nome, String descrizione, double prezzo, int quantita, Categoria categoria) {
+		loginChecker.check(idCommerciante);
 		DescrizioneArticolo descrizioneArticolo = getDescrizioneArticolo(idDescrizioneArticolo);
 		if(nome == null || descrizione == null || prezzo < 0  || quantita < 0 || categoria == null)
 			throw new NullPointerException("not ok");
@@ -55,16 +60,15 @@ public class GestioneArticoliHandler {
 		return repositoryMaster.getDescrizioneArticoloRepository().findById(idDescrizioneArticolo).get();
 	}
 
-	public void rimuoviArticolo(Long idDescArticolo) {
+	public void rimuoviArticolo(Long idCommerciante, Long idDescArticolo) {
+		loginChecker.check(idCommerciante);
 		DescrizioneArticolo articoloDaEliminare = getDescrizioneArticolo(idDescArticolo);
 		repositoryMaster.getDescrizioneArticoloRepository().delete(articoloDaEliminare);
 	}
 
 	public List<DescrizioneArticolo> getArticoliOf(Long idCommerciante) {
 		List<DescrizioneArticolo> articoliCommerciante = new ArrayList<>();
-		if (repositoryMaster.getCommercianteRepository().findById(idCommerciante).isEmpty())
-			throw new NoSuchElementException("Nessun commerciante trovato.");
-		Commerciante commerciante = repositoryMaster.getCommercianteRepository().findById(idCommerciante).get();
+		Commerciante commerciante = loginChecker.check(idCommerciante);
 		List<PuntoVendita> puntiVenditaCommerciante = repositoryMaster.getPuntoVenditaRepository().findAllByCommerciante(commerciante);
 		for(PuntoVendita pv : puntiVenditaCommerciante)
 			articoliCommerciante.addAll(repositoryMaster.getDescrizioneArticoloRepository().findAllByPuntoVendita(pv));

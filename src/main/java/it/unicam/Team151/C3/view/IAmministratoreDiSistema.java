@@ -26,7 +26,7 @@ public class IAmministratoreDiSistema {
 
 	@GetMapping("mostraCategorie")
 	public List<Categoria> getCategorie() {
-		return visualizzaCategorieHandler.getCategorie();
+		return visualizzaCategorieHandler.getCategorie((long) -1);
 	}
 
 	@PostMapping("creaCategoria")
@@ -41,7 +41,7 @@ public class IAmministratoreDiSistema {
 
 	@GetMapping("mostraPuntiConsegna")
 	public List<PuntoConsegna> getPuntiConsegna(){
-		return visualizzaPuntiConsegnaHandler.getPuntiConsegna();
+		return visualizzaPuntiConsegnaHandler.getPuntiConsegna((long) -1);
 	}
 
 	@PostMapping("aggiungiPuntoConsegna")

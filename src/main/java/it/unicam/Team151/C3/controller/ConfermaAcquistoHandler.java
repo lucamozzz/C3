@@ -8,9 +8,9 @@ import it.unicam.Team151.C3.puntoVendita.Pacco;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.repositories.IRepositoryMaster;
 import it.unicam.Team151.C3.utenti.*;
+import it.unicam.Team151.C3.util.ILoginChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -21,11 +21,11 @@ public class ConfermaAcquistoHandler {
 
 	@Autowired
 	IRepositoryMaster repositoryMaster;
+	@Autowired
+	ILoginChecker<Commerciante> loginChecker;
 
 	public List<Pacco> confermaAcquisto(Long idCommerciante) {
-		if(repositoryMaster.getCommercianteRepository().findById(idCommerciante).isEmpty())
-			throw new NullPointerException("il commerciante non esiste");
-		Commerciante commerciante = repositoryMaster.getCommercianteRepository().findById(idCommerciante).get();
+		Commerciante commerciante = loginChecker.check(idCommerciante);
 		List<PuntoVendita> puntiVenditaCommerciante = repositoryMaster.getPuntoVenditaRepository().findAllByCommerciante(commerciante);
 		List<Pacco> pacchiCommerciante = new ArrayList<>();
 		for (PuntoVendita puntoVendita : puntiVenditaCommerciante)
@@ -33,7 +33,8 @@ public class ConfermaAcquistoHandler {
 		return pacchiCommerciante;
 	}
 
-	public void confermaPagamento(Long idPacco) {
+	public void confermaPagamento(Long idCommerciante, Long idPacco) {
+		loginChecker.check(idCommerciante);
 		boolean flag = true;
 		if (repositoryMaster.getPaccoRepository().findById(idPacco).isEmpty())
 			throw new NoSuchElementException("Nessun pacco trovato.");

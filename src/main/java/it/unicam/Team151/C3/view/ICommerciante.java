@@ -32,18 +32,19 @@ public class ICommerciante implements IUtenteAutenticato{
 	}
 
 	@PostMapping("confermaPagamento")
-	public void confermaPagamento(@RequestParam Long idPacco) {
-		confermaAcquistoHandler.confermaPagamento(idPacco);
+	public void confermaPagamento(@RequestParam Long idCommerciante, @RequestParam Long idPacco) {
+		confermaAcquistoHandler.confermaPagamento(idCommerciante, idPacco);
 	}
 
 	@PostMapping("aggiungiArticolo")
-	public DescrizioneArticolo aggiungiArticolo(@RequestParam String nome,
+	public DescrizioneArticolo aggiungiArticolo(@RequestParam Long idCommerciante,
+												@RequestParam String nome,
 												@RequestParam String descrizione,
 												@RequestParam double prezzo,
 												@RequestParam int quantita,
 												@RequestParam Long idPuntoVendita,
 												@RequestParam Long idCategoria) {
-	return gestioneArticoliHandler.aggiungiArticolo(nome, descrizione, prezzo, quantita, idPuntoVendita, idCategoria);
+	return gestioneArticoliHandler.aggiungiArticolo(idCommerciante, nome, descrizione, prezzo, quantita, idPuntoVendita, idCategoria);
 	}
 
 	@PostMapping("getArticoloDaModificare")
@@ -52,10 +53,14 @@ public class ICommerciante implements IUtenteAutenticato{
 	}
 
 	@PostMapping("modificaArticolo")
-	public void inserimentoDatiArticoloDaModificare(@RequestParam Long idDescrizioneArticolo, @RequestParam String nome, @RequestParam String descrizione,
-													@RequestParam double prezzo, @RequestParam int quantita,
+	public void inserimentoDatiArticoloDaModificare(@RequestParam Long idCommerciante,
+													@RequestParam Long idDescrizioneArticolo,
+													@RequestParam String nome,
+													@RequestParam String descrizione,
+													@RequestParam double prezzo,
+													@RequestParam int quantita,
 													@RequestParam Categoria categoria) {
-		gestioneArticoliHandler.modificaArticolo(idDescrizioneArticolo, nome, descrizione, prezzo, quantita, categoria);
+		gestioneArticoliHandler.modificaArticolo(idCommerciante, idDescrizioneArticolo, nome, descrizione, prezzo, quantita, categoria);
 	}
 
 	@PostMapping("getArticoloDaRimuovere")
@@ -64,8 +69,8 @@ public class ICommerciante implements IUtenteAutenticato{
 	}
 
 	@PostMapping("rimuoviArticolo")
-	public void rimozioneArticolo(@RequestParam Long idDescArticolo) {
-		gestioneArticoliHandler.rimuoviArticolo(idDescArticolo);
+	public void rimozioneArticolo(@RequestParam Long idCommerciante, @RequestParam Long idDescArticolo) {
+		gestioneArticoliHandler.rimuoviArticolo(idCommerciante, idDescArticolo);
 	}
 
 	@PostMapping("getPuntiVendita")
@@ -79,13 +84,13 @@ public class ICommerciante implements IUtenteAutenticato{
 	}
 
 	@PostMapping("modificaPuntoVendita")
-	public void modificaPuntoVendita(@RequestParam Long idPuntoVendita, @RequestParam String nome, @RequestParam String ubicazione) {
-		gestionePuntiVenditaHandler.modificaPuntoVendita(idPuntoVendita, nome, ubicazione);
+	public void modificaPuntoVendita(@RequestParam Long idCommerciante, @RequestParam Long idPuntoVendita, @RequestParam String nome, @RequestParam String ubicazione) {
+		gestionePuntiVenditaHandler.modificaPuntoVendita(idCommerciante, idPuntoVendita, nome, ubicazione);
 	}
 
 	@PostMapping("rimuoviPuntoVendita")
-	public void rimuoviPuntoVendita(@RequestParam Long idPuntoVendita) {
-		gestionePuntiVenditaHandler.rimuoviPuntoVendita(idPuntoVendita);
+	public void rimuoviPuntoVendita(@RequestParam Long idCommerciante, @RequestParam Long idPuntoVendita) {
+		gestionePuntiVenditaHandler.rimuoviPuntoVendita(idCommerciante, idPuntoVendita);
 	}
 
 	@Override

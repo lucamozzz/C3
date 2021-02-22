@@ -8,6 +8,7 @@ import it.unicam.Team151.C3.repositories.CarrelloRepository;
 import it.unicam.Team151.C3.repositories.ClienteRepository;
 import it.unicam.Team151.C3.repositories.DescrizioneArticoloRepository;
 import it.unicam.Team151.C3.utenti.Cliente;
+import it.unicam.Team151.C3.util.ILoginChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -26,6 +27,8 @@ public class GestioneCarrelloHandler {
 	CarrelloRepository carrelloRepository;
 	@Autowired
 	ClienteRepository clienteRepository;
+	@Autowired
+	ILoginChecker<Cliente> loginChecker;
 
 	public void aggiungiArticoloCarrello(Long idDescArticolo, int quantita, Long idCliente) {
 		Cliente cliente = getCliente(idCliente);
@@ -81,9 +84,7 @@ public class GestioneCarrelloHandler {
 	}
 
 	private Cliente getCliente(Long idCliente) {
-		if (clienteRepository.findById(idCliente).isEmpty())
-			throw new NoSuchElementException("Nessun cliente trovato.");
-		return clienteRepository.findById(idCliente).get();
+		return loginChecker.check(idCliente);
 	}
 
 	private ArticoloCarrello getArticoloCarrello(Long idArticoloCarrello) {
