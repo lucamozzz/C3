@@ -6,9 +6,9 @@ import it.unicam.Team151.C3.repositories.IRepositoryMaster;
 import it.unicam.Team151.C3.utenti.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -20,19 +20,14 @@ public class LoginHandler {
 	@Autowired
 	private IRepositoryMaster repositoryMaster;
 
-	/**
-	 *  @param email
-	 * @param pwd
-	 * @param ruolo
-	 */
 	public UtenteAutenticato autenticazione(String email, String pwd, String ruolo) throws NotExistingUserException, WrongPasswordException {
 		if (this.checkCredenziali(email, pwd, ruolo)){
 			for (UtenteAutenticato utenteAutenticato : utentiLoggati) {
 				if(utenteAutenticato.getEmail().equals(utente.getEmail()))
-					//TODO creare un'eccezione
 					throw new IllegalStateException("Utente già loggato.");
 			}
 			utente.setLogged(true);
+			save(utente);
 			utentiLoggati.add(utente);
 			return utente;
 		}
@@ -56,6 +51,8 @@ public class LoginHandler {
 	}
 
 	private void caseCliente(String email, String pwd) throws NotExistingUserException, WrongPasswordException {
+		if (repositoryMaster.getClienteRepository().findByEmail(email).isEmpty())
+			throw new NoSuchElementException("Nessun elemento trovato.");
 		Optional<Cliente> cliente = repositoryMaster.getClienteRepository().findByEmail(email);
 		if (cliente.isEmpty())
 			throw new NotExistingUserException();
@@ -75,7 +72,7 @@ public class LoginHandler {
 	}
 
 	private void caseCorriere(String email, String pwd) throws NotExistingUserException, WrongPasswordException {
-		Optional<InterfaceCorriere> corriere = repositoryMaster.getCorriereRepository().findByEmail(email);
+		Optional<Corriere> corriere = repositoryMaster.getCorriereRepository().findByEmail(email);
 		if (corriere.isEmpty())
 			throw new NotExistingUserException();
 		if(corriere.get().getPassword().equals(pwd))
@@ -85,5 +82,16 @@ public class LoginHandler {
 
 	public List<UtenteAutenticato> getUtenti() {
 		return utentiLoggati;
+	}
+
+	private void save(UtenteAutenticato utente) {
+		switch (utente.getRuolo()){
+			case "Cliente" : repositoryMaster.getClienteRepository().save((Cliente) utente);
+				break;
+			case "Commerciante" : repositoryMaster.getCommercianteRepository().save((Commerciante) utente);
+				break;
+			case "Corriere" : repositoryMaster.getCorriereRepository().save((Corriere) utente);
+				break;
+		}
 	}
 }

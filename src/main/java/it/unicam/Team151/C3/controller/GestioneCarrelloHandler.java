@@ -3,7 +3,6 @@ package it.unicam.Team151.C3.controller;
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
 import it.unicam.Team151.C3.articoli.Carrello;
 import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
-import it.unicam.Team151.C3.manager.ArticoloCarrelloManager;
 import it.unicam.Team151.C3.repositories.ArticoloCarrelloRepository;
 import it.unicam.Team151.C3.repositories.CarrelloRepository;
 import it.unicam.Team151.C3.repositories.ClienteRepository;
@@ -14,6 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+//TODO - utilizzare repository master
+
 @Service
 public class GestioneCarrelloHandler {
 
@@ -22,64 +23,36 @@ public class GestioneCarrelloHandler {
 	@Autowired
 	ArticoloCarrelloRepository articoloCarrelloRepository;
 	@Autowired
-	ArticoloCarrelloManager articoloCarrelloManager;
-	@Autowired
 	CarrelloRepository carrelloRepository;
 	@Autowired
 	ClienteRepository clienteRepository;
 
-	//TODO - eliminare codice ripetuto
 	public void aggiungiArticoloCarrello(Long idDescArticolo, int quantita, Long idCliente) {
-		if (clienteRepository.findById(idCliente).isEmpty())
-			throw new NoSuchElementException("Nessun cliente trovato.");
-		Cliente cliente = clienteRepository.findById(idCliente).get();
-		if (carrelloRepository.findByCliente(cliente).isEmpty())
-			throw new NoSuchElementException("Nessun carrello trovato.");
-		Carrello carrello = carrelloRepository.findByCliente(cliente).get();
-		articoloCarrelloRepository.findAllByCarrello(carrello).forEach(carrello.getArticoliCarrello()::add);
-		if (descrizioneArticoloRepository.findById(idDescArticolo).isEmpty())
-			throw new NoSuchElementException("Nessun articolo trovato.");
-		DescrizioneArticolo descrizioneArticolo = descrizioneArticoloRepository.findById(idDescArticolo).get();
+		Cliente cliente = getCliente(idCliente);
+		Carrello carrello = getCarrello(cliente);
+		DescrizioneArticolo descrizioneArticolo = getDescrizioneArticolo(idDescArticolo);
 		if(quantita > descrizioneArticolo.getQuantita())
 			throw new IllegalStateException("Articolo non disponibile in questa quantità.");
-		//TODO - cambiare in findByCarrelloAndDescrizioneArticolo
-		if(articoloCarrelloRepository.findByDescrizioneArticolo(descrizioneArticolo).isPresent()){
-			ArticoloCarrello articoloCarrello = articoloCarrelloRepository.findByDescrizioneArticolo(descrizioneArticolo).get();
+		ArticoloCarrello articoloCarrello;
+		if(articoloCarrelloRepository.findByCarrelloAndDescrizioneArticolo(carrello, descrizioneArticolo).isPresent()){
+			articoloCarrello = articoloCarrelloRepository.findByCarrelloAndDescrizioneArticolo(carrello, descrizioneArticolo).get();
 			articoloCarrello.setQuantita(articoloCarrello.getQuantita() + quantita);
-			articoloCarrelloRepository.save(articoloCarrello);
 		}
 		else {
-			//TODO - newArticoloCarrello viene creato dalla giusta classe(?)
-			ArticoloCarrello articoloCarrello = articoloCarrelloManager.createArticoloCarrello(descrizioneArticolo, quantita, carrello);
-			//TODO - rimuovere metodo aggiungiArticoloCarrello e aggiungere l'articolo al carrello da qui(?)
-			// carrello.getArticoliCarrello().add(newArticoloCarrello)
-			carrello.aggiungiArticoloCarrello(articoloCarrello, quantita);
-			articoloCarrelloManager.saveArticoloCarrello(articoloCarrello);
+			articoloCarrello = carrello.createArticoloCarrello(descrizioneArticolo, quantita);
+			carrello.getArticoliCarrello().add(articoloCarrello);
 		}
+		articoloCarrelloRepository.save(articoloCarrello);
 	}
 
-	//TODO - eliminare codice ripetuto
-	public void rimuoviArticoloCarrello(Long idDescArticolo, int quantita, Long idCliente) {
-		if (clienteRepository.findById(idCliente).isEmpty())
-			throw new NoSuchElementException("Nessun cliente trovato.");
-		Cliente cliente = clienteRepository.findById(idCliente).get();
-		if (carrelloRepository.findByCliente(cliente).isEmpty())
-			throw new NoSuchElementException("Nessun carrello trovato.");
-		Carrello carrello = carrelloRepository.findByCliente(cliente).get();
-		articoloCarrelloRepository.findAllByCarrello(carrello).forEach(carrello.getArticoliCarrello()::add);
-		if (descrizioneArticoloRepository.findById(idDescArticolo).isEmpty())
-			throw new NoSuchElementException("Nessun articolo trovato.");
-		DescrizioneArticolo descrizioneArticolo = descrizioneArticoloRepository.findById(idDescArticolo).get();
-		//TODO - metodo da definire
-		if (articoloCarrelloRepository.findByCarrelloAndDescrizioneArticolo(carrello, descrizioneArticolo).isEmpty())
-			throw new NoSuchElementException("L'articolo non è stato trovato nel carrello.");
-		ArticoloCarrello articoloCarrello = articoloCarrelloRepository.findByCarrelloAndDescrizioneArticolo(carrello, descrizioneArticolo).get();
+	public void rimuoviArticoloCarrello(Long idArticoloCarrello, int quantita, Long idCliente) {
+		Cliente cliente = this.getCliente(idCliente);
+		Carrello carrello = this.getCarrello(cliente);
+		ArticoloCarrello articoloCarrello = getArticoloCarrello(idArticoloCarrello);
 		if (articoloCarrello.getQuantita() < quantita)
 			throw new IllegalArgumentException("La quantità che vuoi rimuovere è troppo elevata.");
 		if (articoloCarrello.getQuantita() == quantita){
-			//TODO - rimuovere metodo rimuoviArticoloCarrello e rimuovere l'articolo dal  carrello da qui(?)
-			// carrello.getArticoliCarrello().remove(articoloCarrello)
-			carrello.rimuoviArticoloCarrello(articoloCarrello, quantita);
+			carrello.getArticoliCarrello().remove(articoloCarrello);
 			articoloCarrelloRepository.delete(articoloCarrello);
 		} else {
 			articoloCarrello.setQuantita(articoloCarrello.getQuantita() - quantita);
@@ -87,15 +60,35 @@ public class GestioneCarrelloHandler {
 		}
 	}
 
-	//TODO - eliminare codice ripetuto
 	public List<ArticoloCarrello> mostraArticoliCarrello(Long idCliente) {
-		if (clienteRepository.findById(idCliente).isEmpty())
-			throw new NoSuchElementException("Nessun cliente trovato.");
-		Cliente cliente = clienteRepository.findById(idCliente).get();
+		Cliente cliente = getCliente(idCliente);
+		Carrello carrello = getCarrello(cliente);
+		return carrello.getArticoliCarrello();
+	}
+
+	private DescrizioneArticolo getDescrizioneArticolo(Long idDescArticolo) {
+		if (descrizioneArticoloRepository.findById(idDescArticolo).isEmpty())
+			throw new NoSuchElementException("Nessun articolo trovato.");
+		return descrizioneArticoloRepository.findById(idDescArticolo).get();
+	}
+
+	private Carrello getCarrello(Cliente cliente) {
 		if (carrelloRepository.findByCliente(cliente).isEmpty())
 			throw new NoSuchElementException("Nessun carrello trovato.");
 		Carrello carrello = carrelloRepository.findByCliente(cliente).get();
 		articoloCarrelloRepository.findAllByCarrello(carrello).forEach(carrello.getArticoliCarrello()::add);
-		return carrello.getArticoliCarrello();
+		return carrello;
+	}
+
+	private Cliente getCliente(Long idCliente) {
+		if (clienteRepository.findById(idCliente).isEmpty())
+			throw new NoSuchElementException("Nessun cliente trovato.");
+		return clienteRepository.findById(idCliente).get();
+	}
+
+	private ArticoloCarrello getArticoloCarrello(Long idArticoloCarrello) {
+		if (articoloCarrelloRepository.findById(idArticoloCarrello).isEmpty())
+			throw new NoSuchElementException("Nessun articolo carrello trovato.");
+		return articoloCarrelloRepository.findById(idArticoloCarrello).get();
 	}
 }

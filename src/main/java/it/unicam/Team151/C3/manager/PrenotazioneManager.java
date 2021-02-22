@@ -2,12 +2,12 @@ package it.unicam.Team151.C3.manager;
 
 import it.unicam.Team151.C3.articoli.Articolo;
 import it.unicam.Team151.C3.articoli.Carrello;
-import it.unicam.Team151.C3.articoli.GestoreArticolo;
-import it.unicam.Team151.C3.prenotazione.GestorePrenotazione;
 import it.unicam.Team151.C3.prenotazione.Prenotazione;
 import it.unicam.Team151.C3.prenotazione.PuntoConsegna;
-import it.unicam.Team151.C3.puntoVendita.GestorePacco;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
+import it.unicam.Team151.C3.repositories.ArticoloRepository;
+import it.unicam.Team151.C3.repositories.PaccoRepository;
+import it.unicam.Team151.C3.repositories.PrenotazioneRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,20 +15,20 @@ import org.springframework.stereotype.Service;
 public class PrenotazioneManager {
 
     @Autowired
-    GestorePacco gestorePacco;
+    PaccoRepository paccoRepository;
     @Autowired
-    GestoreArticolo gestoreArticolo;
+    ArticoloRepository articoloRepository;
     @Autowired
-    GestorePrenotazione gestorePrenotazione;
+    PrenotazioneRepository prenotazioneRepository;
 
     public Prenotazione createPrenotazione(Carrello carrello, PuntoConsegna puntoConsegna) {
         Prenotazione prenotazione = new Prenotazione(carrello, puntoConsegna);
         for (Pacco pacco : prenotazione.getPacchi()){
-            gestorePacco.save(pacco);
+            paccoRepository.save(pacco);
             for (Articolo articolo : pacco.getArticoli())
-                gestoreArticolo.save(articolo);
+                articoloRepository.save(articolo);
         }
-        gestorePrenotazione.save(prenotazione);
+        prenotazioneRepository.save(prenotazione);
         return prenotazione;
     }
 }

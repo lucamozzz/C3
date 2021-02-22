@@ -25,9 +25,11 @@ public class PuntoConsegna {
 	public PuntoConsegna() {
 	}
 
-	public PuntoConsegna(String ubicazione) {
+	public PuntoConsegna(String ubicazione, int nArmadietti) {
 		this.ubicazione = ubicazione;
 		this.armadietti = new ArrayList<>();
+		for (int i =0; i < nArmadietti; i++)
+			armadietti.add(new Armadietto(this));
 	}
 
 	public Armadietto checkCodice(int codice) {

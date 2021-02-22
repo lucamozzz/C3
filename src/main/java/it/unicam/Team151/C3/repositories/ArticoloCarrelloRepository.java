@@ -15,4 +15,6 @@ public interface ArticoloCarrelloRepository extends CrudRepository<ArticoloCarre
     List<ArticoloCarrello> findAllByCarrello(Carrello carrello);
 
     Optional<ArticoloCarrello> findByDescrizioneArticolo(DescrizioneArticolo descrizioneArticolo);
+
+    Optional<ArticoloCarrello> findByCarrelloAndDescrizioneArticolo(Carrello carrello, DescrizioneArticolo descrizioneArticolo);
 }

@@ -1,6 +1,5 @@
 package it.unicam.Team151.C3.controller;
 
-
 import it.unicam.Team151.C3.articoli.Categoria;
 import it.unicam.Team151.C3.repositories.IRepositoryMaster;
 import it.unicam.Team151.C3.util.InterfaceAdmin;
@@ -25,9 +24,9 @@ public class GestioneCategorieHandler {
 	}
 
 	public void aggiornaCategoria(Long idCategoria, String nome, String descrizione) {
-		if(!repositoryMaster.getCategoriaRepository().findById(idCategoria).isPresent())
+		if(repositoryMaster.getCategoriaRepository().findById(idCategoria).isEmpty())
 			throw new IllegalStateException("La categoria richiesta da modificare non esiste");
-		Categoria categoria=repositoryMaster.getCategoriaRepository().findById(idCategoria).get();
+		Categoria categoria = repositoryMaster.getCategoriaRepository().findById(idCategoria).get();
 		categoria.setNome(nome);
 		categoria.setDescrizione(descrizione);
 		repositoryMaster.getCategoriaRepository().save(categoria);

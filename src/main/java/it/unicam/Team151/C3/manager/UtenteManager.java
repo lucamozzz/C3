@@ -1,6 +1,5 @@
 package it.unicam.Team151.C3.manager;
 
-import it.unicam.Team151.C3.articoli.GestoreCarrello;
 import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.utenti.Commerciante;
 import it.unicam.Team151.C3.utenti.Corriere;
@@ -26,21 +25,21 @@ public class UtenteManager {
 		return instance;
 	}
 
-	public UtenteAutenticato createUtente(List<String> form) {
+	public UtenteAutenticato createUtente(String nome, String cognome, String indirizzo, String ruolo, String email, String password) {
 		UtenteAutenticato newUser;
-		switch (form.get(3)) {
+		switch (ruolo) {
 			case "Cliente":
-				newUser = new Cliente(form);
+				newUser = new Cliente(nome, cognome, indirizzo, ruolo, email, password);
 				carrelloManager.createCarrello((Cliente) newUser);
 				break;
 			case "Commerciante":
-				newUser = new Commerciante(form);
+				newUser = new Commerciante(nome, cognome, indirizzo, ruolo, email, password);
 				break;
 			case "Corriere":
-				newUser = new Corriere(form);
+				newUser = new Corriere(nome, cognome, indirizzo, ruolo, email, password);
 				break;
 			default:
-				throw new IllegalStateException("Unexpected value: " + form.get(3));
+				throw new IllegalStateException("Unexpected value: " + ruolo);
 		}
 		return newUser;
 	}

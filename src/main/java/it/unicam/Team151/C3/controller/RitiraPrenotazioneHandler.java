@@ -19,11 +19,8 @@ public class RitiraPrenotazioneHandler {
 	@Autowired
 	ArmadiettoRepository armadiettoRepository;
 
-	//TODO - eliminare codice ripetuto
 	public void ritiraPrenotazione(Long idPuntoConsegna, Long idArmadietto) {
-		if (puntoConsegnaRepository.findById(idPuntoConsegna).isEmpty())
-			throw new NoSuchElementException("Nessun punto consgena trovato.");
-		PuntoConsegna puntoConsegna = puntoConsegnaRepository.findById(idPuntoConsegna).get();
+		PuntoConsegna puntoConsegna = getPuntoConsegna(idPuntoConsegna);
 		if (armadiettoRepository.findById(idArmadietto).isEmpty())
 			throw new NoSuchElementException("Nessun armadietto trovato.");
 		Armadietto armadietto = armadiettoRepository.findById(idArmadietto).get();
@@ -31,14 +28,17 @@ public class RitiraPrenotazioneHandler {
 		servizioClienti.richiestaFeedback();
 	}
 
-	//TODO - eliminare codice ripetuto
 	public Armadietto checkCodice(Long idPuntoConsegna, int codice) {
-		if (puntoConsegnaRepository.findById(idPuntoConsegna).isEmpty())
-			throw new NoSuchElementException("Nessun punto consgena trovato.");
-		PuntoConsegna puntoConsegna = puntoConsegnaRepository.findById(idPuntoConsegna).get();
+		PuntoConsegna puntoConsegna = getPuntoConsegna(idPuntoConsegna);
 		Armadietto armadietto = puntoConsegna.checkCodice(codice);
 		if (armadietto == null)
 			throw new IllegalArgumentException("Codice errato.");
 		return armadietto;
     }
+
+	private PuntoConsegna getPuntoConsegna(Long idPuntoConsegna) {
+		if (puntoConsegnaRepository.findById(idPuntoConsegna).isEmpty())
+			throw new NoSuchElementException("Nessun punto consgena trovato.");
+		return puntoConsegnaRepository.findById(idPuntoConsegna).get();
+	}
 }

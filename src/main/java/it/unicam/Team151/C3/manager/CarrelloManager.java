@@ -1,7 +1,7 @@
 package it.unicam.Team151.C3.manager;
 
 import it.unicam.Team151.C3.articoli.Carrello;
-import it.unicam.Team151.C3.articoli.GestoreCarrello;
+import it.unicam.Team151.C3.repositories.CarrelloRepository;
 import it.unicam.Team151.C3.utenti.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 public class CarrelloManager {
 
     @Autowired
-    GestoreCarrello gestoreCarrello;
+    CarrelloRepository carrelloRepository;
 
     public void createCarrello(Cliente cliente) {
         Carrello carrello = new Carrello(cliente);
-        gestoreCarrello.save(carrello);
+        carrelloRepository.save(carrello);
     }
 }

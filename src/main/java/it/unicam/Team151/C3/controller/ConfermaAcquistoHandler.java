@@ -22,14 +22,10 @@ public class ConfermaAcquistoHandler {
 	@Autowired
 	IRepositoryMaster repositoryMaster;
 
-	/*TODO - miglioramenti classe
-	   da vedere se possibile eliminare le ripetizioni di controlli per vedere se un elemento è nel repository.
-	 */
-
 	public List<Pacco> confermaAcquisto(Long idCommerciante) {
 		if(repositoryMaster.getCommercianteRepository().findById(idCommerciante).isEmpty())
 			throw new NullPointerException("il commerciante non esiste");
-		InterfaceCommerciante commerciante = repositoryMaster.getCommercianteRepository().findById(idCommerciante).get();
+		Commerciante commerciante = repositoryMaster.getCommercianteRepository().findById(idCommerciante).get();
 		List<PuntoVendita> puntiVenditaCommerciante = repositoryMaster.getPuntoVenditaRepository().findAllByCommerciante(commerciante);
 		List<Pacco> pacchiCommerciante = new ArrayList<>();
 		for (PuntoVendita puntoVendita : puntiVenditaCommerciante)
@@ -58,12 +54,12 @@ public class ConfermaAcquistoHandler {
 	public void assegnaCorriere(Prenotazione prenotazione) {
 		List<Long> idCorrieri = new ArrayList<>();
 		Random rand = new Random();
-		for(InterfaceCorriere corriere : repositoryMaster.getCorriereRepository().findAll())
+		for(Corriere corriere : repositoryMaster.getCorriereRepository().findAll())
 			idCorrieri.add(corriere.getId());
 		Long randomElement = idCorrieri.get(rand.nextInt(idCorrieri.size()));
 		if (repositoryMaster.getCorriereRepository().findById(randomElement).isEmpty())
 			throw new NoSuchElementException("Nessun corriere trovato.");
-		InterfaceCorriere corriereDaAssegnare = repositoryMaster.getCorriereRepository().findById(randomElement).get();
+		Corriere corriereDaAssegnare = repositoryMaster.getCorriereRepository().findById(randomElement).get();
 		prenotazione.setCorriere(corriereDaAssegnare);
 		repositoryMaster.getPrenotazioneRepository().save(prenotazione);
 	}
@@ -72,14 +68,13 @@ public class ConfermaAcquistoHandler {
 	//                 METODI PRIVATI A SCOPO IMPLEMENTATIVO               //
 	//*********************************************************************//
 
-	//TODO - estrarre in un interfaccia per eliminare codice ripetuto
 	private List<Pacco> getAllPacchiOf(PuntoVendita puntoVendita){
 		List<Pacco> pacchi = new ArrayList<>();
 		for (Pacco pacco : repositoryMaster.getPaccoRepository().findAllByPuntoVendita(puntoVendita))
 			pacchi.add(riempiPacco(pacco));
 		return pacchi;
 	}
-	//TODO - estrarre in un interfaccia per eliminare codice ripetuto
+
 	private List<Pacco> getAllPacchiOf(Prenotazione prenotazione){
 		List<Pacco> pacchi = new ArrayList<>();
 		for (Pacco pacco : repositoryMaster.getPaccoRepository().findAllByPrenotazione(prenotazione))

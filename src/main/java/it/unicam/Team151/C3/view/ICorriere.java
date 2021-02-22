@@ -3,14 +3,13 @@ package it.unicam.Team151.C3.view;
 import it.unicam.Team151.C3.controller.ConsegnaArticoliHandler;
 import it.unicam.Team151.C3.controller.LogoutHandler;
 import it.unicam.Team151.C3.controller.PrelievoArticoliHandler;
+import it.unicam.Team151.C3.controller.VisualizzaPrenotazioniHandler;
 import it.unicam.Team151.C3.prenotazione.*;
-import it.unicam.Team151.C3.puntoVendita.Pacco;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @RestController
@@ -24,14 +23,14 @@ public class ICorriere implements IUtenteAutenticato{
 	PrelievoArticoliHandler prelievoArticoliHandler;
 
 	@Autowired
-	GestorePrenotazione gestorePrenotazione;
+	LogoutHandler logoutHandler;
 
 	@Autowired
-	LogoutHandler logoutHandler;
+	VisualizzaPrenotazioniHandler visualizzaPrenotazioniHandler;
 
 	@PostMapping("getPrenotazioni")
 	public List<Prenotazione> consegnaArticoli(@RequestParam Long idCorriere) {
-		return consegnaArticoliHandler.getPrenotazioni(idCorriere);
+		return visualizzaPrenotazioniHandler.getPrenotazioni(idCorriere);
 	}
 
 	@PostMapping("consegnaPrenotazione")

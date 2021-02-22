@@ -9,8 +9,6 @@ import it.unicam.Team151.C3.utenti.Corriere;
 import it.unicam.Team151.C3.utenti.UtenteAutenticato;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class RegistrazioneHandler {
@@ -21,18 +19,10 @@ public class RegistrazioneHandler {
 	@Autowired
 	private IRepositoryMaster repositoryMaster;
 
-	//TODO un po' de refactoring
 	public void compilaForm(String nome, String cognome, String indirizzo, String ruolo, String email, String password) throws AlreadyExistingUserException {
-		List<String> form = new ArrayList<>();
-		form.add(nome);
-		form.add(cognome);
-		form.add(indirizzo);
-		form.add(ruolo);
-		form.add(email);
-		form.add(password);
-		if (this.checkDatiInseriti(form)) {
-			UtenteAutenticato newUser = utenteManager.createUtente(form);
-			switch (form.get(3)) {
+		if (this.checkDatiInseriti(nome, cognome, indirizzo, ruolo, email, password)) {
+			UtenteAutenticato newUser = utenteManager.createUtente(nome, cognome, indirizzo, ruolo, email, password);
+			switch (ruolo) {
 				case "Cliente":
 					repositoryMaster.getClienteRepository().save((Cliente) newUser);
 					break;
@@ -46,15 +36,12 @@ public class RegistrazioneHandler {
 		}
 	}
 
-	//TODO migliorare controlli
-	private boolean checkDatiInseriti(List<String> form) throws AlreadyExistingUserException {
-		for (String s : form) {
-			if (s.trim().equals(""))
-				throw new NullPointerException("Uno o più campi null");
-		}
-		if (repositoryMaster.getClienteRepository().findByEmail(form.get(4)).isPresent() ||
-			repositoryMaster.getCommercianteRepository().findByEmail(form.get(4)).isPresent() ||
-			repositoryMaster.getCorriereRepository().findByEmail(form.get(4)).isPresent())
+	private boolean checkDatiInseriti(String nome, String cognome, String indirizzo, String ruolo, String email, String password) throws AlreadyExistingUserException {
+		if (nome.trim().equals("") || cognome.trim().equals("") || indirizzo.trim().equals("") || ruolo.trim().equals("") || email.trim().equals("") || password.trim().equals(""))
+			throw new NullPointerException("Uno o più campi null");
+		if (repositoryMaster.getClienteRepository().findByEmail(email).isPresent() ||
+			repositoryMaster.getCommercianteRepository().findByEmail(email).isPresent() ||
+			repositoryMaster.getCorriereRepository().findByEmail(email).isPresent())
 				throw new AlreadyExistingUserException();
 		return true;
 	}

@@ -18,35 +18,22 @@ public class GestionePuntiVenditaHandler {
 	@Autowired
 	PuntoVenditaRepository puntoVenditaRepository;
 
-	//TODO - rimuovere codice ripetuto
 	public List<PuntoVendita> getPuntiVendita(Long idCommerciante) {
-		if (commercianteRepository.findById(idCommerciante).isEmpty())
-			throw new NoSuchElementException("Nessun commerciante trovato.");
-		Commerciante commerciante = commercianteRepository.findById(idCommerciante).get();
+		Commerciante commerciante = getCommerciante(idCommerciante);
 		return new ArrayList<>(puntoVenditaRepository.findAllByCommerciante(commerciante));
 	}
 
-	//TODO - rimuovere codice ripetuto
 	public void aggiungiPuntoVendita(Long idCommerciante, String nome, String ubicazione) {
-		if (nome == null || ubicazione == null)
-			throw new NullPointerException("Dati inseriti non validi.");
-		if (nome.length() > 25 || ubicazione.length() > 40)
-			throw new IllegalArgumentException("Dati inseriti non validi.");
-		if (commercianteRepository.findById(idCommerciante).isEmpty())
-			throw new NoSuchElementException("Nessun commerciante trovato");
-		Commerciante commerciante = commercianteRepository.findById(idCommerciante).get();
+		Commerciante commerciante = getCommerciante(idCommerciante);
+		if (!commerciante.getLogged())
+			throw new IllegalStateException("Devi effettuare il login.");
+		checkDati(nome, ubicazione);
 		puntoVenditaRepository.save(commerciante.createPuntoVendita(nome, ubicazione));
 	}
 
-	//TODO - rimuovere codice ripetuto
 	public void modificaPuntoVendita(Long idPuntoVendita, String nome, String ubicazione) {
-		if (nome == null || ubicazione == null)
-			throw new NullPointerException("Dati inseriti non validi.");
-		if (nome.length() > 25 || ubicazione.length() > 40)
-			throw new IllegalArgumentException("Dati inseriti non validi.");
-		if (puntoVenditaRepository.findById(idPuntoVendita).isEmpty())
-			throw new NoSuchElementException("Nessun punto vendita trovato.");
-		PuntoVendita puntoVendita = puntoVenditaRepository.findById(idPuntoVendita).get();
+		checkDati(nome, ubicazione);
+		PuntoVendita puntoVendita = getPuntoVendita(idPuntoVendita);
 		if (!nome.isEmpty())
 			puntoVendita.setNome(nome);
 		if (!ubicazione.isEmpty())
@@ -54,10 +41,26 @@ public class GestionePuntiVenditaHandler {
 		puntoVenditaRepository.save(puntoVendita);
 	}
 
-	//TODO - rimuovere codice ripetuto
 	public void rimuoviPuntoVendita(Long idPuntoVendita) {
+		puntoVenditaRepository.delete(this.getPuntoVendita(idPuntoVendita));
+	}
+
+	private Commerciante getCommerciante(Long idCommerciante) {
+		if (commercianteRepository.findById(idCommerciante).isEmpty())
+			throw new NoSuchElementException("Nessun commerciante trovato.");
+		return commercianteRepository.findById(idCommerciante).get();
+	}
+
+	private PuntoVendita getPuntoVendita(Long idPuntoVendita) {
 		if (puntoVenditaRepository.findById(idPuntoVendita).isEmpty())
 			throw new NoSuchElementException("Nessun punto vendita trovato.");
-		puntoVenditaRepository.delete(puntoVenditaRepository.findById(idPuntoVendita).get());
+		return puntoVenditaRepository.findById(idPuntoVendita).get();
+	}
+
+	private void checkDati(String nome, String ubicazione) {
+		if (nome == null || ubicazione == null)
+			throw new NullPointerException("Dati inseriti non validi.");
+		if (nome.length() > 25 || ubicazione.length() > 40)
+			throw new IllegalArgumentException("Dati inseriti non validi.");
 	}
 }

@@ -34,13 +34,13 @@ public class Prenotazione {
 	private Ricevuta ricevuta;
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCliente")
-	private InterfaceCliente cliente;
+	private Cliente cliente;
 	@Transient
 	private List<Pacco> pacchi;
 	private Stato stato;
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCorriere")
-	private InterfaceCorriere corriere;
+	private Corriere corriere;
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idPuntoConsegna")
 	private PuntoConsegna puntoConsegna;
@@ -60,7 +60,7 @@ public class Prenotazione {
 	/**
 	 * getter del cliente della prenotazione.
 	 */
-	public InterfaceCliente getCliente() {
+	public Cliente getCliente() {
 		return this.cliente;
 	}
 
@@ -94,11 +94,11 @@ public class Prenotazione {
 		this.stato = nuovoStato;
 	}
 
-	public void setCorriere(InterfaceCorriere corriere) {
+	public void setCorriere(Corriere corriere) {
 		this.corriere = corriere;
 	}
 
-	public InterfaceCorriere getCorriere() {
+	public Corriere getCorriere() {
 		return this.corriere;
 	}
 

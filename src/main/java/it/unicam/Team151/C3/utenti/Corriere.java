@@ -24,19 +24,18 @@ public class Corriere implements InterfaceCorriere {
     private String ruolo;
     private String email;
     private String password;
-    @Transient
     private boolean logged;
 
     public Corriere() {
     }
 
-    public Corriere(List<String> form) {
-        this.nome = form.get(0);
-        this.cognome = form.get(1);
-        this.indirizzo = form.get(2);
-        this.ruolo = form.get(3);
-        this.email = form.get(4);
-        this.password = form.get(5);
+    public Corriere(String nome, String cognome, String indirizzo, String ruolo, String email, String password) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.indirizzo = indirizzo;
+        this.ruolo = ruolo;
+        this.email = email;
+        this.password = password;
         this.logged = false;
     }
 
