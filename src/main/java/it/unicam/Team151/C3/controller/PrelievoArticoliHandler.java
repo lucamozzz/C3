@@ -18,10 +18,10 @@ public class PrelievoArticoliHandler {
 	@Autowired
 	IRepositoryMaster repositoryMaster;
 	@Autowired
-	ILoginChecker<Corriere> loginChecker;
+	ILoginChecker loginChecker;
 
 	public void prelievoArticoli(Long idCorriere, Long idPacco) {
-		loginChecker.check(idCorriere);
+		loginChecker.checkCorriere(idCorriere);
 		Pacco pacco = repositoryMaster.getPaccoRepository().findById(idPacco).get();
 		if (repositoryMaster.getPaccoRepository().findById(idPacco).isEmpty())
 			throw new NoSuchElementException("Nessun pacco trovato.");

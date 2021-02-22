@@ -16,10 +16,10 @@ public class ConsegnaArticoliHandler {
 	@Autowired
 	IRepositoryMaster repositoryMaster;
 	@Autowired
-	ILoginChecker<Corriere> loginChecker;
+	ILoginChecker loginChecker;
 
 	public void consegnaPrenotazione(Long idCorriere, Long idPrenotazione) {
-		loginChecker.check(idCorriere);
+		loginChecker.checkCorriere(idCorriere);
 		if (repositoryMaster.getPrenotazioneRepository().findById(idPrenotazione).isEmpty())
 			throw new NoSuchElementException("Nessuna prenotazione trovata.");
 		Prenotazione prenotazione = repositoryMaster.getPrenotazioneRepository().findById(idPrenotazione).get();

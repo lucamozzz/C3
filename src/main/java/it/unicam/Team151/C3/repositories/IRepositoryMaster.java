@@ -1,6 +1,7 @@
 package it.unicam.Team151.C3.repositories;
 
 public interface IRepositoryMaster {
+
     ClienteRepository getClienteRepository();
 
     CommercianteRepository getCommercianteRepository();

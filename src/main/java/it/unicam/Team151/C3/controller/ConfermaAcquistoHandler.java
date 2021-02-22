@@ -22,10 +22,10 @@ public class ConfermaAcquistoHandler {
 	@Autowired
 	IRepositoryMaster repositoryMaster;
 	@Autowired
-	ILoginChecker<Commerciante> loginChecker;
+	ILoginChecker loginChecker;
 
 	public List<Pacco> confermaAcquisto(Long idCommerciante) {
-		Commerciante commerciante = loginChecker.check(idCommerciante);
+		Commerciante commerciante = loginChecker.checkCommerciante(idCommerciante);
 		List<PuntoVendita> puntiVenditaCommerciante = repositoryMaster.getPuntoVenditaRepository().findAllByCommerciante(commerciante);
 		List<Pacco> pacchiCommerciante = new ArrayList<>();
 		for (PuntoVendita puntoVendita : puntiVenditaCommerciante)
@@ -34,7 +34,7 @@ public class ConfermaAcquistoHandler {
 	}
 
 	public void confermaPagamento(Long idCommerciante, Long idPacco) {
-		loginChecker.check(idCommerciante);
+		loginChecker.checkCommerciante(idCommerciante);
 		boolean flag = true;
 		if (repositoryMaster.getPaccoRepository().findById(idPacco).isEmpty())
 			throw new NoSuchElementException("Nessun pacco trovato.");

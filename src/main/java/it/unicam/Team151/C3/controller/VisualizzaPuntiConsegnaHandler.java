@@ -2,8 +2,6 @@ package it.unicam.Team151.C3.controller;
 
 import it.unicam.Team151.C3.prenotazione.PuntoConsegna;
 import it.unicam.Team151.C3.repositories.IRepositoryMaster;
-import it.unicam.Team151.C3.repositories.PuntoConsegnaRepository;
-import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.util.ILoginChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,18 +12,17 @@ import java.util.List;
 public class VisualizzaPuntiConsegnaHandler {
 
     @Autowired
-    PuntoConsegnaRepository puntoConsegnaRepository;
-    @Autowired
     IRepositoryMaster repositoryMaster;
     @Autowired
-    ILoginChecker<Cliente> loginChecker;
+    ILoginChecker loginChecker;
 
     public List<PuntoConsegna> getPuntiConsegna(Long id) {
-        if (id != -1){
-            loginChecker.check(id);
-        }
+        if (id != -1)
+            loginChecker.checkCliente(id);
         List<PuntoConsegna> puntiConsegna = new ArrayList<>();
-        puntoConsegnaRepository.findAll().forEach(puntiConsegna::add);
+        repositoryMaster.getPuntoConsegnaRepository().findAll().forEach(puntiConsegna::add);
+        for (PuntoConsegna puntoConsegna : puntiConsegna)
+            puntoConsegna.getArmadietti().addAll(repositoryMaster.getArmadiettoRepository().findAllByPuntoConsegna(puntoConsegna));
         return puntiConsegna;
     }
 }

@@ -21,10 +21,10 @@ public class RitiraPrenotazioneHandler {
 	@Autowired
 	ArmadiettoRepository armadiettoRepository;
 	@Autowired
-	ILoginChecker<Cliente> loginChecker;
+	ILoginChecker loginChecker;
 
 	public void ritiraPrenotazione(Long idCliente, Long idPuntoConsegna, Long idArmadietto) {
-		loginChecker.check(idCliente);
+		loginChecker.checkCliente(idCliente);
 		PuntoConsegna puntoConsegna = getPuntoConsegna(idPuntoConsegna);
 		if (armadiettoRepository.findById(idArmadietto).isEmpty())
 			throw new NoSuchElementException("Nessun armadietto trovato.");

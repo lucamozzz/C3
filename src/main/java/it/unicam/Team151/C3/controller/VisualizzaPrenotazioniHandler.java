@@ -15,10 +15,10 @@ public class VisualizzaPrenotazioniHandler {
     @Autowired
     IRepositoryMaster repositoryMaster;
     @Autowired
-    ILoginChecker<Corriere> loginChecker;
+    ILoginChecker loginChecker;
 
     public List<Prenotazione> getPrenotazioni(Long idCorriere) {
-        Corriere corriere = loginChecker.check(idCorriere);
+        Corriere corriere = loginChecker.checkCorriere(idCorriere);
         List<Prenotazione> prenotazioni = repositoryMaster.getPrenotazioneRepository().findAllByCorriere(corriere);
         for (Prenotazione prenotazione : prenotazioni) {
             prenotazione.getPacchi().addAll(repositoryMaster.getPaccoRepository().findAllByPrenotazione(prenotazione));

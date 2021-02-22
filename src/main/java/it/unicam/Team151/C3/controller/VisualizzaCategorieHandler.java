@@ -16,11 +16,11 @@ public class VisualizzaCategorieHandler {
     @Autowired
     CategoriaRepository categoriaRepository;
     @Autowired
-    ILoginChecker<Cliente> loginChecker;
+    ILoginChecker loginChecker;
 
     public List<Categoria> getCategorie(Long id){
         if (id != -1)
-            loginChecker.check(id);
+            loginChecker.checkCliente(id);
         List<Categoria> categorie = new ArrayList<>();
         categoriaRepository.findAll().forEach(categorie::add);
         return categorie;

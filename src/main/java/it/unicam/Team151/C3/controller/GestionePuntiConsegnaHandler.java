@@ -1,6 +1,8 @@
 package it.unicam.Team151.C3.controller;
 
+import it.unicam.Team151.C3.prenotazione.Armadietto;
 import it.unicam.Team151.C3.prenotazione.PuntoConsegna;
+import it.unicam.Team151.C3.repositories.ArmadiettoRepository;
 import it.unicam.Team151.C3.repositories.PuntoConsegnaRepository;
 import it.unicam.Team151.C3.util.InterfaceAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,15 @@ public class GestionePuntiConsegnaHandler {
 	InterfaceAdmin admin;
 	@Autowired
 	PuntoConsegnaRepository puntoConsegnaRepository;
+	@Autowired
+	ArmadiettoRepository armadiettoRepository;
 
 	public void aggiungiPuntoConsegna(String ubicazione, int numeroArmadietti) {
 		checkDati(ubicazione, ubicazione.length() > 40 || numeroArmadietti < 1);
-		admin.createPuntoConsegna(ubicazione, numeroArmadietti);
+		PuntoConsegna puntoConsegna = admin.createPuntoConsegna(ubicazione, numeroArmadietti);
+		puntoConsegnaRepository.save(puntoConsegna);
+		for (Armadietto armadietto : puntoConsegna.getArmadietti())
+			armadiettoRepository.save(armadietto);
 	}
 
 	public void modificaPuntoConsegna(Long idPuntoConsegna, String ubicazione) {

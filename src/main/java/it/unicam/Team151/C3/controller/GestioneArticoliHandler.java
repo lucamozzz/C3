@@ -18,11 +18,11 @@ public class GestioneArticoliHandler {
 	@Autowired
 	IRepositoryMaster repositoryMaster;
 	@Autowired
-	ILoginChecker<Commerciante> loginChecker;
+	ILoginChecker loginChecker;
 
 	public DescrizioneArticolo aggiungiArticolo(Long idCommerciante, String nome, String descrizione, double prezzo,
                                                 int quantita, Long idPuntoVendita, Long idCategoria) {
-		loginChecker.check(idCommerciante);
+		loginChecker.checkCommerciante(idCommerciante);
 		if (repositoryMaster.getPuntoVenditaRepository().findById(idPuntoVendita).isEmpty())
 			throw new NoSuchElementException("Nessun punto vendita trovato.");
 		PuntoVendita puntoVendita = repositoryMaster.getPuntoVenditaRepository().findById(idPuntoVendita).get();
@@ -37,7 +37,7 @@ public class GestioneArticoliHandler {
 	}
 
 	public void modificaArticolo(Long idCommerciante, Long idDescrizioneArticolo, String nome, String descrizione, double prezzo, int quantita, Categoria categoria) {
-		loginChecker.check(idCommerciante);
+		loginChecker.checkCommerciante(idCommerciante);
 		DescrizioneArticolo descrizioneArticolo = getDescrizioneArticolo(idDescrizioneArticolo);
 		if(nome == null || descrizione == null || prezzo < 0  || quantita < 0 || categoria == null)
 			throw new NullPointerException("not ok");
@@ -61,14 +61,14 @@ public class GestioneArticoliHandler {
 	}
 
 	public void rimuoviArticolo(Long idCommerciante, Long idDescArticolo) {
-		loginChecker.check(idCommerciante);
+		loginChecker.checkCommerciante(idCommerciante);
 		DescrizioneArticolo articoloDaEliminare = getDescrizioneArticolo(idDescArticolo);
 		repositoryMaster.getDescrizioneArticoloRepository().delete(articoloDaEliminare);
 	}
 
 	public List<DescrizioneArticolo> getArticoliOf(Long idCommerciante) {
 		List<DescrizioneArticolo> articoliCommerciante = new ArrayList<>();
-		Commerciante commerciante = loginChecker.check(idCommerciante);
+		Commerciante commerciante = loginChecker.checkCommerciante(idCommerciante);
 		List<PuntoVendita> puntiVenditaCommerciante = repositoryMaster.getPuntoVenditaRepository().findAllByCommerciante(commerciante);
 		for(PuntoVendita pv : puntiVenditaCommerciante)
 			articoliCommerciante.addAll(repositoryMaster.getDescrizioneArticoloRepository().findAllByPuntoVendita(pv));

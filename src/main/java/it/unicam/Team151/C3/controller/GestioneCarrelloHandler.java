@@ -28,7 +28,7 @@ public class GestioneCarrelloHandler {
 	@Autowired
 	ClienteRepository clienteRepository;
 	@Autowired
-	ILoginChecker<Cliente> loginChecker;
+	ILoginChecker loginChecker;
 
 	public void aggiungiArticoloCarrello(Long idDescArticolo, int quantita, Long idCliente) {
 		Cliente cliente = getCliente(idCliente);
@@ -84,7 +84,7 @@ public class GestioneCarrelloHandler {
 	}
 
 	private Cliente getCliente(Long idCliente) {
-		return loginChecker.check(idCliente);
+		return loginChecker.checkCliente(idCliente);
 	}
 
 	private ArticoloCarrello getArticoloCarrello(Long idArticoloCarrello) {

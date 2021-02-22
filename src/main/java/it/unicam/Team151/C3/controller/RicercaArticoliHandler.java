@@ -16,10 +16,10 @@ public class RicercaArticoliHandler {
 	@Autowired
 	IRepositoryMaster repositoryMaster;
 	@Autowired
-	ILoginChecker<Cliente> loginChecker;
+	ILoginChecker loginChecker;
 
 	public List<DescrizioneArticolo> scegliCategoria(Long idCliente, Long idCategoria) {
-		loginChecker.check(idCliente);
+		loginChecker.checkCliente(idCliente);
 		if(repositoryMaster.getCategoriaRepository().findById(idCategoria).isEmpty())
 			throw new NullPointerException("la categoria non esiste");
 		Categoria categoria = repositoryMaster.getCategoriaRepository().findById(idCategoria).get();
@@ -27,14 +27,14 @@ public class RicercaArticoliHandler {
 	}
 
 	public List<PuntoVendita> ricercaArticoliPuntoVendita(Long idCliente) {
-		loginChecker.check(idCliente);
+		loginChecker.checkCliente(idCliente);
 		List<PuntoVendita> puntiVendita = new ArrayList<>();
 		repositoryMaster.getPuntoVenditaRepository().findAll().forEach(puntiVendita::add);
 		return puntiVendita;
 	}
 
 	public List<DescrizioneArticolo> scegliPuntoVendita(Long idCliente, Long idPuntoVendita) {
-		loginChecker.check(idCliente);
+		loginChecker.checkCliente(idCliente);
 		if(repositoryMaster.getPuntoVenditaRepository().findById(idPuntoVendita).isEmpty())
 			throw new NullPointerException("il punto vendita non esiste.");
 		PuntoVendita puntoVendita = repositoryMaster.getPuntoVenditaRepository().findById(idPuntoVendita).get();

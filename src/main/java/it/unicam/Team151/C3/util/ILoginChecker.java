@@ -1,8 +1,12 @@
 package it.unicam.Team151.C3.util;
 
-import it.unicam.Team151.C3.utenti.UtenteAutenticato;
+import it.unicam.Team151.C3.utenti.*;
 
-public interface ILoginChecker<E extends UtenteAutenticato> {
+public interface ILoginChecker {
 
-    E check(Long id);
+    Cliente checkCliente(Long id);
+
+    Commerciante checkCommerciante(Long id);
+
+    Corriere checkCorriere(Long id);
 }

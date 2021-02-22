@@ -19,7 +19,7 @@ public class GestionePuntiVenditaHandler {
 	@Autowired
 	PuntoVenditaRepository puntoVenditaRepository;
 	@Autowired
-	ILoginChecker<Commerciante> loginChecker;
+	ILoginChecker loginChecker;
 
 	public List<PuntoVendita> getPuntiVendita(Long idCommerciante) {
 		Commerciante commerciante = getCommerciante(idCommerciante);
@@ -35,7 +35,7 @@ public class GestionePuntiVenditaHandler {
 	}
 
 	public void modificaPuntoVendita(Long idCommerciante, Long idPuntoVendita, String nome, String ubicazione) {
-		loginChecker.check(idCommerciante);
+		loginChecker.checkCommerciante(idCommerciante);
 		checkDati(nome, ubicazione);
 		PuntoVendita puntoVendita = getPuntoVendita(idPuntoVendita);
 		if (!nome.isEmpty())
@@ -46,12 +46,12 @@ public class GestionePuntiVenditaHandler {
 	}
 
 	public void rimuoviPuntoVendita(Long idCommerciante, Long idPuntoVendita) {
-		loginChecker.check(idCommerciante);
+		loginChecker.checkCommerciante(idCommerciante);
 		puntoVenditaRepository.delete(this.getPuntoVendita(idPuntoVendita));
 	}
 
 	private Commerciante getCommerciante(Long idCommerciante) {
-		return loginChecker.check(idCommerciante);
+		return loginChecker.checkCommerciante(idCommerciante);
 	}
 
 	private PuntoVendita getPuntoVendita(Long idPuntoVendita) {

@@ -7,6 +7,7 @@ import it.unicam.Team151.C3.prenotazione.Ricevuta;
 import it.unicam.Team151.C3.prenotazione.PuntoConsegna;
 import it.unicam.Team151.C3.repositories.*;
 import it.unicam.Team151.C3.utenti.Cliente;
+import it.unicam.Team151.C3.utenti.InterfaceCliente;
 import it.unicam.Team151.C3.util.ILoginChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,10 +32,10 @@ public class ConfermaPrenotazioneHandler {
 	@Autowired
 	ArticoloCarrelloRepository articoloCarrelloRepository;
 	@Autowired
-	ILoginChecker<Cliente> loginChecker;
+	ILoginChecker loginChecker;
 
 	public Ricevuta confermaPrenotazione(Long idPuntoConsegna, Long idCliente) {
-		Cliente cliente = loginChecker.check(idCliente);
+		Cliente cliente = loginChecker.checkCliente(idCliente);
 		if (carrelloRepository.findByCliente(cliente).isEmpty())
 			throw new NoSuchElementException("Nessun carrello trovato.");
 		Carrello carrello = carrelloRepository.findByCliente(cliente).get();
