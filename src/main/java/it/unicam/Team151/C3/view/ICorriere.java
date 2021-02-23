@@ -6,10 +6,7 @@ import it.unicam.Team151.C3.controller.PrelievoArticoliHandler;
 import it.unicam.Team151.C3.controller.VisualizzaPrenotazioniHandler;
 import it.unicam.Team151.C3.prenotazione.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
@@ -28,7 +25,7 @@ public class ICorriere implements IUtenteAutenticato{
 	@Autowired
 	VisualizzaPrenotazioniHandler visualizzaPrenotazioniHandler;
 
-	@PostMapping("getPrenotazioni")
+	@GetMapping("getPrenotazioni")
 	public List<Prenotazione> getPrenotazioni(@RequestParam Long idCorriere) {
 		return visualizzaPrenotazioniHandler.getPrenotazioni(idCorriere);
 	}

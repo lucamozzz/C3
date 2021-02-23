@@ -42,45 +42,23 @@ public class LoginHandler {
 	public boolean checkCredenziali(String email, String pwd, String ruolo) throws NotExistingUserException, WrongPasswordException {
 		switch (ruolo) {
 			case "Cliente":
-				caseCliente(email, pwd);
+				check(pwd, repositoryMaster.getClienteRepository().findByEmail(email));
 				break;
 			case "Commerciante":
-				caseCommerciante(email, pwd);
+				check(pwd, repositoryMaster.getCommercianteRepository().findByEmail(email));
 				break;
 			case "Corriere":
-				caseCorriere(email, pwd);
+				check(pwd, repositoryMaster.getCorriereRepository().findByEmail(email));
 				break;
 		}
 		return true;
 	}
 
-	private void caseCliente(String email, String pwd) throws NotExistingUserException, WrongPasswordException {
-		if (repositoryMaster.getClienteRepository().findByEmail(email).isEmpty())
-			throw new NoSuchElementException("Nessun elemento trovato.");
-		Optional<Cliente> cliente = repositoryMaster.getClienteRepository().findByEmail(email);
-		if (cliente.isEmpty())
+	private void check(String pwd, Optional<? extends UtenteAutenticato> user) throws NotExistingUserException, WrongPasswordException {
+		if (user.isEmpty())
 			throw new NotExistingUserException();
-		if(cliente.get().getPassword().equals(pwd)) {
-			utente = cliente.get();
-		}
-		else throw new WrongPasswordException();
-	}
-
-	private void caseCommerciante(String email, String pwd) throws NotExistingUserException, WrongPasswordException {
-		Optional<Commerciante> commerciante = repositoryMaster.getCommercianteRepository().findByEmail(email);
-		if (commerciante.isEmpty())
-			throw new NotExistingUserException();
-		if(commerciante.get().getPassword().equals(pwd))
-			utente = commerciante.get();
-		else throw new WrongPasswordException();
-	}
-
-	private void caseCorriere(String email, String pwd) throws NotExistingUserException, WrongPasswordException {
-		Optional<Corriere> corriere = repositoryMaster.getCorriereRepository().findByEmail(email);
-		if (corriere.isEmpty())
-			throw new NotExistingUserException();
-		if(corriere.get().getPassword().equals(pwd))
-			utente = corriere.get();
+		if(user.get().getPassword().equals(pwd))
+			utente = user.get();
 		else throw new WrongPasswordException();
 	}
 

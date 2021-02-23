@@ -55,7 +55,7 @@ public class ICliente implements IUtenteAutenticato{
 		gestioneCarrelloHandler.rimuoviArticoloCarrello(idArticoloCarrello, quantita, idCliente);
 	}
 
-	@PostMapping("getCarrello")
+	@GetMapping("getCarrello")
 	public List<ArticoloCarrello> mostraArticoliCarrello(@RequestParam Long idCliente){
 		return gestioneCarrelloHandler.mostraArticoliCarrello(idCliente);
 	}
@@ -65,7 +65,7 @@ public class ICliente implements IUtenteAutenticato{
 		return visualizzaCategorieHandler.getCategorie(idCliente);
 	}
 
-	@PostMapping("scegliCategoria")
+	@GetMapping("scegliCategoria")
 	public List<DescrizioneArticolo> scegliCategoria(@RequestParam Long idCliente, @RequestParam Long idCategoria) {
 		return ricercaArticoliHandler.scegliCategoria(idCliente, idCategoria);
 	}
@@ -75,7 +75,7 @@ public class ICliente implements IUtenteAutenticato{
 		return ricercaArticoliHandler.getPuntiVendita(idCliente);
 	}
 
-	@PostMapping("scegliPuntoVendita")
+	@GetMapping("scegliPuntoVendita")
 	public List<DescrizioneArticolo> scegliPuntoVendita(@RequestParam Long idCliente, @RequestParam Long idPuntoVendita) {
 		return ricercaArticoliHandler.scegliPuntoVendita(idCliente, idPuntoVendita);
 	}
