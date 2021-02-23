@@ -3,6 +3,7 @@ package it.unicam.Team151.C3.controller;
 import it.unicam.Team151.C3.prenotazione.Armadietto;
 import it.unicam.Team151.C3.prenotazione.PuntoConsegna;
 import it.unicam.Team151.C3.repositories.ArmadiettoRepository;
+import it.unicam.Team151.C3.repositories.IRepositoryMaster;
 import it.unicam.Team151.C3.repositories.PuntoConsegnaRepository;
 import it.unicam.Team151.C3.util.InterfaceAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +16,16 @@ public class GestionePuntiConsegnaHandler {
 	@Autowired
 	InterfaceAdmin admin;
 	@Autowired
-	PuntoConsegnaRepository puntoConsegnaRepository;
-	@Autowired
-	ArmadiettoRepository armadiettoRepository;
+	IRepositoryMaster repositoryMaster;
 
 	public void aggiungiPuntoConsegna(String ubicazione, int numeroArmadietti) {
 		if (!admin.getLogged())
 			throw new IllegalStateException("Non hai i permessi per accedere a questa funziona.");
 		checkDati(ubicazione, ubicazione.length() > 40 || numeroArmadietti < 1);
 		PuntoConsegna puntoConsegna = admin.createPuntoConsegna(ubicazione, numeroArmadietti);
-		puntoConsegnaRepository.save(puntoConsegna);
+		repositoryMaster.getPuntoConsegnaRepository().save(puntoConsegna);
 		for (Armadietto armadietto : puntoConsegna.getArmadietti())
-			armadiettoRepository.save(armadietto);
+			repositoryMaster.getArmadiettoRepository().save(armadietto);
 	}
 
 	public void modificaPuntoConsegna(Long idPuntoConsegna, String ubicazione) {
@@ -36,19 +35,19 @@ public class GestionePuntiConsegnaHandler {
 		PuntoConsegna puntoConsegna = getPuntoConsegna(idPuntoConsegna);
 		if (!ubicazione.isEmpty())
 			puntoConsegna.setUbicazione(ubicazione);
-		puntoConsegnaRepository.save(puntoConsegna);
+		repositoryMaster.getPuntoConsegnaRepository().save(puntoConsegna);
 	}
 
 	public void rimuoviPuntoConsegna(Long idPuntoConsegna) {
 		if (!admin.getLogged())
 			throw new IllegalStateException("Non hai i permessi per accedere a questa funziona.");
-		puntoConsegnaRepository.delete(this.getPuntoConsegna(idPuntoConsegna));
+		repositoryMaster.getPuntoConsegnaRepository().delete(this.getPuntoConsegna(idPuntoConsegna));
 	}
 
 	private PuntoConsegna getPuntoConsegna(Long idPuntoConsegna) {
-		if (puntoConsegnaRepository.findById(idPuntoConsegna).isEmpty())
+		if (repositoryMaster.getPuntoConsegnaRepository().findById(idPuntoConsegna).isEmpty())
 			throw new NoSuchElementException("Nessun punto consegna trovato.");
-		return puntoConsegnaRepository.findById(idPuntoConsegna).get();
+		return repositoryMaster.getPuntoConsegnaRepository().findById(idPuntoConsegna).get();
 	}
 
 	private void checkDati(String ubicazione, boolean condizione) {

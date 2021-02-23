@@ -3,6 +3,7 @@ package it.unicam.Team151.C3.controller;
 import it.unicam.Team151.C3.prenotazione.Armadietto;
 import it.unicam.Team151.C3.prenotazione.PuntoConsegna;
 import it.unicam.Team151.C3.repositories.ArmadiettoRepository;
+import it.unicam.Team151.C3.repositories.IRepositoryMaster;
 import it.unicam.Team151.C3.repositories.PuntoConsegnaRepository;
 import it.unicam.Team151.C3.servizioClienti.ServizioClienti;
 import it.unicam.Team151.C3.utenti.Cliente;
@@ -17,20 +18,18 @@ public class RitiraPrenotazioneHandler {
 	@Autowired
 	ServizioClienti servizioClienti;
 	@Autowired
-	PuntoConsegnaRepository puntoConsegnaRepository;
-	@Autowired
-	ArmadiettoRepository armadiettoRepository;
+	IRepositoryMaster repositoryMaster;
 	@Autowired
 	ILoginChecker loginChecker;
 
 	public void ritiraPrenotazione(Long idCliente, Long idPuntoConsegna, Long idArmadietto) {
 		loginChecker.checkCliente(idCliente);
 		PuntoConsegna puntoConsegna = getPuntoConsegna(idPuntoConsegna);
-		if (armadiettoRepository.findById(idArmadietto).isEmpty())
+		if (repositoryMaster.getArmadiettoRepository().findById(idArmadietto).isEmpty())
 			throw new NoSuchElementException("Nessun armadietto trovato.");
-		Armadietto armadietto = armadiettoRepository.findById(idArmadietto).get();
+		Armadietto armadietto = repositoryMaster.getArmadiettoRepository().findById(idArmadietto).get();
 		puntoConsegna.liberaArmadietto(armadietto);
-		armadiettoRepository.save(armadietto);
+		repositoryMaster.getArmadiettoRepository().save(armadietto);
 		servizioClienti.richiestaFeedback();
 	}
 
@@ -43,10 +42,10 @@ public class RitiraPrenotazioneHandler {
     }
 
 	private PuntoConsegna getPuntoConsegna(Long idPuntoConsegna) {
-		if (puntoConsegnaRepository.findById(idPuntoConsegna).isEmpty())
+		if (repositoryMaster.getPuntoConsegnaRepository().findById(idPuntoConsegna).isEmpty())
 			throw new NoSuchElementException("Nessun punto consgena trovato.");
-		PuntoConsegna puntoConsegna = puntoConsegnaRepository.findById(idPuntoConsegna).get();
-		puntoConsegna.getArmadietti().addAll(armadiettoRepository.findAllByPuntoConsegna(puntoConsegna));
+		PuntoConsegna puntoConsegna = repositoryMaster.getPuntoConsegnaRepository().findById(idPuntoConsegna).get();
+		puntoConsegna.getArmadietti().addAll(repositoryMaster.getArmadiettoRepository().findAllByPuntoConsegna(puntoConsegna));
 		return puntoConsegna;
 	}
 }

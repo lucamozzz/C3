@@ -2,6 +2,7 @@ package it.unicam.Team151.C3.controller;
 
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.repositories.CommercianteRepository;
+import it.unicam.Team151.C3.repositories.IRepositoryMaster;
 import it.unicam.Team151.C3.repositories.PuntoVenditaRepository;
 import it.unicam.Team151.C3.utenti.Commerciante;
 import it.unicam.Team151.C3.util.ILoginChecker;
@@ -15,15 +16,13 @@ import java.util.NoSuchElementException;
 public class GestionePuntiVenditaHandler {
 
 	@Autowired
-	CommercianteRepository commercianteRepository;
-	@Autowired
-	PuntoVenditaRepository puntoVenditaRepository;
+	IRepositoryMaster repositoryMaster;
 	@Autowired
 	ILoginChecker loginChecker;
 
 	public List<PuntoVendita> getPuntiVendita(Long idCommerciante) {
 		Commerciante commerciante = getCommerciante(idCommerciante);
-		return new ArrayList<>(puntoVenditaRepository.findAllByCommerciante(commerciante));
+		return new ArrayList<>(repositoryMaster.getPuntoVenditaRepository().findAllByCommerciante(commerciante));
 	}
 
 	public void aggiungiPuntoVendita(Long idCommerciante, String nome, String ubicazione) {
@@ -31,7 +30,7 @@ public class GestionePuntiVenditaHandler {
 		if (!commerciante.getLogged())
 			throw new IllegalStateException("Devi effettuare il login.");
 		checkDati(nome, ubicazione);
-		puntoVenditaRepository.save(commerciante.createPuntoVendita(nome, ubicazione));
+		repositoryMaster.getPuntoVenditaRepository().save(commerciante.createPuntoVendita(nome, ubicazione));
 	}
 
 	public void modificaPuntoVendita(Long idCommerciante, Long idPuntoVendita, String nome, String ubicazione) {
@@ -42,12 +41,12 @@ public class GestionePuntiVenditaHandler {
 			puntoVendita.setNome(nome);
 		if (!ubicazione.isEmpty())
 			puntoVendita.setUbicazione(ubicazione);
-		puntoVenditaRepository.save(puntoVendita);
+		repositoryMaster.getPuntoVenditaRepository().save(puntoVendita);
 	}
 
 	public void rimuoviPuntoVendita(Long idCommerciante, Long idPuntoVendita) {
 		loginChecker.checkCommerciante(idCommerciante);
-		puntoVenditaRepository.delete(this.getPuntoVendita(idPuntoVendita));
+		repositoryMaster.getPuntoVenditaRepository().delete(this.getPuntoVendita(idPuntoVendita));
 	}
 
 	private Commerciante getCommerciante(Long idCommerciante) {
@@ -55,9 +54,9 @@ public class GestionePuntiVenditaHandler {
 	}
 
 	private PuntoVendita getPuntoVendita(Long idPuntoVendita) {
-		if (puntoVenditaRepository.findById(idPuntoVendita).isEmpty())
+		if (repositoryMaster.getPuntoVenditaRepository().findById(idPuntoVendita).isEmpty())
 			throw new NoSuchElementException("Nessun punto vendita trovato.");
-		return puntoVenditaRepository.findById(idPuntoVendita).get();
+		return repositoryMaster.getPuntoVenditaRepository().findById(idPuntoVendita).get();
 	}
 
 	private void checkDati(String nome, String ubicazione) {

@@ -3,10 +3,7 @@ package it.unicam.Team151.C3.controller;
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
 import it.unicam.Team151.C3.articoli.Carrello;
 import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
-import it.unicam.Team151.C3.repositories.ArticoloCarrelloRepository;
-import it.unicam.Team151.C3.repositories.CarrelloRepository;
-import it.unicam.Team151.C3.repositories.ClienteRepository;
-import it.unicam.Team151.C3.repositories.DescrizioneArticoloRepository;
+import it.unicam.Team151.C3.repositories.*;
 import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.util.ILoginChecker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +11,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-//TODO - utilizzare repository master
 
 @Service
 public class GestioneCarrelloHandler {
 
 	@Autowired
-	DescrizioneArticoloRepository descrizioneArticoloRepository;
-	@Autowired
-	ArticoloCarrelloRepository articoloCarrelloRepository;
-	@Autowired
-	CarrelloRepository carrelloRepository;
-	@Autowired
-	ClienteRepository clienteRepository;
+	IRepositoryMaster repositoryMaster;
+
 	@Autowired
 	ILoginChecker loginChecker;
 
@@ -37,15 +28,15 @@ public class GestioneCarrelloHandler {
 		if(quantita > descrizioneArticolo.getQuantita())
 			throw new IllegalStateException("Articolo non disponibile in questa quantità.");
 		ArticoloCarrello articoloCarrello;
-		if(articoloCarrelloRepository.findByCarrelloAndDescrizioneArticolo(carrello, descrizioneArticolo).isPresent()){
-			articoloCarrello = articoloCarrelloRepository.findByCarrelloAndDescrizioneArticolo(carrello, descrizioneArticolo).get();
+		if(repositoryMaster.getArticoloCarrelloRepository().findByCarrelloAndDescrizioneArticolo(carrello, descrizioneArticolo).isPresent()){
+			articoloCarrello = repositoryMaster.getArticoloCarrelloRepository().findByCarrelloAndDescrizioneArticolo(carrello, descrizioneArticolo).get();
 			articoloCarrello.setQuantita(articoloCarrello.getQuantita() + quantita);
 		}
 		else {
 			articoloCarrello = carrello.createArticoloCarrello(descrizioneArticolo, quantita);
 			carrello.getArticoliCarrello().add(articoloCarrello);
 		}
-		articoloCarrelloRepository.save(articoloCarrello);
+		repositoryMaster.getArticoloCarrelloRepository().save(articoloCarrello);
 	}
 
 	public void rimuoviArticoloCarrello(Long idArticoloCarrello, int quantita, Long idCliente) {
@@ -56,10 +47,10 @@ public class GestioneCarrelloHandler {
 			throw new IllegalArgumentException("La quantità che vuoi rimuovere è troppo elevata.");
 		if (articoloCarrello.getQuantita() == quantita){
 			carrello.getArticoliCarrello().remove(articoloCarrello);
-			articoloCarrelloRepository.delete(articoloCarrello);
+			repositoryMaster.getArticoloCarrelloRepository().delete(articoloCarrello);
 		} else {
 			articoloCarrello.setQuantita(articoloCarrello.getQuantita() - quantita);
-			articoloCarrelloRepository.save(articoloCarrello);
+			repositoryMaster.getArticoloCarrelloRepository().save(articoloCarrello);
 		}
 	}
 
@@ -70,16 +61,16 @@ public class GestioneCarrelloHandler {
 	}
 
 	private DescrizioneArticolo getDescrizioneArticolo(Long idDescArticolo) {
-		if (descrizioneArticoloRepository.findById(idDescArticolo).isEmpty())
+		if (repositoryMaster.getDescrizioneArticoloRepository().findById(idDescArticolo).isEmpty())
 			throw new NoSuchElementException("Nessun articolo trovato.");
-		return descrizioneArticoloRepository.findById(idDescArticolo).get();
+		return repositoryMaster.getDescrizioneArticoloRepository().findById(idDescArticolo).get();
 	}
 
 	private Carrello getCarrello(Cliente cliente) {
-		if (carrelloRepository.findByCliente(cliente).isEmpty())
+		if (repositoryMaster.getCarrelloRepository().findByCliente(cliente).isEmpty())
 			throw new NoSuchElementException("Nessun carrello trovato.");
-		Carrello carrello = carrelloRepository.findByCliente(cliente).get();
-		articoloCarrelloRepository.findAllByCarrello(carrello).forEach(carrello.getArticoliCarrello()::add);
+		Carrello carrello = repositoryMaster.getCarrelloRepository().findByCliente(cliente).get();
+		repositoryMaster.getArticoloCarrelloRepository().findAllByCarrello(carrello).forEach(carrello.getArticoliCarrello()::add);
 		return carrello;
 	}
 
@@ -88,8 +79,8 @@ public class GestioneCarrelloHandler {
 	}
 
 	private ArticoloCarrello getArticoloCarrello(Long idArticoloCarrello) {
-		if (articoloCarrelloRepository.findById(idArticoloCarrello).isEmpty())
+		if (repositoryMaster.getArticoloCarrelloRepository().findById(idArticoloCarrello).isEmpty())
 			throw new NoSuchElementException("Nessun articolo carrello trovato.");
-		return articoloCarrelloRepository.findById(idArticoloCarrello).get();
+		return repositoryMaster.getArticoloCarrelloRepository().findById(idArticoloCarrello).get();
 	}
 }
