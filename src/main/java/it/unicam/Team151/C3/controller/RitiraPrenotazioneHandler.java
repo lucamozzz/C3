@@ -30,6 +30,7 @@ public class RitiraPrenotazioneHandler {
 			throw new NoSuchElementException("Nessun armadietto trovato.");
 		Armadietto armadietto = armadiettoRepository.findById(idArmadietto).get();
 		puntoConsegna.liberaArmadietto(armadietto);
+		armadiettoRepository.save(armadietto);
 		servizioClienti.richiestaFeedback();
 	}
 
@@ -44,6 +45,8 @@ public class RitiraPrenotazioneHandler {
 	private PuntoConsegna getPuntoConsegna(Long idPuntoConsegna) {
 		if (puntoConsegnaRepository.findById(idPuntoConsegna).isEmpty())
 			throw new NoSuchElementException("Nessun punto consgena trovato.");
-		return puntoConsegnaRepository.findById(idPuntoConsegna).get();
+		PuntoConsegna puntoConsegna = puntoConsegnaRepository.findById(idPuntoConsegna).get();
+		puntoConsegna.getArmadietti().addAll(armadiettoRepository.findAllByPuntoConsegna(puntoConsegna));
+		return puntoConsegna;
 	}
 }

@@ -4,6 +4,7 @@ import it.unicam.Team151.C3.exceptions.NotExistingUserException;
 import it.unicam.Team151.C3.exceptions.WrongPasswordException;
 import it.unicam.Team151.C3.repositories.IRepositoryMaster;
 import it.unicam.Team151.C3.utenti.*;
+import it.unicam.Team151.C3.util.InterfaceAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -18,23 +19,26 @@ public class LoginHandler {
 	private UtenteAutenticato utente = null;
 
 	@Autowired
+	InterfaceAdmin admin;
+	@Autowired
 	private IRepositoryMaster repositoryMaster;
 
 	public UtenteAutenticato autenticazione(String email, String pwd, String ruolo) throws NotExistingUserException, WrongPasswordException {
-		if (this.checkCredenziali(email, pwd, ruolo)){
+		if (email.equals("system@admin") && pwd.equals("admin"))
+			admin.setLogged(true);
+		else if (this.checkCredenziali(email, pwd, ruolo)){
 			for (UtenteAutenticato utenteAutenticato : utentiLoggati) {
 				if(utenteAutenticato.getEmail().equals(utente.getEmail()))
 					throw new IllegalStateException("Utente già loggato.");
 			}
 			utente.setLogged(true);
-			save(utente);
+			this.save(utente);
 			utentiLoggati.add(utente);
 			return utente;
 		}
-		else return null;
+		return null;
 	}
 
-	//TODO un po' de refactoring
 	public boolean checkCredenziali(String email, String pwd, String ruolo) throws NotExistingUserException, WrongPasswordException {
 		switch (ruolo) {
 			case "Cliente":

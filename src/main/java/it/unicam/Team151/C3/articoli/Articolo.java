@@ -26,8 +26,9 @@ public class Articolo {
 	public Articolo() {
 	}
 
-	public Articolo(DescrizioneArticolo descrizioneArticolo) {
+	public Articolo(DescrizioneArticolo descrizioneArticolo, Pacco pacco) {
 		this.descrizioneArticolo = descrizioneArticolo;
+		this.pacco = pacco;
 	}
 
 	public Long getId() {

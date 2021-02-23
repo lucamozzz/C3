@@ -2,16 +2,12 @@ package it.unicam.Team151.C3.prenotazione;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import it.unicam.Team151.C3.articoli.Articolo;
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
 import it.unicam.Team151.C3.articoli.Carrello;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
 import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.utenti.Corriere;
-import it.unicam.Team151.C3.utenti.InterfaceCliente;
-import it.unicam.Team151.C3.utenti.InterfaceCorriere;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,7 +32,7 @@ public class Prenotazione {
 	@JoinColumn(name = "idCliente")
 	private Cliente cliente;
 	@Transient
-	private List<Pacco> pacchi;
+	private List<Pacco> pacchi = new ArrayList<>();
 	private Stato stato;
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idCorriere")
@@ -69,17 +65,6 @@ public class Prenotazione {
 	 */
 	public Ricevuta getRicevuta() {
 		return this.ricevuta;
-	}
-
-	/**
-	 * getter della lista degli articoli della prenotazione.
-	 */
-	public List<Articolo> getArticoli() {
-		List<Articolo> articoli = new ArrayList<>();
-		for (Pacco pacco : pacchi) {
-			articoli.addAll(pacco.getArticoli());
-		}
-		return articoli;
 	}
 
 	public Long getID() {

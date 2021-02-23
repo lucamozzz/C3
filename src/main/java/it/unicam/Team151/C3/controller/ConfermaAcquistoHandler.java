@@ -105,6 +105,7 @@ public class ConfermaAcquistoHandler {
 
 	private void inConsegna(Prenotazione prenotazione) {
 		Ricevuta ricevuta = prenotazione.getRicevuta();
+		prenotazione.setStato(Stato.Pronto);
 		List<Armadietto> armadiettiOfPuntoConsegna = repositoryMaster.getArmadiettoRepository().findAllByPuntoConsegna(prenotazione.getPuntoConsegna());
 		for (Armadietto armadietto : armadiettiOfPuntoConsegna) {
 			if (armadietto.isDisponibile()){

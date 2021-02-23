@@ -19,7 +19,7 @@ public class ArticoloCarrello {
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idDescrizioneArticolo")
 	private DescrizioneArticolo descrizioneArticolo;
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name = "idCarrello")
 	private Carrello carrello;
 

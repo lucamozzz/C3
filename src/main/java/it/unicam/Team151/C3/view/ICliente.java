@@ -61,7 +61,7 @@ public class ICliente implements IUtenteAutenticato{
 	}
 
 	@GetMapping("mostraCategorie")
-	public List<Categoria> ricercaArticoliCategoria(@RequestParam Long idCliente) {
+	public List<Categoria> getCategorie(@RequestParam Long idCliente) {
 		return visualizzaCategorieHandler.getCategorie(idCliente);
 	}
 
@@ -71,8 +71,8 @@ public class ICliente implements IUtenteAutenticato{
 	}
 
 	@GetMapping("puntiVendita")
-	public List<PuntoVendita> ricercaArticoliPuntoVendita(@RequestParam Long idCliente) {
-		return ricercaArticoliHandler.ricercaArticoliPuntoVendita(idCliente);
+	public List<PuntoVendita> getPuntiVendita(@RequestParam Long idCliente) {
+		return ricercaArticoliHandler.getPuntiVendita(idCliente);
 	}
 
 	@PostMapping("scegliPuntoVendita")

@@ -43,7 +43,7 @@ public class PrelievoArticoliHandler {
 			}
 		}
 		if (flag){
-			prenotazione.setStato(pacchiPrenotazione.get(0).getStato());
+			prenotazione.setStato(Stato.Ritirato);
 			repositoryMaster.getPrenotazioneRepository().save(prenotazione);
 		}
 	}

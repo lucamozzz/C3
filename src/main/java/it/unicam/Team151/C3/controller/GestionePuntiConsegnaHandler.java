@@ -20,6 +20,8 @@ public class GestionePuntiConsegnaHandler {
 	ArmadiettoRepository armadiettoRepository;
 
 	public void aggiungiPuntoConsegna(String ubicazione, int numeroArmadietti) {
+		if (!admin.getLogged())
+			throw new IllegalStateException("Non hai i permessi per accedere a questa funziona.");
 		checkDati(ubicazione, ubicazione.length() > 40 || numeroArmadietti < 1);
 		PuntoConsegna puntoConsegna = admin.createPuntoConsegna(ubicazione, numeroArmadietti);
 		puntoConsegnaRepository.save(puntoConsegna);
@@ -28,6 +30,8 @@ public class GestionePuntiConsegnaHandler {
 	}
 
 	public void modificaPuntoConsegna(Long idPuntoConsegna, String ubicazione) {
+		if (!admin.getLogged())
+			throw new IllegalStateException("Non hai i permessi per accedere a questa funziona.");
 		checkDati(ubicazione, ubicazione.length() > 40);
 		PuntoConsegna puntoConsegna = getPuntoConsegna(idPuntoConsegna);
 		if (!ubicazione.isEmpty())
@@ -36,6 +40,8 @@ public class GestionePuntiConsegnaHandler {
 	}
 
 	public void rimuoviPuntoConsegna(Long idPuntoConsegna) {
+		if (!admin.getLogged())
+			throw new IllegalStateException("Non hai i permessi per accedere a questa funziona.");
 		puntoConsegnaRepository.delete(this.getPuntoConsegna(idPuntoConsegna));
 	}
 

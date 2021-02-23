@@ -12,11 +12,14 @@ public class GestioneCategorieHandler {
 	@Autowired
 	IRepositoryMaster repositoryMaster;
 
-	InterfaceAdmin amministratoreDiSistema;
+	@Autowired
+	InterfaceAdmin admin;
 
 	public void creaCategoria(String nome, String descrizione) {
-		if(checkDatiInseriti(nome, descrizione)){
-			Categoria categoria= amministratoreDiSistema.createCategoria(nome, descrizione);
+		if (!admin.getLogged())
+			throw new IllegalStateException("Non hai i permessi per accedere a questa funziona.");
+		if(checkDatiInseriti(nome)){
+			Categoria categoria= admin.createCategoria(nome, descrizione);
 			repositoryMaster.getCategoriaRepository().save(categoria);
 		}
 		else
@@ -24,18 +27,22 @@ public class GestioneCategorieHandler {
 	}
 
 	public void aggiornaCategoria(Long idCategoria, String nome, String descrizione) {
+		if (!admin.getLogged())
+			throw new IllegalStateException("Non hai i permessi per accedere a questa funziona.");
 		if(repositoryMaster.getCategoriaRepository().findById(idCategoria).isEmpty())
 			throw new IllegalStateException("La categoria richiesta da modificare non esiste");
 		Categoria categoria = repositoryMaster.getCategoriaRepository().findById(idCategoria).get();
+		if (checkDatiInseriti(nome)){
 		categoria.setNome(nome);
 		categoria.setDescrizione(descrizione);
 		repositoryMaster.getCategoriaRepository().save(categoria);
+		} else
+			throw new IllegalArgumentException("Esiste già una categoria con questo nome.");
 	}
 
-	public boolean checkDatiInseriti(String nome, String descrizione) {
-		Categoria categoria = new Categoria(nome, descrizione);
+	public boolean checkDatiInseriti(String nome) {
 		for (Categoria cat : repositoryMaster.getCategoriaRepository().findAll()) {
-			if(cat.getNome().equals(categoria.getNome()))
+			if(cat.getNome().equals(nome))
 				return false;
 		}
 		return true;

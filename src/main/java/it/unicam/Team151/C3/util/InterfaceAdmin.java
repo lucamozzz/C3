@@ -9,4 +9,7 @@ public interface InterfaceAdmin {
 
     PuntoConsegna createPuntoConsegna(String ubicazione, int nArmadietti);
 
+    void setLogged(boolean b);
+
+    boolean getLogged();
 }

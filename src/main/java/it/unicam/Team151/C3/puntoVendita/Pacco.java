@@ -23,7 +23,7 @@ public class Pacco {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Transient
-	private List<Articolo> articoli;
+	private List<Articolo> articoli = new ArrayList<>();
 	@ManyToOne(cascade = {CascadeType.ALL})
 	@JoinColumn(name = "idPuntoVendita")
 	private PuntoVendita puntoVendita;
@@ -36,13 +36,12 @@ public class Pacco {
 	}
 
 	public Pacco(Prenotazione prenotazione, List<ArticoloCarrello> articoliCarrello) {
-		this.articoli = new ArrayList<>();
 		this.puntoVendita = articoliCarrello.get(0).getDescrizioneArticolo().getPuntoVendita();
 		this.prenotazione = prenotazione;
 		this.stato = Stato.PresoInCarico;
 		for (ArticoloCarrello articoloCarrello : articoliCarrello) {
 			for (int i = 0; i < articoloCarrello.getQuantita(); i++)
-				this.articoli.add(new Articolo(articoloCarrello.getDescrizioneArticolo()));
+				this.articoli.add(new Articolo(articoloCarrello.getDescrizioneArticolo(), this));
 		}
 	}
 

@@ -26,7 +26,7 @@ public class RicercaArticoliHandler {
 		return repositoryMaster.getDescrizioneArticoloRepository().findAllByCategoria(categoria);
 	}
 
-	public List<PuntoVendita> ricercaArticoliPuntoVendita(Long idCliente) {
+	public List<PuntoVendita> getPuntiVendita(Long idCliente) {
 		loginChecker.checkCliente(idCliente);
 		List<PuntoVendita> puntiVendita = new ArrayList<>();
 		repositoryMaster.getPuntoVenditaRepository().findAll().forEach(puntiVendita::add);

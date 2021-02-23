@@ -1,10 +1,7 @@
 package it.unicam.Team151.C3.view;
 
 import it.unicam.Team151.C3.articoli.Categoria;
-import it.unicam.Team151.C3.controller.GestioneCategorieHandler;
-import it.unicam.Team151.C3.controller.GestionePuntiConsegnaHandler;
-import it.unicam.Team151.C3.controller.VisualizzaCategorieHandler;
-import it.unicam.Team151.C3.controller.VisualizzaPuntiConsegnaHandler;
+import it.unicam.Team151.C3.controller.*;
 import it.unicam.Team151.C3.prenotazione.PuntoConsegna;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("admin")
-public class IAmministratoreDiSistema {
+public class IAmministratoreDiSistema implements IUtenteAutenticato{
 
 	@Autowired
 	GestionePuntiConsegnaHandler gestionePuntiConsegnaHandler;
@@ -23,6 +20,8 @@ public class IAmministratoreDiSistema {
 	VisualizzaPuntiConsegnaHandler visualizzaPuntiConsegnaHandler;
 	@Autowired
 	VisualizzaCategorieHandler visualizzaCategorieHandler;
+	@Autowired
+	LogoutHandler logoutHandler;
 
 	@GetMapping("mostraCategorie")
 	public List<Categoria> getCategorie() {
@@ -57,5 +56,11 @@ public class IAmministratoreDiSistema {
 	@PostMapping("rimuoviPuntoConsegna")
 	public void rimuoviPuntoConsegna(@RequestParam Long idPuntoConsegna) {
 		gestionePuntiConsegnaHandler.rimuoviPuntoConsegna(idPuntoConsegna);
+	}
+
+	@Override
+	@PostMapping("logout")
+	public void logout(@RequestParam Long id) {
+		logoutHandler.logout(id);
 	}
 }

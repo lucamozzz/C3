@@ -29,7 +29,7 @@ public class ICorriere implements IUtenteAutenticato{
 	VisualizzaPrenotazioniHandler visualizzaPrenotazioniHandler;
 
 	@PostMapping("getPrenotazioni")
-	public List<Prenotazione> consegnaArticoli(@RequestParam Long idCorriere) {
+	public List<Prenotazione> getPrenotazioni(@RequestParam Long idCorriere) {
 		return visualizzaPrenotazioniHandler.getPrenotazioni(idCorriere);
 	}
 
