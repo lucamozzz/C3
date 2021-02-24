@@ -8,7 +8,6 @@ import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.util.ILoginChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -65,10 +64,11 @@ public class GestioneCarrelloHandler {
 	/**
 	 * Metodo che permette al cliente di vedere il suo carrello
 	 */
-	public List<ArticoloCarrello> mostraArticoliCarrello(Long idCliente) {
-		Cliente cliente = getCliente(idCliente);
-		Carrello carrello = getCarrello(cliente);
-		return carrello.getArticoliCarrello();
+	public Carrello mostraArticoliCarrello(Long idCliente) {
+		return getCarrello(getCliente(idCliente));
+//		Cliente cliente = getCliente(idCliente);
+//		Carrello carrello = getCarrello(cliente);
+//		return carrello.getArticoliCarrello();
 	}
 
 	private DescrizioneArticolo getDescrizioneArticolo(Long idDescArticolo) {

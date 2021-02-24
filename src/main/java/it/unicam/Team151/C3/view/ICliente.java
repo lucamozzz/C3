@@ -1,6 +1,7 @@
 package it.unicam.Team151.C3.view;
 
 import it.unicam.Team151.C3.articoli.ArticoloCarrello;
+import it.unicam.Team151.C3.articoli.Carrello;
 import it.unicam.Team151.C3.articoli.Categoria;
 import it.unicam.Team151.C3.articoli.DescrizioneArticolo;
 import it.unicam.Team151.C3.controller.*;
@@ -80,7 +81,7 @@ public class ICliente implements IUtenteAutenticato{
 	 * Metodo che permette al cliente di visualizzare il suo carrello
 	 */
 	@GetMapping("getCarrello")
-	public List<ArticoloCarrello> mostraArticoliCarrello(@RequestParam Long idCliente){
+	public Carrello mostraArticoliCarrello(@RequestParam Long idCliente){
 		return gestioneCarrelloHandler.mostraArticoliCarrello(idCliente);
 	}
 
