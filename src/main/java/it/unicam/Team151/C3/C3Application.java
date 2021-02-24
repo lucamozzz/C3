@@ -11,31 +11,10 @@ import org.springframework.stereotype.Component;
 @SpringBootApplication
 @Component
 @EnableJpaRepositories("it.unicam.Team151.C3.repositories")
-public class C3Application implements CommandLineRunner{
+public class C3Application{
 
 	public static void main(String[] args) {
 		SpringApplication.run(C3Application.class, args);
 	}
 
-
-	@Autowired
-	PuntoVenditaRepository puntoVenditaRepository;
-	@Autowired
-	PuntoConsegnaRepository puntoConsegnaRepository;
-	@Autowired
-	ArticoloCarrelloRepository articoloCarrelloRepository;
-	@Autowired
-	DescrizioneArticoloRepository descrizioneArticoloRepository;
-	@Autowired
-	CategoriaRepository categoriaRepository;
-	@Autowired
-	CommercianteRepository commercianteRepository;
-	@Autowired
-	ClienteRepository clienteRepository;
-	@Autowired
-	CarrelloRepository carrelloRepository;
-
-	@Override
-	public void run(String... args) throws Exception {
-	}
 }
