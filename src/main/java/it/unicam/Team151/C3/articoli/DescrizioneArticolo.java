@@ -52,6 +52,13 @@ public class DescrizioneArticolo {
 	}
 
 	/**
+	 * Metodo che ti restituisce il nome associato alla descrizione articolo
+	 */
+	public String getNome() {
+		return nome;
+	}
+
+	/**
 	 * Metodo che ti restituisce la descrizione associato alla descrizione articolo
 	 */
 	public String getDescrizione() {

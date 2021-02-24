@@ -29,14 +29,16 @@ public class GestioneCarrelloHandler {
 		Cliente cliente = getCliente(idCliente);
 		Carrello carrello = getCarrello(cliente);
 		DescrizioneArticolo descrizioneArticolo = getDescrizioneArticolo(idDescArticolo);
-		if(quantita > descrizioneArticolo.getQuantita())
-			throw new IllegalStateException("Articolo non disponibile in questa quantità.");
 		ArticoloCarrello articoloCarrello;
 		if(repositoryMaster.getArticoloCarrelloRepository().findByCarrelloAndDescrizioneArticolo(carrello, descrizioneArticolo).isPresent()){
 			articoloCarrello = repositoryMaster.getArticoloCarrelloRepository().findByCarrelloAndDescrizioneArticolo(carrello, descrizioneArticolo).get();
+			if(quantita > descrizioneArticolo.getQuantita() - articoloCarrello.getQuantita())
+				throw new IllegalStateException("Articolo non disponibile in questa quantità.");
 			articoloCarrello.setQuantita(articoloCarrello.getQuantita() + quantita);
 		}
 		else {
+			if(quantita > descrizioneArticolo.getQuantita())
+				throw new IllegalStateException("Articolo non disponibile in questa quantità.");
 			articoloCarrello = carrello.createArticoloCarrello(descrizioneArticolo, quantita);
 			carrello.getArticoliCarrello().add(articoloCarrello);
 		}
