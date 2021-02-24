@@ -10,6 +10,9 @@ import it.unicam.Team151.C3.utenti.UtenteAutenticato;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Classe che rappresenta il caso d'uso 'Registrazione'
+ */
 @Service
 public class RegistrazioneHandler {
 
@@ -19,6 +22,9 @@ public class RegistrazioneHandler {
 	@Autowired
 	private IRepositoryMaster repositoryMaster;
 
+	/**
+	 * Metodo che permette ad un utente di registrarsi a C3
+	 */
 	public void compilaForm(String nome, String cognome, String indirizzo, String ruolo, String email, String password) throws AlreadyExistingUserException {
 		if (this.checkDatiInseriti(nome, cognome, indirizzo, ruolo, email, password)) {
 			UtenteAutenticato newUser = utenteManager.createUtente(nome, cognome, indirizzo, ruolo, email, password);

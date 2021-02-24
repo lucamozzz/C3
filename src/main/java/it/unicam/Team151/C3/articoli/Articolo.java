@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
 import javax.persistence.*;
 
+/**
+ * Classe che rappresenta l'oggetto Articolo
+ */
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
 		property = "id",
@@ -31,22 +34,37 @@ public class Articolo {
 		this.pacco = pacco;
 	}
 
+	/**
+	 * Metodo che ti restituisce l'id associato all'articolo
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * Metodo che ti restituisce la descrizione articolo associata all'articolo
+	 */
 	public DescrizioneArticolo getDescrizioneArticolo() {
 		return descrizioneArticolo;
 	}
 
+	/**
+	 * Metodo che ti restituisce il pacco in cui è contenuto l'articolo
+	 */
 	public Pacco getPacco() {
 		return pacco;
 	}
 
+	/**
+	 * Metodo che assegna una descrizione articolo all'articolo
+	 */
 	public void setDescrizioneArticolo(DescrizioneArticolo descrizioneArticolo) {
 		this.descrizioneArticolo = descrizioneArticolo;
 	}
 
+	/**
+	 * Metodo che assegna un pacco all'articolo
+	 */
 	public void setPacco(Pacco pacco) {
 		this.pacco = pacco;
 	}

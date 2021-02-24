@@ -11,8 +11,14 @@ import java.util.Optional;
 @Repository
 public interface ArmadiettoRepository extends CrudRepository<Armadietto, Long> {
 
+    /**
+     * Metodo che restituisce tutti gli armadietti associati al punto consegna
+     */
     List<Armadietto> findAllByPuntoConsegna(PuntoConsegna puntoConsegna);
 
+    /**
+     * Metodo che restituisce l'armadietto con quel codice
+     */
     Optional<Armadietto> findByCodice(int codice);
 
 }

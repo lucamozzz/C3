@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * Classe che rappresenta il caso d'uso 'Gestione Articoli'
+ */
 @Service
 public class GestioneArticoliHandler {
 
@@ -20,6 +23,9 @@ public class GestioneArticoliHandler {
 	@Autowired
 	ILoginChecker loginChecker;
 
+	/**
+	 * Metodo che permette al commerciante di aggiungere una descrizione articolo
+	 */
 	public DescrizioneArticolo aggiungiArticolo(Long idCommerciante, String nome, String descrizione, double prezzo,
                                                 int quantita, Long idPuntoVendita, Long idCategoria) {
 		loginChecker.checkCommerciante(idCommerciante);
@@ -36,6 +42,9 @@ public class GestioneArticoliHandler {
 		return descrizioneArticolo;
 	}
 
+	/**
+	 * Metodo che permette al commerciante di modificare una descrizione articolo
+	 */
 	public void modificaArticolo(Long idCommerciante, Long idDescrizioneArticolo, String nome, String descrizione, double prezzo, int quantita, Categoria categoria) {
 		loginChecker.checkCommerciante(idCommerciante);
 		DescrizioneArticolo descrizioneArticolo = getDescrizioneArticolo(idDescrizioneArticolo);
@@ -60,12 +69,18 @@ public class GestioneArticoliHandler {
 		return repositoryMaster.getDescrizioneArticoloRepository().findById(idDescrizioneArticolo).get();
 	}
 
+	/**
+	 * Metodo che permette al commerciante di rimuovere una descrizione articolo
+	 */
 	public void rimuoviArticolo(Long idCommerciante, Long idDescArticolo) {
 		loginChecker.checkCommerciante(idCommerciante);
 		DescrizioneArticolo articoloDaEliminare = getDescrizioneArticolo(idDescArticolo);
 		repositoryMaster.getDescrizioneArticoloRepository().delete(articoloDaEliminare);
 	}
 
+	/**
+	 * Metodo che restituisce tutte le descrizioni articolo associate al commerciante
+	 */
 	public List<DescrizioneArticolo> getArticoliOf(Long idCommerciante) {
 		List<DescrizioneArticolo> articoliCommerciante = new ArrayList<>();
 		Commerciante commerciante = loginChecker.checkCommerciante(idCommerciante);

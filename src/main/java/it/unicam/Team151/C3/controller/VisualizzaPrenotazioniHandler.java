@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+/**
+ * Classe che rappresenta il caso d'uso 'Visualizza Prenotazioni'
+ */
 @Service
 public class VisualizzaPrenotazioniHandler {
 
@@ -17,6 +20,9 @@ public class VisualizzaPrenotazioniHandler {
     @Autowired
     ILoginChecker loginChecker;
 
+    /**
+     * Metodo che restituisce tutte le prenotazioni associate al corriere
+     */
     public List<Prenotazione> getPrenotazioni(Long idCorriere) {
         Corriere corriere = loginChecker.checkCorriere(idCorriere);
         List<Prenotazione> prenotazioni = repositoryMaster.getPrenotazioneRepository().findAllByCorriere(corriere);

@@ -10,5 +10,8 @@ import java.util.List;
 @Repository
 public interface PrenotazioneRepository extends CrudRepository<Prenotazione, Long> {
 
+    /**
+     * Metodo che restituisce tutti le prenotazioni associate al corriere
+     */
     List<Prenotazione> findAllByCorriere(InterfaceCorriere corriere);
 }

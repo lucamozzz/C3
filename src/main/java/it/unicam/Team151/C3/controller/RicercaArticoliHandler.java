@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe che rappresenta il caso d'uso 'Ricerca Articoli'
+ */
 @Service
 public class RicercaArticoliHandler {
 
@@ -18,6 +21,9 @@ public class RicercaArticoliHandler {
 	@Autowired
 	ILoginChecker loginChecker;
 
+	/**
+	 * Metodo che restituisce tutte le descrizioni articolo associate a quella categoria
+	 */
 	public List<DescrizioneArticolo> scegliCategoria(Long idCliente, Long idCategoria) {
 		loginChecker.checkCliente(idCliente);
 		if(repositoryMaster.getCategoriaRepository().findById(idCategoria).isEmpty())
@@ -26,6 +32,9 @@ public class RicercaArticoliHandler {
 		return repositoryMaster.getDescrizioneArticoloRepository().findAllByCategoria(categoria);
 	}
 
+	/**
+	 * Metodo che restituisce tutti i punti vendita presenti in C3
+	 */
 	public List<PuntoVendita> getPuntiVendita(Long idCliente) {
 		loginChecker.checkCliente(idCliente);
 		List<PuntoVendita> puntiVendita = new ArrayList<>();
@@ -33,6 +42,9 @@ public class RicercaArticoliHandler {
 		return puntiVendita;
 	}
 
+	/**
+	 * Metodo che restituisce tutte le descrizioni articolo associate a quel punto vendita
+	 */
 	public List<DescrizioneArticolo> scegliPuntoVendita(Long idCliente, Long idPuntoVendita) {
 		loginChecker.checkCliente(idCliente);
 		if(repositoryMaster.getPuntoVenditaRepository().findById(idPuntoVendita).isEmpty())

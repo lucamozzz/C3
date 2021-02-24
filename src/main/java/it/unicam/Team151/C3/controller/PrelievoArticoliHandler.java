@@ -4,7 +4,6 @@ import it.unicam.Team151.C3.prenotazione.Prenotazione;
 import it.unicam.Team151.C3.prenotazione.Stato;
 import it.unicam.Team151.C3.puntoVendita.Pacco;
 import it.unicam.Team151.C3.repositories.IRepositoryMaster;
-import it.unicam.Team151.C3.utenti.Corriere;
 import it.unicam.Team151.C3.util.ILoginChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * Classe che rappresenta il caso d'uso 'Prelievo Articoli'
+ */
 @Service
 public class PrelievoArticoliHandler {
 
@@ -20,15 +22,19 @@ public class PrelievoArticoliHandler {
 	@Autowired
 	ILoginChecker loginChecker;
 
+	/**
+	 * Metodo che permette al corriere di prelevare un pacco da un punto vendita, cambiandone lo stato in ritirato
+	 * (ed enventualmente cambia lo stato anche alla sua prenotazione)
+	 */
 	public void prelievoArticoli(Long idCorriere, Long idPacco) {
 		loginChecker.checkCorriere(idCorriere);
 		Pacco pacco = repositoryMaster.getPaccoRepository().findById(idPacco).get();
 		if (repositoryMaster.getPaccoRepository().findById(idPacco).isEmpty())
 			throw new NoSuchElementException("Nessun pacco trovato.");
 		pacco.setStato(Stato.Ritirato);
-		if (repositoryMaster.getPrenotazioneRepository().findById(pacco.getPrenotazione().getID()).isEmpty())
+		if (repositoryMaster.getPrenotazioneRepository().findById(pacco.getPrenotazione().getId()).isEmpty())
 			throw new NoSuchElementException("Nessuna prenotazione trovata.");
-		Prenotazione prenotazione = repositoryMaster.getPrenotazioneRepository().findById(pacco.getPrenotazione().getID()).get();
+		Prenotazione prenotazione = repositoryMaster.getPrenotazioneRepository().findById(pacco.getPrenotazione().getId()).get();
 		repositoryMaster.getPaccoRepository().save(pacco);
 		checkStatoPrenotazione(prenotazione);
 	}

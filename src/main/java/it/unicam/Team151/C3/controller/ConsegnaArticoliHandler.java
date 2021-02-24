@@ -9,7 +9,9 @@ import it.unicam.Team151.C3.util.ILoginChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.NoSuchElementException;
-
+/**
+ * Classe che rappresenta il caso d'uso 'Consegna Articoli'
+ */
 @Service
 public class ConsegnaArticoliHandler {
 
@@ -18,6 +20,9 @@ public class ConsegnaArticoliHandler {
 	@Autowired
 	ILoginChecker loginChecker;
 
+	/**
+	 * Metodo che permette al corriere di riempire l'armadietto assegnato con una prenotazione, cambaiandone lo stato in consegnato
+	 */
 	public void consegnaPrenotazione(Long idCorriere, Long idPrenotazione) {
 		loginChecker.checkCorriere(idCorriere);
 		if (repositoryMaster.getPrenotazioneRepository().findById(idPrenotazione).isEmpty())

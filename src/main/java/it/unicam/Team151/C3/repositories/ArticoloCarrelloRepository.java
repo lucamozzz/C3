@@ -12,9 +12,18 @@ import java.util.Optional;
 @Repository
 public interface ArticoloCarrelloRepository extends CrudRepository<ArticoloCarrello, Long> {
 
+    /**
+     * Metodo che restituisce tutti gli articoli carrello associati al carrello
+     */
     List<ArticoloCarrello> findAllByCarrello(Carrello carrello);
 
+    /**
+     * Metodo che restituisce un articolo carrello con quella descrizione articolo
+     */
     Optional<ArticoloCarrello> findByDescrizioneArticolo(DescrizioneArticolo descrizioneArticolo);
 
+    /**
+     * Metodo che restituisce un articolo carrello con quella descrizione articolo e quel carrello
+     */
     Optional<ArticoloCarrello> findByCarrelloAndDescrizioneArticolo(Carrello carrello, DescrizioneArticolo descrizioneArticolo);
 }

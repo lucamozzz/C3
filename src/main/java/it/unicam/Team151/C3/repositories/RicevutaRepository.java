@@ -10,5 +10,8 @@ import java.util.Optional;
 @Repository
 public interface RicevutaRepository extends CrudRepository<Ricevuta, Long> {
 
+    /**
+     * Metodo che restituisce una ricevuta associata alla prenotazione
+     */
     Optional<Ricevuta> findByPrenotazione(Prenotazione prenotazione);
 }

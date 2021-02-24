@@ -7,8 +7,10 @@ import it.unicam.Team151.C3.utenti.UtenteAutenticato;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
+/**
+ * Classe con la unica responsabilita di essere il creator di un oggetto UtenteAutenticato
+ */
 @Service
 public class UtenteManager {
 
@@ -25,6 +27,10 @@ public class UtenteManager {
 		return instance;
 	}
 
+	/**
+	 * Metodo che crea un oggetto UtenteAutenticato, specificando se si tratta di un CLiente, un Corriere o un Commerciante
+	 * a seconda del ruolo passato come parametro.
+	 */
 	public UtenteAutenticato createUtente(String nome, String cognome, String indirizzo, String ruolo, String email, String password) {
 		UtenteAutenticato newUser;
 		switch (ruolo) {

@@ -12,5 +12,8 @@ import java.util.Optional;
 @Repository
 public interface PuntoVenditaRepository extends CrudRepository<PuntoVendita, Long> {
 
+    /**
+     * Metodo che restituisce tutti i punti vendita associati al commerciante
+     */
     List<PuntoVendita> findAllByCommerciante(InterfaceCommerciante commerciante);
 }

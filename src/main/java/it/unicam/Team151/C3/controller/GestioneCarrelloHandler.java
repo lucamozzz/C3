@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-
+/**
+ * Classe che rappresenta il caso d'uso 'Gestione Carrello'
+ */
 @Service
 public class GestioneCarrelloHandler {
 
@@ -21,6 +23,9 @@ public class GestioneCarrelloHandler {
 	@Autowired
 	ILoginChecker loginChecker;
 
+	/**
+	 * Metodo che permette al cliente di aggiungere un articolo al carrello
+	 */
 	public void aggiungiArticoloCarrello(Long idDescArticolo, int quantita, Long idCliente) {
 		Cliente cliente = getCliente(idCliente);
 		Carrello carrello = getCarrello(cliente);
@@ -39,6 +44,9 @@ public class GestioneCarrelloHandler {
 		repositoryMaster.getArticoloCarrelloRepository().save(articoloCarrello);
 	}
 
+	/**
+	 * Metodo che permette al cliente di rimuovere un articolo dal carrello
+	 */
 	public void rimuoviArticoloCarrello(Long idArticoloCarrello, int quantita, Long idCliente) {
 		Cliente cliente = this.getCliente(idCliente);
 		Carrello carrello = this.getCarrello(cliente);
@@ -54,6 +62,9 @@ public class GestioneCarrelloHandler {
 		}
 	}
 
+	/**
+	 * Metodo che permette al cliente di vedere il suo carrello
+	 */
 	public List<ArticoloCarrello> mostraArticoliCarrello(Long idCliente) {
 		Cliente cliente = getCliente(idCliente);
 		Carrello carrello = getCarrello(cliente);

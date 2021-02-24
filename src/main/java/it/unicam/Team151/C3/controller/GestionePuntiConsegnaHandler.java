@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.NoSuchElementException;
 
+/**
+ * Classe che rappresenta il caso d'uso 'Gestione Punti Consegna'
+ */
 @Service
 public class GestionePuntiConsegnaHandler {
 
@@ -18,6 +21,9 @@ public class GestionePuntiConsegnaHandler {
 	@Autowired
 	IRepositoryMaster repositoryMaster;
 
+	/**
+	 * Metodo che permette all'admin di aggiungere un punto consegna
+	 */
 	public void aggiungiPuntoConsegna(String ubicazione, int numeroArmadietti) {
 		if (!admin.getLogged())
 			throw new IllegalStateException("Non hai i permessi per accedere a questa funziona.");
@@ -28,6 +34,9 @@ public class GestionePuntiConsegnaHandler {
 			repositoryMaster.getArmadiettoRepository().save(armadietto);
 	}
 
+	/**
+	 * Metodo che permette all'admin di modificare un punto consegna
+	 */
 	public void modificaPuntoConsegna(Long idPuntoConsegna, String ubicazione) {
 		if (!admin.getLogged())
 			throw new IllegalStateException("Non hai i permessi per accedere a questa funziona.");
@@ -38,6 +47,9 @@ public class GestionePuntiConsegnaHandler {
 		repositoryMaster.getPuntoConsegnaRepository().save(puntoConsegna);
 	}
 
+	/**
+	 * Metodo che permette all'admin di rimuovere un punto consegna
+	 */
 	public void rimuoviPuntoConsegna(Long idPuntoConsegna) {
 		if (!admin.getLogged())
 			throw new IllegalStateException("Non hai i permessi per accedere a questa funziona.");

@@ -1,5 +1,8 @@
 package it.unicam.Team151.C3.utenti;
 
+/**
+ * Interfaccia che generalizza tutti gli autenticati a C3, fornendo loro metodi prestabiliti.
+ */
 public interface UtenteAutenticato {
 
      Long getId();

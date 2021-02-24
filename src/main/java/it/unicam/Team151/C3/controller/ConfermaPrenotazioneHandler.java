@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * Classe che rappresenta il caso d'uso 'Conferma Prenotazione'
+ */
 @Service
 public class ConfermaPrenotazioneHandler {
 
@@ -23,6 +26,9 @@ public class ConfermaPrenotazioneHandler {
 	@Autowired
 	ILoginChecker loginChecker;
 
+	/**
+	 * Metodo che conferma la prenotazine del carrello di un cliente
+	 */
 	public Ricevuta confermaPrenotazione(Long idPuntoConsegna, Long idCliente) {
 		Cliente cliente = loginChecker.checkCliente(idCliente);
 		if (repositoryMaster.getCarrelloRepository().findByCliente(cliente).isEmpty())
@@ -44,6 +50,9 @@ public class ConfermaPrenotazioneHandler {
 		} else throw new IllegalStateException("Uno o più articoli non disponibili.");
 	}
 
+	/**
+	 * Metodo che controlla se gli articoli nel carrello siano ancora disponibili
+	 */
 	public boolean checkDisponibilitaArticoli(List<ArticoloCarrello> articoli) {
 		for (ArticoloCarrello articoloCarrello : articoli) {
 			DescrizioneArticolo descrizioneArticolo = getDescrizioneArticolo(articoloCarrello);
@@ -53,6 +62,9 @@ public class ConfermaPrenotazioneHandler {
 		return true;
 	}
 
+	/**
+	 * Metodo che aggiorna le descrizioni articolo degli articoli compresi nella prenotazione effettuata
+	 */
 	public void updateCatalogo(Carrello carrello) {
 		for (ArticoloCarrello articoloCarrello : carrello.getArticoliCarrello()){
 			DescrizioneArticolo descrizioneArticolo = getDescrizioneArticolo(articoloCarrello);

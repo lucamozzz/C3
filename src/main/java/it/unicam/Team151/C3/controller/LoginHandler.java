@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+/**
+ * Classe che rappresenta il caso d'uso 'Login'
+ */
 @Service
 public class LoginHandler {
 
@@ -23,6 +26,9 @@ public class LoginHandler {
 	@Autowired
 	private IRepositoryMaster repositoryMaster;
 
+	/**
+	 * Metodo che permette ad un utente di autenticarsi a C3
+	 */
 	public UtenteAutenticato autenticazione(String email, String pwd, String ruolo) throws NotExistingUserException, WrongPasswordException {
 		if (email.equals("system@admin") && pwd.equals("admin"))
 			admin.setLogged(true);
@@ -39,6 +45,9 @@ public class LoginHandler {
 		return null;
 	}
 
+	/**
+	 * Metodo che controlla se l'email dell'utente sia presente nel repository e combaci con la pwd
+	 */
 	public boolean checkCredenziali(String email, String pwd, String ruolo) throws NotExistingUserException, WrongPasswordException {
 		switch (ruolo) {
 			case "Cliente":

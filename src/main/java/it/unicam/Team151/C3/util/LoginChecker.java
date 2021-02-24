@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.NoSuchElementException;
 
+/**
+ * Classe che serve a controllare se un qualsiasi utente autenticato sia loggato a C3, prima di permettergli
+ * di fare operazioni nel sistema
+ */
 @Service
 public class LoginChecker implements ILoginChecker{
 

@@ -9,7 +9,9 @@ import it.unicam.Team151.C3.util.InterfaceAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-
+/**
+ * Classe che rappresenta il caso d'uso 'Logout'
+ */
 @Service
 public class LogoutHandler {
 
@@ -20,6 +22,9 @@ public class LogoutHandler {
 	@Autowired
 	InterfaceAdmin admin;
 
+	/**
+	 * Metodo che permette ad un utente di sloggarsi da C3
+	 */
 	public void logout(Long id) {
 		if (id == -1)
 			admin.setLogged(false);

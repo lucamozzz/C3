@@ -5,7 +5,9 @@ import it.unicam.Team151.C3.repositories.IRepositoryMaster;
 import it.unicam.Team151.C3.util.InterfaceAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+/**
+ * Classe che rappresenta il caso d'uso 'Gestione Categorie'
+ */
 @Service
 public class GestioneCategorieHandler {
 
@@ -15,6 +17,9 @@ public class GestioneCategorieHandler {
 	@Autowired
 	InterfaceAdmin admin;
 
+	/**
+	 * Metodo che permette all'admin di creare una categoria
+	 */
 	public void creaCategoria(String nome, String descrizione) {
 		if (!admin.getLogged())
 			throw new IllegalStateException("Non hai i permessi per accedere a questa funziona.");
@@ -26,6 +31,9 @@ public class GestioneCategorieHandler {
 			throw new IllegalArgumentException("Esiste già una categoria con questo nome!");
 	}
 
+	/**
+	 * Metodo che permette all'admin di aggiornare una categoria
+	 */
 	public void aggiornaCategoria(Long idCategoria, String nome, String descrizione) {
 		if (!admin.getLogged())
 			throw new IllegalStateException("Non hai i permessi per accedere a questa funziona.");

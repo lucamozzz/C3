@@ -12,7 +12,13 @@ import java.util.List;
 @Repository
 public interface PaccoRepository extends CrudRepository<Pacco, Long> {
 
+    /**
+     * Metodo che restituisce tutti i pacchi associati alla prenotazione
+     */
     List<Pacco> findAllByPrenotazione(Prenotazione prenotazione);
 
+    /**
+     * Metodo che restituisce tutti i pacchi associati al punto vendita
+     */
     List<Pacco> findAllByPuntoVendita(PuntoVendita puntoVendita);
 }

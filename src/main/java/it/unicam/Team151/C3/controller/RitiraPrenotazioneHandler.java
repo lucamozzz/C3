@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.NoSuchElementException;
 
+/**
+ * Classe che rappresenta il caso d'uso 'Ritira Prenotazione'
+ */
 @Service
 public class RitiraPrenotazioneHandler {
 
@@ -22,6 +25,10 @@ public class RitiraPrenotazioneHandler {
 	@Autowired
 	ILoginChecker loginChecker;
 
+	/**
+	 * Metodo che permette al cliente di ritirare la sua prenotazione e che libera l'armadietto, rendendolo disponibile
+	 * per la prossima prenotazione
+	 */
 	public void ritiraPrenotazione(Long idCliente, Long idPuntoConsegna, Long idArmadietto) {
 		loginChecker.checkCliente(idCliente);
 		PuntoConsegna puntoConsegna = getPuntoConsegna(idPuntoConsegna);
@@ -33,6 +40,9 @@ public class RitiraPrenotazioneHandler {
 		servizioClienti.richiestaFeedback();
 	}
 
+	/**
+	 * Metodo che restituisce l'armadietto con quel codice, se il codice è giusto
+	 */
 	public Armadietto checkCodice(Long idPuntoConsegna, int codice) {
 		PuntoConsegna puntoConsegna = getPuntoConsegna(idPuntoConsegna);
 		Armadietto armadietto = puntoConsegna.checkCodice(codice);

@@ -8,5 +8,8 @@ import java.util.Optional;
 @Repository
 public interface CommercianteRepository extends CrudRepository<Commerciante, Long> {
 
+    /**
+     * Metodo che restituisce un commerciante con quell'email
+     */
     Optional<Commerciante> findByEmail(String email);
 }

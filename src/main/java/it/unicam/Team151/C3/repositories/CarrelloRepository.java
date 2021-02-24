@@ -10,5 +10,8 @@ import java.util.Optional;
 @Repository
 public interface CarrelloRepository extends CrudRepository<Carrello, Long> {
 
+    /**
+     * Metodo che restituisce un carrello associato al cliente
+     */
     Optional<Carrello> findByCliente(Cliente cliente);
 }

@@ -9,5 +9,9 @@ import java.util.Optional;
 
 @Repository
 public interface CorriereRepository extends CrudRepository<Corriere, Long> {
+
+    /**
+     * Metodo che restituisce un corriere con quell'email
+     */
     Optional<Corriere> findByEmail(String email);
 }

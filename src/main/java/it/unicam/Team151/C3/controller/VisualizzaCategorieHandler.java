@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe che rappresenta il caso d'uso 'Visualizza Categorie'
+ */
 @Service
 public class VisualizzaCategorieHandler {
 
@@ -22,6 +25,9 @@ public class VisualizzaCategorieHandler {
     @Autowired
     InterfaceAdmin admin;
 
+    /**
+     * Metodo che restituisce tutte le categorie presenti in C3
+     */
     public List<Categoria> getCategorie(Long id){
         if (id == -1 && admin.getLogged() || loginChecker.checkCliente(id) != null) {
             List<Categoria> categorie = new ArrayList<>();

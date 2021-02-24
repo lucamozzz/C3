@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe che rappresenta il caso d'uso 'Visualizza Punti Consegna'
+ */
 @Service
 public class VisualizzaPuntiConsegnaHandler {
 
@@ -19,6 +22,9 @@ public class VisualizzaPuntiConsegnaHandler {
     @Autowired
     InterfaceAdmin admin;
 
+    /**
+     * Metodo che restituisce tutti i punti consegna presenti in C3
+     */
     public List<PuntoConsegna> getPuntiConsegna(Long id) {
         if (id == -1 && admin.getLogged() || loginChecker.checkCliente(id) != null) {
             List<PuntoConsegna> puntiConsegna = new ArrayList<>();

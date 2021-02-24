@@ -15,6 +15,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Classe che rappresenta un oggetto Prenotazione.
+ * Ha la responsabilità di creator di oggetti Ricevuta e Pacco.
+ */
 @JsonIdentityInfo(
 		generator = ObjectIdGenerators.PropertyGenerator.class,
 		property = "id",
@@ -54,47 +58,72 @@ public class Prenotazione {
 	}
 
 	/**
-	 * getter del cliente della prenotazione.
+	 * Metodo che restituisce il cliente associato alla prenotazione.
 	 */
 	public Cliente getCliente() {
 		return this.cliente;
 	}
 
 	/**
-	 * getter della ricevuta della prenotazione.
+	 * Metodo che restituisce la ricevuta associata alla prenotazione.
 	 */
 	public Ricevuta getRicevuta() {
 		return this.ricevuta;
 	}
 
-	public Long getID() {
+	/**
+	 * Metodo che restituisce l'id associato alla prenotazione.
+	 */
+	public Long getId() {
 		return this.id;
 	}
 
+	/**
+	 * Metodo che restituisce lo stato in cui si trova la prenotazione.
+	 */
 	public Stato getStato() {
 		return this.stato;
 	}
 
-	public void setStato(Stato nuovoStato) {
-		this.stato = nuovoStato;
-	}
-
-	public void setCorriere(Corriere corriere) {
-		this.corriere = corriere;
-	}
-
+	/**
+	 * Metodo che restituisce il corriere incaricato della consegna della prenotazione.
+	 */
 	public Corriere getCorriere() {
 		return this.corriere;
 	}
 
+	/**
+	 * Metodo che restituisce la lista di pacchi contenuti nella prenotazione.
+	 */
 	public List<Pacco> getPacchi() {
 		return this.pacchi;
 	}
 
+	/**
+	 * Metodo che restituisce il punto consegna associato alla prenotazione.
+	 */
 	public PuntoConsegna getPuntoConsegna() {
 		return this.puntoConsegna;
 	}
 
+	/**
+	 * Metodo che imposta uno stato alla prenotazione.
+	 */
+	public void setStato(Stato nuovoStato) {
+		this.stato = nuovoStato;
+	}
+
+	/**
+	 * Metodo che associa un corriere alla prenotazione
+	 */
+	public void setCorriere(Corriere corriere) {
+		this.corriere = corriere;
+	}
+
+	/**
+	 * Metodo che crea tutti i pacchi associati alla prenotazione (metodo chiamato solamente nel costruttore della prenotazione).
+	 * Ricorsivamente ogni pacco creato creerà a sua volta gli articoli.
+	 */
 	public List<Pacco> createPacchi(Carrello carrello){
 		Set<PuntoVendita> puntiVendita = new HashSet<>();
 		List<Pacco> pacchi = new ArrayList<>();
@@ -111,10 +140,16 @@ public class Prenotazione {
 		return pacchi;
 	}
 
+	/**
+	 * Metodo che crea una ricevuta
+	 */
 	public void createRicevuta(){
 		this.ricevuta = new Ricevuta(this);
 	}
 
+	/**
+	 * Metodo che imposta una ricevuta alla prenotazione
+	 */
 	public void setRicevuta(Ricevuta ricevuta) {
 		this.ricevuta = ricevuta;
 	}

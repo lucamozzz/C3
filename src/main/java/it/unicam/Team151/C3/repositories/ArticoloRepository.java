@@ -10,5 +10,8 @@ import java.util.List;
 @Repository
 public interface ArticoloRepository extends CrudRepository<Articolo, Long> {
 
+    /**
+     * Metodo che restituisce tutti gli articoli associati al pacco
+     */
     List<Articolo> findAllByPacco(Pacco pacco);
 }

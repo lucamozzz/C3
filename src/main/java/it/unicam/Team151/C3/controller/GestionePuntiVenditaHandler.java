@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-
+/**
+ * Classe che rappresenta il caso d'uso 'Gestione Punti Vendita'
+ */
 @Service
 public class GestionePuntiVenditaHandler {
 
@@ -20,11 +22,17 @@ public class GestionePuntiVenditaHandler {
 	@Autowired
 	ILoginChecker loginChecker;
 
+	/**
+	 * Metodo che permette al commerciante di visualizzare i punti vendita ad esso associati
+	 */
 	public List<PuntoVendita> getPuntiVendita(Long idCommerciante) {
 		Commerciante commerciante = getCommerciante(idCommerciante);
 		return new ArrayList<>(repositoryMaster.getPuntoVenditaRepository().findAllByCommerciante(commerciante));
 	}
 
+	/**
+	 * Metodo che permette al commerciante di aggiungere un punto vendita
+	 */
 	public void aggiungiPuntoVendita(Long idCommerciante, String nome, String ubicazione) {
 		Commerciante commerciante = getCommerciante(idCommerciante);
 		if (!commerciante.getLogged())
@@ -33,6 +41,9 @@ public class GestionePuntiVenditaHandler {
 		repositoryMaster.getPuntoVenditaRepository().save(commerciante.createPuntoVendita(nome, ubicazione));
 	}
 
+	/**
+	 * Metodo che permette al commerciante di modificare un punto vendita
+	 */
 	public void modificaPuntoVendita(Long idCommerciante, Long idPuntoVendita, String nome, String ubicazione) {
 		loginChecker.checkCommerciante(idCommerciante);
 		checkDati(nome, ubicazione);
@@ -44,6 +55,9 @@ public class GestionePuntiVenditaHandler {
 		repositoryMaster.getPuntoVenditaRepository().save(puntoVendita);
 	}
 
+	/**
+	 * Metodo che permette al commerciante di rimuovere un punto vendita
+	 */
 	public void rimuoviPuntoVendita(Long idCommerciante, Long idPuntoVendita) {
 		loginChecker.checkCommerciante(idCommerciante);
 		repositoryMaster.getPuntoVenditaRepository().delete(this.getPuntoVendita(idPuntoVendita));

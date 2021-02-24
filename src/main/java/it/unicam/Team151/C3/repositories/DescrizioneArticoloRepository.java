@@ -12,7 +12,12 @@ import java.util.Optional;
 @Repository
 public interface DescrizioneArticoloRepository extends CrudRepository<DescrizioneArticolo, Long> {
 
+    /**
+     * Metodo che restituisce tutti le descrizioni articolo associate alla categoria
+     */
     List<DescrizioneArticolo> findAllByCategoria(Categoria categoria);
-
+    /**
+     * Metodo che restituisce tutti le descrizioni articolo associate al punto vendita
+     */
     List<DescrizioneArticolo> findAllByPuntoVendita(PuntoVendita puntoVendita);
 }

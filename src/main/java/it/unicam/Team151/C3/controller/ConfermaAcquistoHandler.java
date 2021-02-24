@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
+/**
+ * Classe che rappresenta il caso d'uso 'Conferma Acquisto'
+ */
 @Service
 public class ConfermaAcquistoHandler {
 
@@ -24,6 +27,9 @@ public class ConfermaAcquistoHandler {
 	@Autowired
 	ILoginChecker loginChecker;
 
+	/**
+	 * Metodo che restituisce tutti i pacchi associati al commerciante
+	 */
 	public List<Pacco> confermaAcquisto(Long idCommerciante) {
 		Commerciante commerciante = loginChecker.checkCommerciante(idCommerciante);
 		List<PuntoVendita> puntiVenditaCommerciante = repositoryMaster.getPuntoVenditaRepository().findAllByCommerciante(commerciante);
@@ -33,6 +39,9 @@ public class ConfermaAcquistoHandler {
 		return pacchiCommerciante;
 	}
 
+	/**
+	 * Metodo permette al commerciante di cambiare lo stato di un pacco a pronto (ed eventualmente anche all'intera prenotazione)
+	 */
 	public void confermaPagamento(Long idCommerciante, Long idPacco) {
 		loginChecker.checkCommerciante(idCommerciante);
 		boolean flag = true;
@@ -41,7 +50,7 @@ public class ConfermaAcquistoHandler {
 		Pacco pacco = repositoryMaster.getPaccoRepository().findById(idPacco).get();
 		pacco.setStato(Stato.Pronto);
 		repositoryMaster.getPaccoRepository().save(pacco);
-		Prenotazione prenotazione = this.getPrenotazione(pacco.getPrenotazione().getID());
+		Prenotazione prenotazione = this.getPrenotazione(pacco.getPrenotazione().getId());
 		for(Pacco p : prenotazione.getPacchi()) {
 			if (p.getStato() != Stato.Pronto) {
 				flag = false;
@@ -52,6 +61,9 @@ public class ConfermaAcquistoHandler {
 			this.inConsegna(prenotazione);
 	}
 
+	/**
+	 * Metodo che data una prenotazione, la associa ad un corriere
+	 */
 	public void assegnaCorriere(Prenotazione prenotazione) {
 		List<Long> idCorrieri = new ArrayList<>();
 		Random rand = new Random();
