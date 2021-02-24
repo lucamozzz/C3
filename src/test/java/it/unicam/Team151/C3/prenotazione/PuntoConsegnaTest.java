@@ -3,6 +3,7 @@ package it.unicam.Team151.C3.prenotazione;
 import it.unicam.Team151.C3.articoli.Carrello;
 import it.unicam.Team151.C3.utenti.Cliente;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,6 +28,7 @@ class PuntoConsegnaTest {
     }
 
     @Test
+    @Order(1)
     void checkCodice() {
         Armadietto armadietto= puntoConsegna.getArmadietti().get(5);
         ricevuta.setCodice(armadietto.getCodice());
@@ -34,11 +36,13 @@ class PuntoConsegnaTest {
         assertEquals(armadietto1, armadietto);
     }
 
+    @Order(2)
     @Test
     void getUbicazione() {
         assertEquals("Le mosse", puntoConsegna.getUbicazione());
     }
 
+    @Order(3)
     @Test
     void getArmadietti() {
         assertFalse(puntoConsegna.getArmadietti().isEmpty());
@@ -46,6 +50,7 @@ class PuntoConsegnaTest {
     }
 
     @Test
+    @Order(4)
     void liberaArmadietto() {
         Armadietto armadietto= puntoConsegna.getArmadietti().get(5);
         armadietto.setDisponibilita(false);

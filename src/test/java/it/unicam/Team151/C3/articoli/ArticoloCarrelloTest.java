@@ -4,6 +4,7 @@ import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.utenti.Commerciante;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,22 +36,26 @@ public class ArticoloCarrelloTest{
     }
 
     @Test
+    @Order(1)
     void getDescrizioneArticolo() {
         assertEquals(descrizioneArticolo2,articoloCarrello1.getDescrizioneArticolo());
         assertNotEquals(descrizioneArticolo1, articoloCarrello1.getDescrizioneArticolo());
     }
 
     @Test
+    @Order(2)
     void getQuantita() {
         assertEquals(2, articoloCarrello1.getQuantita());
     }
 
     @Test
+    @Order(3)
     void getCarrello() {
         assertEquals(carrelloRossi, articoloCarrello1.getCarrello());
     }
 
     @Test
+    @Order(4)
     void getPrezzo() {
         assertEquals(900, articoloCarrello1.getPrezzo());
     }

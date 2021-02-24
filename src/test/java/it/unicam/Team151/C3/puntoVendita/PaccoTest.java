@@ -10,6 +10,7 @@ import it.unicam.Team151.C3.prenotazione.Stato;
 import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.utenti.Commerciante;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -49,28 +50,38 @@ class PaccoTest {
         carrelloRossi.getArticoliCarrello().add(articoloCarrello2);
         puntoConsegna= new PuntoConsegna("Le mosse",7);
         prenotazione= new Prenotazione(carrelloRossi,puntoConsegna);
-        pacco1= prenotazione.getPacchi().get(0);
-        pacco2= prenotazione.getPacchi().get(1);
+        if(prenotazione.getPacchi().get(0).getArticoli().size()==2) {
+            pacco1 = prenotazione.getPacchi().get(0);
+            pacco2 = prenotazione.getPacchi().get(1);
+        }
+        else{
+            pacco2 = prenotazione.getPacchi().get(0);
+            pacco1 = prenotazione.getPacchi().get(1);
+        }
     }
 
     @Test
+    @Order(1)
     void getArticoli() {
         assertEquals(2, pacco1.getArticoli().size());
         assertEquals(3,pacco2.getArticoli().size());
     }
 
     @Test
+    @Order(2)
     void getPuntoVendita() {
         assertEquals(puntoVendita1.getId(), pacco1.getPuntoVendita().getId());
         assertEquals(puntoVendita2.getId(), pacco2.getPuntoVendita().getId());
     }
 
     @Test
+    @Order(3)
     void getPrenotazione() {
         assertEquals(prenotazione,pacco2.getPrenotazione());
     }
 
     @Test
+    @Order(4)
     void getStato() {
         assertEquals(Stato.PresoInCarico,pacco1.getStato());
         pacco1.setStato(Stato.Consegnato);

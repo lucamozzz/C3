@@ -4,6 +4,7 @@ import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.utenti.Commerciante;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,6 +37,7 @@ class CarrelloTest {
     }
 
     @Test
+    @Order(2)
     void getTotale() {
         assertEquals(900.0,carrelloRossi.getTotale());
         carrelloRossi.getArticoliCarrello().add(articoloCarrello2);
@@ -43,6 +45,7 @@ class CarrelloTest {
     }
 
     @Test
+    @Order(3)
     void svuota() {
         assertFalse(carrelloRossi.getArticoliCarrello().isEmpty());
         carrelloRossi.svuota();
@@ -50,6 +53,7 @@ class CarrelloTest {
     }
 
     @Test
+    @Order(2)
     void getArticoliCarrello() {
         assertEquals(1,carrelloRossi.getArticoliCarrello().size());
         carrelloRossi.getArticoliCarrello().add(articoloCarrello2);
@@ -57,11 +61,13 @@ class CarrelloTest {
     }
 
     @Test
+    @Order(1)
     void getCliente() {
         assertEquals(rossi,carrelloRossi.getCliente());
     }
 
     @Test
+    @Order(2)
     void createArticoloCarrello() {
         carrelloRossi.getArticoliCarrello().add(carrelloRossi.createArticoloCarrello(descrizioneArticolo2, 1));
         assertEquals(1, carrelloRossi.getArticoliCarrello().get(1).getQuantita());

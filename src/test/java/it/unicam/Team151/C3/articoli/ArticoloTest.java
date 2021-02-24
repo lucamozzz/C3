@@ -7,6 +7,7 @@ import it.unicam.Team151.C3.puntoVendita.PuntoVendita;
 import it.unicam.Team151.C3.utenti.Cliente;
 import it.unicam.Team151.C3.utenti.Commerciante;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,8 +52,14 @@ class ArticoloTest {
         carrelloRossi.getArticoliCarrello().add(articoloCarrello2);
         puntoConsegna= new PuntoConsegna("Le mosse",7);
         prenotazione= new Prenotazione(carrelloRossi,puntoConsegna);
-        pacco1= prenotazione.getPacchi().get(0);
-        pacco2= prenotazione.getPacchi().get(1);
+        if(prenotazione.getPacchi().get(0).getArticoli().size()==2) {
+            pacco1 = prenotazione.getPacchi().get(0);
+            pacco2 = prenotazione.getPacchi().get(1);
+        }
+        else{
+            pacco2 = prenotazione.getPacchi().get(0);
+            pacco1 = prenotazione.getPacchi().get(1);
+        }
         articolo1 = pacco1.getArticoli().get(0);
         articolo2 = pacco1.getArticoli().get(1);
         articolo3 = pacco2.getArticoli().get(0);
@@ -61,6 +68,7 @@ class ArticoloTest {
     }
 
     @Test
+    @Order(2)
     void getDescrizioneArticolo() {
         assertEquals(descrizioneArticolo1, articolo1.getDescrizioneArticolo());
         assertEquals(descrizioneArticolo1, articolo2.getDescrizioneArticolo());
@@ -71,6 +79,7 @@ class ArticoloTest {
     }
 
     @Test
+    @Order(1)
     void getPacco() {
         assertEquals(pacco1.getId(), articolo1.getPacco().getId());
         assertEquals(pacco1.getId(), articolo2.getPacco().getId());
