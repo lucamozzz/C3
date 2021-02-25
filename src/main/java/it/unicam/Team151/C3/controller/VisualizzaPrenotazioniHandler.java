@@ -31,8 +31,9 @@ public class VisualizzaPrenotazioniHandler {
             for (Pacco pacco : prenotazione.getPacchi()) {
                 pacco.getArticoli().addAll(repositoryMaster.getArticoloRepository().findAllByPacco(pacco));
             }
+            if (repositoryMaster.getRicevutaRepository().findByPrenotazione(prenotazione).isPresent())
+                prenotazione.setRicevuta(repositoryMaster.getRicevutaRepository().findByPrenotazione(prenotazione).get());
         }
         return prenotazioni;
     }
-
 }

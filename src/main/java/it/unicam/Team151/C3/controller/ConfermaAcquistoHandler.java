@@ -123,7 +123,8 @@ public class ConfermaAcquistoHandler {
 			if (armadietto.isDisponibile()){
 				ricevuta.setCodice(armadietto.getCodice());
 				armadietto.setDisponibilita(false);
-			}
+				break;
+			} else throw new IllegalStateException("Nessun armadietto disponibile, riprovare più tardi.");
 		}
 		this.assegnaCorriere(prenotazione);
 	}

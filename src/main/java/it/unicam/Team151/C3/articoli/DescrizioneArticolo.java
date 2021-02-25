@@ -25,10 +25,10 @@ public class DescrizioneArticolo {
 	private String descrizione;
 	private double prezzo;
 	private int quantita;
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name = "idPuntoVendita")
 	private PuntoVendita puntoVendita;
-	@ManyToOne(cascade = {CascadeType.ALL})
+	@ManyToOne
 	@JoinColumn(name = "idCategoria")
 	private Categoria categoria;
 
