@@ -10,11 +10,11 @@
 	</parent>
 	<groupId>it.unicam.team151</groupId>
 	<artifactId>C3</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>2.1.7.RELEASE</version>
 	<name>C3</name>
 	<description>Progetto di Ingegneria del Software</description>
 	<properties>
-		<java.version>8</java.version>
+		<java.version>11</java.version>
 	</properties>
 
 	<dependencies>
