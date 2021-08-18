@@ -14,7 +14,7 @@
 	<name>C3</name>
 	<description>Progetto di Ingegneria del Software</description>
 	<properties>
-		<java.version>9</java.version>
+		<java.version>8</java.version>
 	</properties>
 
 	<dependencies>
@@ -48,8 +48,13 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
