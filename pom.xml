@@ -14,7 +14,7 @@
 	<name>C3</name>
 	<description>Progetto di Ingegneria del Software</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 
 	<dependencies>
